@@ -205,7 +205,8 @@ def test_tuple_annotation(particles: Union[tuple, list]):
                 else Particle(particle) for particle in particles]
 
     try:
-        resulting_particles = function_with_tuple_annotation(particles, 'ignore', x='ignore')
+        resulting_particles = function_with_tuple_annotation(
+            particles, 'ignore', x='ignore')
     except Exception as exc2:
         raise AtomicError(
             f"Unable to evaluate a function decorated by particle_input"
@@ -218,8 +219,10 @@ def test_tuple_annotation(particles: Union[tuple, list]):
     #     Particle('p+') == 'p+'
     # will return True because of how Particle.__eq__ is set up.
 
-    returned_particle_instances = all([isinstance(p, Particle) for p in resulting_particles])
-    returned_correct_instances = all([expected[i] == resulting_particles[i] for i in range(2)])
+    returned_particle_instances = all(
+        [isinstance(p, Particle) for p in resulting_particles])
+    returned_correct_instances = all(
+        [expected[i] == resulting_particles[i] for i in range(2)])
 
     if not returned_particle_instances:
         raise AtomicError(
