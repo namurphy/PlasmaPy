@@ -4,9 +4,9 @@ from plasmapy.utils.pytest_helpers.pytest_helpers import (
     assert_can_handle_nparray,
 )
 
-from .error_messages import call_string
+from plasmapy.utils.pytest_helpers.error_messages import call_string
 
-from .exceptions import (
+from plasmapy.utils.pytest_helpers.exceptions import (
     InconsistentTypeError,
     UnexpectedResultError,
     UnexpectedExceptionError,
@@ -16,3 +16,5 @@ from .exceptions import (
     MissingWarningError,
     InvalidTestError,
 )
+
+from plasmapy.utils.pytest_helpers.expected import ExpectedOutcome
