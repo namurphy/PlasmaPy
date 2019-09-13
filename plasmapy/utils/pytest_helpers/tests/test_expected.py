@@ -1,3 +1,4 @@
+import collections
 import pytest
 from plasmapy.utils.pytest_helpers.expected import (
     ExpectedOutcome,
@@ -5,116 +6,6 @@ from plasmapy.utils.pytest_helpers.expected import (
     _is_exception,
     _is_warning_and_value,
 )
-
-
-
-expected_exception = KeyError
-expected_warning = UserWarning
-expected_value = 42
-
-
-@pytest.fixture(scope="module")
-def expected_outcome_for_an_exception():
-    return ExpectedOutcome(expected_exception)
-
-
-attribute_strings_and_expected_values = [
-    ('.exception', expected_exception),
-    ('.warning', None),
-    ('.value', None),
-
-]
-
-@pytest.mark.parametrize(
-    "attribute_string, expected",
-    attribute_strings_and_expected_values
-)
-def test_expected_outcome_attributes_for_an_exception(
-        attribute_string,
-        expected,
-        expected_outcome_for_an_exception,
-):
-    result = eval("expected_outcome_for_an_exception" + attribute_string)
-
-    assert result is expected or result == expected
-
-
-
-
-
-def test_for_expected_outcome_attrs_for_exception(expected_outcome_for_an_exception):
-    errors = []
-
-    if expected_outcome_for_an_exception.exception is not expected_exception:
-        errors.append(
-            f"{expected_outcome_exception}.exception should be"
-            f"{expected_exception}, but instead is "
-            f"{expected_outcome_exception.exception}."
-        )
-
-    if expected_outcome_for_an_exception.warning is not None:
-        errors.append(
-            f"{expected_outcome_for_an_exception}.warning should return None,"
-            f"but instead returns ")
-
-    if expected_outcome_for_an_exception.value is not None:
-        errors.append(f"{expected_outcome_for_an_exception}.value is not the expected value of None")
-
-#    errors.append('asdfas')
-#    errors.append('asdfasadf')
-
-    if errors:
-
-
-        pytest.fail(' '.join(errors))
-
-
-#@pytest.mark.parametrize(
-#    "arg, attr_string, expected_value",
-#    [
-#        (KeyError, '.exception', KeyError)
-#    ]
-
-#)
-
-#def test_(arg, attr_string, expected_value):
-
-#    ...
-"""
-class TestExpectedOutcome:
-    @classmethod
-    def setup_class(cls):
-        cls.expected_outcomes = {
-            'value': ExpectedOutcome(expected_value),
-            'warning': ExpectedOutcome(expected_warning),
-            'exception': ExpectedOutcome(expected_exception),
-            'value and warning': ExpectedOutcome((expected_value, expected_warning)),
-            'warning and value': ExpectedOutcome([expected_warning, expected_value]),
-        }
-
-    def test_exception_attrs(self):
-        expected_outcome = self.expected_outcomes['exception']
-        list_of_errors = []
-
-        if expected_outcome.exception is not ep
-
-
-
-        list_of_errors = []
-
-        if expected_outcome.exception is not expected_exception:
-            list_of_errors.append()
-
- #       if expected_outcome.
-
-#        assert self.instances['exception'].exception is expected_exception
-#        assert self.instances['exception'].expecting_exception is True
-#        assert self.instances['exception'].expecting_value is False
-#        assert self.instances['exception']
-
-#        if
-
-"""
 
 
 @pytest.mark.parametrize(
@@ -170,3 +61,64 @@ def test__is_warning_and_value(argument, expected):
     object that is not a warning, and `False` for other objects.
     """
     assert _is_warning_and_value(argument) is expected
+
+
+expected_exception = KeyError
+expected_warning = UserWarning
+expected_value = 42
+
+Case = collections.namedtuple('Case', ['argument', 'attribute', 'correct_outcome'])
+
+cases = [
+    Case(expected_exception, 'exception', expected_exception),
+    Case(expected_exception, 'warning', None),
+    Case(expected_exception, 'value', None),
+    Case(expected_exception, 'expected', expected_exception),
+    Case(expected_exception, 'expecting_exception', True),
+    Case(expected_exception, 'expecting_warning', False),
+    Case(expected_exception, 'expecting_value', False),
+    Case(expected_warning, 'exception', None),
+    Case(expected_warning, 'warning', expected_warning),
+    Case(expected_warning, 'value', None),
+    Case(expected_warning, 'expected', expected_warning),
+    Case(expected_warning, 'expecting_exception', False),
+    Case(expected_warning, 'expecting_warning', True),
+    Case(expected_warning, 'expecting_value', False),
+    Case(expected_value, 'exception', None),
+    Case(expected_value, 'warning', None),
+    Case(expected_value, 'value', expected_value),
+    Case(expected_value, 'expected', expected_value),
+    Case(expected_value, 'expecting_exception', False),
+    Case(expected_value, 'expecting_warning', False),
+    Case(expected_value, 'expecting_value', True),
+    Case((expected_value, expected_warning), 'exception', None),
+    Case((expected_value, expected_warning), 'warning', expected_warning),
+    Case((expected_value, expected_warning), 'value', expected_value),
+    Case((expected_value, expected_warning), 'expecting_exception', False),
+    Case((expected_value, expected_warning), 'expecting_warning', True),
+    Case((expected_value, expected_warning), 'expecting_value', True),
+    Case((expected_value, expected_warning), 'expected', (expected_warning, expected_value)),
+    Case((expected_warning, expected_value), 'exception', None),
+    Case((expected_warning, expected_value), 'warning', expected_warning),
+    Case((expected_warning, expected_value), 'value', expected_value),
+    Case((expected_warning, expected_value), 'expecting_exception', False),
+    Case((expected_warning, expected_value), 'expecting_warning', True),
+    Case((expected_warning, expected_value), 'expecting_value', True),
+    Case((expected_warning, expected_value), 'expected', (expected_warning, expected_value)),
+]
+
+
+@pytest.mark.parametrize("case", cases)
+def test_expected_outcome(case):
+    try:
+        expected_outcome = ExpectedOutcome(case.argument)
+    except Exception:
+        pytest.fail(f'Unable to instantiate ExpectedOutcome for {case.argument}')
+    else:
+        result = eval(f'expected_outcome.{case.attribute}')
+
+    if result is not case.correct_outcome and result != case.correct_outcome:
+        pytest.fail(
+            f"ExpectedOutcome({case.argument}) results in {repr(result)} "
+            f"but should result in {case.correct_outcome}."
+        )
