@@ -2,14 +2,21 @@ import inspect
 
 
 def _is_warning(obj) -> bool:
+    """Return `True` if the argument is a warning, and `False` otherwise."""
     return inspect.isclass(obj) and issubclass(obj, Warning)
 
 
 def _is_exception(obj) -> bool:
+    """Return `True` if the argument is an exception, and `False` otherwise."""
     return inspect.isclass(obj) and issubclass(obj, Exception) and not issubclass(obj, Warning)
 
 
 def _is_warning_and_value(obj) -> bool:
+    """
+    Return `True` if the argument is a `tuple` or `list` containing two
+    items: a warning and an `object` that is not a warning; and `False`
+    otherwise.
+    """
     if not isinstance(obj, (list, tuple)) or len(obj) != 2:
         return False
     return _is_warning(obj[0]) ^ _is_warning(obj[1])
