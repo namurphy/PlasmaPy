@@ -1,17 +1,20 @@
 import pytest
 from typing import List, Optional
-import collections
+#import collections
 
 
 class ActualOutcome:
 
-    def __init__(self, callable_object, args, kwargs):
+    def __init__(self, callable_object, args=tuple(), kwargs=dict()):
+
+        if not isinstance(args, (tuple, list)):
+            args = (args,)
 
         self._info = {}
 
         try:
             with pytest.warns(None) as warnings_record:
-                result = callable_object(args, kwargs)
+                result = callable_object(*args, **kwargs)
         except Exception as exception_record:
             ...
 

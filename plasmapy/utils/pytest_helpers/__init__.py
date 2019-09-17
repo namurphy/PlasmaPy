@@ -18,3 +18,5 @@ from plasmapy.utils.pytest_helpers.exceptions import (
 )
 
 from plasmapy.utils.pytest_helpers.expected import ExpectedOutcome
+
+from plasmapy.utils.pytest_helpers.actual import ActualOutcome
