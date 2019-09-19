@@ -110,13 +110,8 @@ cases = [
 
 @pytest.mark.parametrize("case", cases)
 def test_expected_outcome(case):
-    try:
-        expected_outcome = ExpectedOutcome(case.argument)
-    except Exception:
-        pytest.fail(f'Unable to instantiate ExpectedOutcome for {case.argument}')
-    else:
-        result = eval(f'expected_outcome.{case.attribute}')
-
+    expected_outcome = ExpectedOutcome(case.argument)
+    result = expected_outcome.__getattribute__(case.attribute)
     if result is not case.correct_outcome and result != case.correct_outcome:
         pytest.fail(
             f"ExpectedOutcome({case.argument}) results in {repr(result)} "
