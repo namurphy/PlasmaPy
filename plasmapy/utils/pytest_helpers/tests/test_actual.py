@@ -12,6 +12,7 @@ def return_douglas_adams_number():
 
 def add(a, *, b=2):
     """A sample function that has an argument and a keyword argument."""
+    return a + b
 
 
 def return_argument_and_issue_warning(arg, warning_message, *, kwarg=UnicodeWarning):
@@ -39,6 +40,9 @@ cases = [
     Case(return_douglas_adams_number, (), {}, 'value', 42),
     Case(return_douglas_adams_number, (), {}, 'exception', None),
     Case(return_douglas_adams_number, (), {}, 'warnings', None),
+    Case(return_douglas_adams_number, (), {}, 'got_an_exception', False),
+    Case(return_douglas_adams_number, (), {}, 'got_a_warning', False),
+    Case(return_douglas_adams_number, (), {}, 'got_a_value', True),
 ]
 
 
@@ -52,7 +56,15 @@ def test_actual_outcome(case):
             f'args = {case.args} and kwargs = {case.kwargs}'
         )
     else:
-        result =
+        result = actual_outcome.__getattribute__(case.attribute)
+
+    if result is not case.correct_outcome and result != case.correct_outcome:
+        pytest.fail(
+            f"ActualOutcome({repr(case.args)}) results in {repr(result)} "
+            f"but should result in {repr(case.correct_outcome)}"
+        )
+
+
 
 
 
