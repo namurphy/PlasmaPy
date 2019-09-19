@@ -84,6 +84,13 @@ class ExpectedOutcome:
         return self.__repr__()
 
     def __eq__(self, other):
+
+        # TODO: Can we expand __eq__ so that it is what is used to tell whether
+        #       or not the test passes?  It would be for comparing an ExpectedOutcome
+        #       instance and an ActualOutcome instance.  We'll also want to be able
+        #       to compare ActualOutcome and ActualOutcome for when identical-ish output is
+        #       expected for
+
         try:
             return self.value == other.value
         except Exception as exc:
