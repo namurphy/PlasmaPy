@@ -2,9 +2,11 @@ import pytest
 from typing import List, Optional, Dict, Tuple, Any, Union
 #import collections
 
-class _TestParameters:
-    def __init__(self):
-        ...
+class _TestInputs:
+    def __init__(self, callable_object, args=(), kwargs={}):
+        self.callable_object = callable_object
+        self.args = args
+        self.kwargs = kwargs
 
     @property
     def callable_object(self):
@@ -18,8 +20,19 @@ class _TestParameters:
             raise TypeError(f"{repr(obj)} is not callable.")
 
     @property
-    def positional_arguments(self):
-        return self._positional_arguments
+    def args(self):
+        return self._args
+
+    @args.setter
+    def args(self, new_args):
+        self.args = new_args if isinstance(new_args, (tuple, list)) else (new_args,)
+
+    @property
+    def kwargs(self, k):
+        if kwargs is None:
+            kwargs = {}
+        if not isinstance(kwargs, dict):
+
 
     @args.setter
     def keyword_arguments(self, kwargs: Dict[str, Any]):
