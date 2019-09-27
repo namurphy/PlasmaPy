@@ -1,12 +1,12 @@
 import pytest
 from typing import List, Optional, Dict, Tuple, Any, Union
-#import collections
+import collections
 
 class _TestInputs:
     def __init__(self, callable_object, args=(), kwargs={}):
         self.callable_object = callable_object
-        self.args = args
-        self.kwargs = kwargs
+        self.positional_arguments = args
+        self.keyword_arguments = kwargs
 
     @property
     def callable_object(self):
@@ -20,22 +20,25 @@ class _TestInputs:
             raise TypeError(f"{repr(obj)} is not callable.")
 
     @property
-    def args(self):
+    def positional_arguments(self):
         return self._args
 
-    @args.setter
-    def args(self, new_args):
-        self.args = new_args if isinstance(new_args, (tuple, list)) else (new_args,)
+    @positional_arguments.setter
+    def positional_arguments(self, args):
+        self._args = args if isinstance(args, (tuple, list)) else (args,)
 
     @property
-    def kwargs(self, k):
-        if kwargs is None:
-            kwargs = {}
-        if not isinstance(kwargs, dict):
+    def keyword_arguments(self):
+        return self._kwargs
 
-
-    @args.setter
+    @keyword_arguments.setter
     def keyword_arguments(self, kwargs: Dict[str, Any]):
+        if not isinstance(kwargs, dict):
+            raise TypeError("kwargs must be a dict")
+        if not all([isinstance(key, str) and key != '' for key in kwargs.keys()]):
+            raise ValueError("The keys to kwargs must be non-empty strings")
+        self._kwargs = kwargs
+
 
 
 class ActualOutcome:
