@@ -18,6 +18,13 @@ from plasmapy.tests.helper.runners import (
     method_test_runner,
 )
 
+from plasmapy.tests.helper.cases import (
+    AttrTestCase,
+    MethodTestCase,
+    FunctionTestCase,
+    BaseTestCase,
+)
+
 from plasmapy.tests.helper.exceptions import (
     Failed,
     UnexpectedResultError,

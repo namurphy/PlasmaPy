@@ -15,7 +15,79 @@ from plasmapy.tests.helper.expected import ExpectedTestOutcome
 from plasmapy.tests.helper.comparators import CompareActualExpected
 from plasmapy.tests.helper.exceptions import InvalidTestError
 
+from plasmapy.tests.helper.cases import (
+    BaseTestCase,
+    AttrTestCase,
+    MethodTestCase,
+    FunctionTestCase,
+)
+
 __all__ = ["function_test_runner", "method_test_runner", "attr_test_runner"]
+
+
+def _get_test_inputs(case: BaseTestCase) -> AbstractTestInputs:
+    """
+    Select and instantiate the appropriate subclass of
+    ~plasmapy.tests.helper.inputs.
+
+    """
+
+    if isinstance(case, FunctionTestCase):
+
+        inputs = FunctionTestInputs(
+            function=case.function, args=case.args, kwargs=case.kwargs
+        )
+
+    elif isinstance(MethodTestCase):
+
+        inputs = ClassMethodTestInputs(
+            cls=case.cls,
+            method=case.method,
+            cls_args=case.cls_args,
+            cls_kwargs=case.cls_kwargs,
+            method_args=case.method_args,
+            method_kwargs=case.method_kwargs,
+        )
+
+    elif isinstance(AttrTestCase):
+
+        inputs = ClassAttributeTestInputs(
+            cls=case.cls,
+            attribute=case.attribute,
+            cls_args=case.cls_args,
+            cls_kwargs=case.cls_kwargs,
+        )
+
+    else:
+
+        raise TypeError(
+            "A test case must be an instance of FunctionTestCase, "
+            "MethodTestCase, or AttrTestCase."
+        )
+
+    return inputs
+
+
+def test_runner(case: BaseTestCase) -> NoReturn:
+
+    __tracebackhide__ = True
+
+    try:
+        test_inputs = _get_test_inputs(case)
+        actual_outcome = ActualTestOutcome(test_inputs)
+        expected_outcome = ExpectedTestOutcome(case.expected)
+        comparison = CompareActualExpected(
+            actual_outcome=actual_outcome,
+            expected_outcome=expected_outcome,
+            rtol=case.rtol,
+            atol=case.atol,
+        )
+    except Exception as exc:
+
+        raise InvalidTestError("Unable to run test.") from exc
+
+    if not comparison.test_passed:
+        raise comparison.exception(comparison.error_message)
 
 
 def _test_runner(
@@ -35,7 +107,9 @@ def _test_runner(
     try:
         actual_outcome = ActualTestOutcome(inputs)
         expected_outcome = ExpectedTestOutcome(expected)
-        comparison = CompareActualExpected(actual_outcome, expected_outcome, rtol=rtol, atol=atol)
+        comparison = CompareActualExpected(
+            actual_outcome, expected_outcome, rtol=rtol, atol=atol
+        )
     except Exception as exc:
         raise InvalidTestError("Unable to run test.") from exc
 
@@ -334,7 +408,9 @@ def method_test_runner(
     """
 
     __tracebackhide__ = True
-    inputs = ClassMethodTestInputs(cls, method, cls_args, cls_kwargs, method_args, method_kwargs)
+    inputs = ClassMethodTestInputs(
+        cls, method, cls_args, cls_kwargs, method_args, method_kwargs
+    )
     _test_runner(inputs, expected, rtol=rtol, atol=atol)
 
 

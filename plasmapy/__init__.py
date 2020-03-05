@@ -38,7 +38,7 @@ Utility tools
 # Packages may add whatever they like to this file, but
 # should keep this content at the top.
 # ----------------------------------------------------------------------------
-from .version import __version__
+#from .version import __version__
 
 from . import formulary
 from . import particles

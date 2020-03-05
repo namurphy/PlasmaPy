@@ -28,8 +28,10 @@ class _ExitPytestWarns(Warning):
 
 class ActualTestOutcome:
     def __init__(
-            self,
-            inputs: Union[FunctionTestInputs, ClassMethodTestInputs, ClassAttributeTestInputs],
+        self,
+        inputs: Union[
+            FunctionTestInputs, ClassMethodTestInputs, ClassAttributeTestInputs
+        ],
     ):
         """
         A class to record the actual outcome of a test.
@@ -53,7 +55,9 @@ class ActualTestOutcome:
             )
 
         with pytest.warns(Warning) as warnings_record:
-            warnings.warn("So we can exit pytest.warns context manager", _ExitPytestWarns)
+            warnings.warn(
+                "So we can exit pytest.warns context manager", _ExitPytestWarns
+            )
             with pytest.raises(BaseException) as exception_info:
                 self._value = inputs.call()
                 raise _ExitPytestRaises("So we can exit pytest.raises context manager")

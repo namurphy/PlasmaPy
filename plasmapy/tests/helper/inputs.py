@@ -63,7 +63,6 @@ def _validate_kwargs(kwargs: Optional[Dict[str, Any]]) -> Dict[str, Any]:
 
 
 class AbstractTestInputs(ABC):
-
     @abstractmethod
     def call(self) -> NoReturn:
         pass
@@ -301,7 +300,10 @@ class ClassAttributeTestInputs(GenericClassTestInputs):
         """
 
         return class_attribute_call_string(
-            cls=self.cls, attr=self.attribute, cls_args=self.cls_args, cls_kwargs=self.cls_kwargs,
+            cls=self.cls,
+            attr=self.attribute,
+            cls_args=self.cls_args,
+            cls_kwargs=self.cls_kwargs,
         )
 
 
@@ -413,7 +415,9 @@ class ClassMethodTestInputs(GenericClassTestInputs):
         if not isinstance(method_name, str):
             raise TypeError("Expecting the name of a method as a string.")
         elif not hasattr(self.cls, method_name):
-            raise ValueError(f"No method named {method_name} in class {self.cls.__name__}.")
+            raise ValueError(
+                f"No method named {method_name} in class {self.cls.__name__}."
+            )
 
         actual_method = getattr(self.cls, method_name)
 
@@ -421,7 +425,8 @@ class ClassMethodTestInputs(GenericClassTestInputs):
             self._info["method"] = method_name
         else:
             raise ValueError(
-                f"Expecting the attribute {method_name} in " f"{self.cls.__name__} to be callable."
+                f"Expecting the attribute {method_name} in "
+                f"{self.cls.__name__} to be callable."
             )
 
     @cls_args.setter
