@@ -33,6 +33,11 @@ See Also
   package provides access to properties of elements, isotopes, and ions
   in the periodic table of elements.
 
+.. nbgallery::
+    :caption: Examples
+
+    /notebooks/ionization_states
+
 Reference/API
 =============
 
