@@ -6,67 +6,56 @@ import numpy as np
 
 
 def get_paschen_constants(gas, electrode):
-
     r"""
+    Return the constants A and B and the second Townsend coefficient to
+    calculate the Paschen breakdown voltage.
 
-     Return the constants A and B and the second Townsend coefficient to calculate the Paschen breakdown voltage.
+    Parameters
+    ----------
+    gas : `str`
+         The gas for which to find the coefficients.
 
+    electrode : `str`
+         The electrode material.
 
-     Parameters
-     ----------
+    Return
+    ------
+    Dictionary containing the constants ``A``, ``B`` and ``townsend_gamma`` for calculation
+    of the breakdown voltage.
 
-     gas :        `str`
-          The gas for which to find the coefficients.
+    References
+    ----------
+    Paschen_constants contains the coefficents A and B  for the estimation of the
+    First Townsend Ionization Coefficent
+    (exponential fit to the First Townsend Ionization coefficient)
+    as adapted from
+    E.Nasser, Fundamentals of Gaseous Ionization and Plasma Electronics,
+    Wiley-Interscience, New York 1971
 
-     electrode :  `str`
-          The electrode material.
+    format: paschen_constants dir {"gas":[A,B]}
+    units: A in [Ionisation/(Pa m)] and B in [V/(Pa m)]
 
-     Return
-     ------
+    `townsend_gamma` is the Second Townsend Ionization coefficient as given by
+    A.Beroual and I. Fonfana, Discharge in Long Air Gap Modeling and Application
+    IOP Publishing Ltd 2016
+    ISBN 978-0-7503-1236-3 (ebook)
+    ISBN 978-0-7503-1237-0 (print)
 
-     Dictionary containing the constants ``A``, ``B`` and ``townsend_gamma`` for calculation
-     of the breakdown voltage.
+    Examples
+    --------
 
+    >>> get_paschen_constants("Ar", "Ni")
+    {'A': 11, 'B': 135, 'gam': 0.058}
 
+    If electrode material is not found a default value of 0.01 is taken
 
-     References
-     ---------
-     Paschen_constants contains the coefficents A and B  for the estimation of the
-     First Townsend Ionization Coefficent
-     (exponential fit to the First Townsend Ionization coefficient)
-     as adapted from
-     E.Nasser, Fundamentals of Gaseous Ionization and Plasma Electronics,
-     Wiley-Interscience, New York 1971
+    >>> get_paschen_constants("Ar", "zz")
+    {'A': 11, 'B': 135, 'gam': 0.01}
 
-     format: paschen_constants dir {"gas":[A,B]}
-     units: A in [Ionisation/(Pa m)] and B in [V/(Pa m)]
+    If ``gas`` is not found, `None` is returned.
 
-
-     `townsend_gamma` is the Second Townsend Ionization coefficient as given by
-     A.Beroual and I. Fonfana, Discharge in Long Air Gap Modeling and Application
-     IOP Publishing Ltd 2016
-     ISBN 978-0-7503-1236-3 (ebook)
-     ISBN 978-0-7503-1237-0 (print)
-
-
-
-     Examples
-     --------
-
-     >>> get_paschen_constants("Ar", "Ni")
-     {'A': 11, 'B': 135, 'gam': 0.058}
-
-     If electrode material is not found a default value of 0.01 is taken
-
-     >>> get_paschen_constants("Ar", "zz")
-     {'A': 11, 'B': 135, 'gam': 0.01}
-
-     If ``gas`` is not found, `None` is returned.
-
-     >>> get_paschen_constants("Zz", "Ni")
-
-
- """
+    >>> get_paschen_constants("Zz", "Ni")
+    """
 
     # Supported gases
 
@@ -198,32 +187,33 @@ def get_paschen_constants(gas, electrode):
 
 def breakdown_voltage(distance, pressure, A, B, gam):
     r"""
-    Calculate the breakdown voltage V according to the Paschen law
+    Calculate the breakdown voltage :math:`V` according to the Paschen
+    law.
 
-                         𝑉=𝐵𝑝𝑑/𝑙𝑛(𝐴𝑝𝑑/𝑙𝑛(1+1/𝛾))
+    .. math::
 
+        V = \frac{Bpd}{\ln(Apd) - \ln\left[\ln \left(1 + γ^{-1} \right]}
 
     Parameters
     ----------
+    distance : floating
+        Electrode distance
 
-    distance:  floating
-    electrode distance
+    pressure : list
+        Gas pressure
 
-    pressure:  list
-    Gas pressure
+    A : floating
+        Paschen constant A
 
-    A:         floating
-    Paschen constant A
+    B : floating
+        Paschen constant B
 
-    B:         floating
-    Paschen constant B
+    gam : floating
+        Second Townsend coefficient
 
-    gam:       floating
-    Second Townsend coefficient
-
-    The parameters A,B and gam can be obtain for some typical gases and electrode materials
-    from the function get_paschen_constants, other values can be also be introduced
-
+    The parameters A, B and gam can be obtained for some typical gases
+    and electrode materials from the function `get_paschen_constants`,
+    other values can be also be introduced.
 
     Return
     ------
@@ -231,10 +221,8 @@ def breakdown_voltage(distance, pressure, A, B, gam):
 
     [p*d value, Paschen breakdown voltage]
 
-
     Examples
     --------
-
     >>> breakdown_voltage(0.1,[100,200],11,135,0.058)
     [(10.0, 371.44065672260245), (20.0, 623.8960061470598)]
 
@@ -248,23 +236,23 @@ def breakdown_voltage(distance, pressure, A, B, gam):
 
 
 def minimum_breakdown_voltage(A, B, gam):
-
     r"""
-    Calculate the minimum breakdown voltage and the corresponding pd value from the Paschen law
+    Calculate the minimum breakdown voltage and the corresponding pd
+    value from the Paschen law
 
     Parameters
     ----------
-    A:     floating
-    B:     floating
-    gam:   floating
+    A : floating
+    B : floating
+    gam : floating
 
     Return
     ------
-    vmin:  floating
-    Minimum breakdown voltage
+    vmin : floating
+        Minimum breakdown voltage
 
-    pdmin: floating
-    pd value of the minimum breakdown voltage
+    pdmin : floating
+        pd value of the minimum breakdown voltage
 
     Example
     -------
