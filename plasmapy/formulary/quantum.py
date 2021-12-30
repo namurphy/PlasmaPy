@@ -53,7 +53,7 @@ def deBroglie_wavelength(V: u.m / u.s, particle) -> u.m:
     V : `~astropy.units.Quantity`
         Particle velocity in units convertible to meters per second.
 
-    particle : `str`, `~plasmapy.particles.Particle`, or `~astropy.units.Quantity`
+    particle : `str`, `~plasmapy.particles.particle_class.Particle`, or `~astropy.units.Quantity`
         An instance of `~plasmapy.particles.particle_class.Particle`, or
         an equvalent representation (e.g., ``'e'``, ``'p'``, ``'D+'``, or
         ``'He-4 1+'``), for the particle of interest, or the particle
