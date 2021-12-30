@@ -220,28 +220,28 @@ def swept_probe_analysis(
 
     Parameters
     ----------
-    probe_characteristic : ~plasmapy.diagnostics.langmuir.Characteristic
+    probe_characteristic : `~plasmapy.diagnostics.langmuir.Characteristic`
         The swept probe characteristic that is to be analyzed.
 
-    probe_area : ~astropy.units.Quantity
+    probe_area : `~astropy.units.Quantity`
         The area of the probe exposed to plasma in units convertible to m^2.
 
-    gas_argument : argument to instantiate the `Particle` class.
-        `str`, `int`, or `~plasmapy.particles.Particle`
+    gas_argument : argument to instantiate the |Particle| class.
+        `str`, `int`, or `~plasmapy.particles.particle_class.Particle`
         A string representing a particle, element, isotope, or ion; an
         integer representing the atomic number of an element; or a
-        `Particle` instance.
+        |Particle| instance.
 
-    visualize : bool, optional
+    visualize : `bool`, optional
         Can be used to plot the characteristic and the obtained parameters.
-        Default is False.
+        Default is `False`.
 
-    plot_electron_fit : bool, optional
+    plot_electron_fit : `bool`, optional
         If True, the fit of the electron current in the exponential section is
         shown. Default is False.
 
-    plot_EEDF : bool, optional
-        If True, the EEDF is computed and shown. Default is False.
+    plot_EEDF : `bool`, optional
+        If `True`, the EEDF is computed and shown. Default is `False`.
 
     Returns
     -------
@@ -289,7 +289,6 @@ def swept_probe_analysis(
     density provided by OML theory is likely the best estimate as it is not
     dependent on the obtained electron temperature, given that the conditions
     for OML theory hold.
-
     """
     _langmuir_futurewarning()
 
@@ -453,7 +452,7 @@ def get_plasma_potential(probe_characteristic, return_arg=False):
     probe_characteristic : ~plasmapy.diagnostics.langmuir.Characteristic
         The probe characteristic that is being analyzed.
 
-    return_arg : bool, optional
+    return_arg : `bool`, optional
         Controls whether or not the argument of the plasma potential within the
         characteristic array should be returned instead of the value of the
         voltage. Default is False.
