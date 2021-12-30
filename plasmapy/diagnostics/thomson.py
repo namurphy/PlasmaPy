@@ -1,6 +1,6 @@
 """
-Defines the Thomson scattering analysis module as
-part of `plasmapy.diagnostics`.
+Defines the Thomson scattering analysis module as part of
+`plasmapy.diagnostics`.
 """
 
 __all__ = [
@@ -64,7 +64,7 @@ def spectral_density(
 
     where :math:`χ_e` is the electron component susceptibility of the
     plasma and :math:`ε = 1 + \sum_e χ_e + \sum_i χ_i` is the total
-    plasma dielectric  function (with :math:`\chi_i` being the ion component
+    plasma dielectric  function (with :math:`χ_i` being the ion component
     of the susceptibility), :math:`Z_i` is the charge of each ion, :math:`k`
     is the scattering wavenumber, :math:`ω` is the scattering frequency,
     and :math:`f_{e0,e}` and :math:`f_{i0,i}` are the electron and ion velocity
