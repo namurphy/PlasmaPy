@@ -11,4 +11,5 @@ scipy >= 1.2
 setuptools >= 41.2
 tqdm >= 4.41.0
 voila >= 0.2.15
+wrapt >= 1.11.0
 xarray >= 0.14.0
