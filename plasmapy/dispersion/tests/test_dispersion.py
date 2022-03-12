@@ -113,7 +113,7 @@ def test_plasma_dispersion_func_power_series_expansion():
 
     Z_power_series = np.zeros_like(w_array)
 
-    for n in range(0, 200):
+    for n in range(200):
         Z_power_series += 1j * np.sqrt(π) * (1j * w_array) ** n / Γ(n / 2 + 1)
 
     assert np.allclose(
@@ -151,11 +151,9 @@ def test_plasma_dispersion_func_roots():
 
     for root in roots:
         Z_at_root = plasma_dispersion_func(root)
-        assert np.isclose(Z_at_root, 0 + 0j, atol=1e-15 * (1 + 1j)), (
-            "A root of the plasma dispersion function is expected at w = "
-            f"{root}, but plasma_dispersion_func({root}) is equal to "
-            f"{Z_at_root} instead of {0j}."
-        )
+        assert np.isclose(
+            Z_at_root, 0 + 0j, atol=1e-15 * (1 + 1j)
+        ), f"A root of the plasma dispersion function is expected at w = {root}, but plasma_dispersion_func({root}) is equal to {Z_at_root} instead of 0j."
 
 
 # w, expected

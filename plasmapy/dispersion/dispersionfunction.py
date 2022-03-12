@@ -90,9 +90,7 @@ def plasma_dispersion_func(
     if not np.all(np.isfinite(zeta)):
         raise ValueError("The argument to plasma_dispersion_function is not finite.")
 
-    Z = 1j * np.sqrt(np.pi) * Faddeeva_function(zeta)
-
-    return Z
+    return 1j * np.sqrt(np.pi) * Faddeeva_function(zeta)
 
 
 def plasma_dispersion_func_deriv(
@@ -171,6 +169,4 @@ def plasma_dispersion_func_deriv(
             "The argument to plasma_dispersion_function_deriv is not finite."
         )
 
-    Zprime = -2 * (1 + zeta * plasma_dispersion_func(zeta))
-
-    return Zprime
+    return -2 * (1 + zeta * plasma_dispersion_func(zeta))
