@@ -155,7 +155,7 @@ class TestBasicRegistrationFactory(object):
             registry=external_registry
         )
 
-        assert len(external_registry) == 0
+        assert not external_registry
 
         FactoryWithExternalRegistry.register(StandardWidget)
         assert type(FactoryWithExternalRegistry(style="standard")) is StandardWidget

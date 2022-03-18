@@ -2036,5 +2036,4 @@ def coupling_parameter(
             f"'quantum', instead of '{method}'."
         )
 
-    coupling = coulomb_energy / kinetic_energy
-    return coupling
+    return coulomb_energy / kinetic_energy

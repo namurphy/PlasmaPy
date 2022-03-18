@@ -249,7 +249,7 @@ def hollweg(
 
     # validate argument k
     k = k.squeeze()
-    if not k.ndim in [0, 1]:
+    if k.ndim not in [0, 1]:
         raise ValueError(
             f"Argument 'k' needs to be single valued or a 1D array astropy Quantity,"
             f" got array of shape {k.shape}."
@@ -259,7 +259,7 @@ def hollweg(
 
     # validate argument theta
     theta = theta.squeeze()
-    if not theta.ndim in [0, 1]:
+    if theta.ndim not in [0, 1]:
         raise ValueError(
             f"Argument 'theta' needs to be a single valued or 1D array astropy "
             f"Quantity, got array of shape {k.shape}."
