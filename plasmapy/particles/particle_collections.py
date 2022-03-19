@@ -119,7 +119,7 @@ class ParticleList(collections.UserList):
         `list` containing `~plasmapy.particles.particle_class.Particle`
         and `~plasmapy.particles.particle_class.CustomParticle` instances.
         """
-        new_particles = list()
+        new_particles = []
         if particles is None:
             return new_particles
         for obj in particles:
@@ -249,6 +249,46 @@ class ParticleList(collections.UserList):
         if not isinstance(particle, (Particle, CustomParticle)):
             particle = Particle(particle)
         self.data.insert(index, particle)
+
+    def is_category(
+        self,
+        *category_tuple,
+        require: Union[str, Iterable[str]] = None,
+        any_of: Union[str, Iterable[str]] = None,
+        exclude: Union[str, Iterable[str]] = None,
+    ) -> List[bool]:
+        """
+        Determine element-wise if the particles in the |ParticleList|
+        meet categorization criteria.
+
+        Return a `list` in which each element will be `True` if the
+        corresponding particle is consistent with the categoziation
+        criteria, and `False` otherwise.
+
+        Please refer to the documentation of
+        `~plasmapy.particles.particle_class.Particle.is_category`
+        for information on the parameters and categories, as well as
+        more extensive examples.
+
+        Examples
+        --------
+        >>> particles = ParticleList(["proton", "electron", "tau neutrino"])
+        >>> particles.is_category("lepton")
+        [False, True, True]
+        >>> particles.is_category(require="lepton", exclude="neutrino")
+        [False, True, False]
+        >>> particles.is_category(any_of=["lepton", "charged"])
+        [True, True, True]
+        """
+        return [
+            particle.is_category(
+                *category_tuple,
+                require=require,
+                any_of=any_of,
+                exclude=exclude,
+            )
+            for particle in self
+        ]
 
     @property
     def charge_number(self) -> np.array:
@@ -434,7 +474,7 @@ def ionic_levels(
     >>> ionic_levels("Fe-56", min_charge=13, max_charge=15)
     ParticleList(['Fe-56 13+', 'Fe-56 14+', 'Fe-56 15+'])
     """
-    base_particle = Particle(particle.isotope if particle.isotope else particle.element)
+    base_particle = Particle(particle.isotope or particle.element)
 
     if max_charge is None:
         max_charge = particle.atomic_number
