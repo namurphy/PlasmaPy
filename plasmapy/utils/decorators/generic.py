@@ -34,6 +34,7 @@ class GenericDecorator:
     def __init__(
         self,
         function_to_decorate: Optional[Callable] = None,
+        /,
         *args_to_decorator,
         **kwargs_to_decorator,
     ):
