@@ -8,6 +8,7 @@ __all__ = ["GenericDecorator", "OriginalGenericDecorator"]
 import collections
 import functools
 import inspect
+import wrapt
 
 from typing import AbstractSet, Any, Callable, Dict, Mapping, NoReturn, Optional, Tuple
 
@@ -41,7 +42,7 @@ class GenericDecorator:
         self.initialize()
         self.args_to_decorator = args_to_decorator
         self.kwargs_to_decorator = kwargs_to_decorator
-        self.function_being_decorated = function_to_decorate
+        self.decorated_function = function_to_decorate
         print("Ending __init__")
 
     def initialize(self):
@@ -51,13 +52,13 @@ class GenericDecorator:
     @property
     def args_to_decorator(self) -> tuple:
         """The positional arguments provided to the decorator."""
-        print(f"Accessing args_to_decorator: {args_to_decorator}")
-        return self._data["args_to_decorator"]
+        print(f"Accessing args_to_decorator: {self._data['args_to_decorator']}")
+        return self._args_to_decorator
 
     @args_to_decorator.setter
     def args_to_decorator(self, args: dict):
         print(f"Storing args_to_decorator: {args}")
-        self._data["args_to_decorator"] = args
+        self._args_to_decorator = args
 
     @property
     def kwargs_to_decorator(self):
@@ -71,39 +72,45 @@ class GenericDecorator:
         self._data["kwargs_to_decorator"] = kwargs
 
     @property
-    def function_being_decorated(self) -> Optional[Callable]:
+    def decorated_function(self) -> Optional[Callable]:
         """The function being decorated."""
         print(
             f"Accessing function_being_decorated: {self._data['function_being_decorated']}"
         )
-        try:
-            return self._data["function_being_decorated"]
-        except KeyError:
-            return None
+        return self._data.get("function_being_decorated", None)
 
-    @function_being_decorated.setter
-    def function_being_decorated(self, function_to_decorate):
+    @decorated_function.setter
+    def decorated_function(self, function_to_decorate):
         print(f"Setting function_being_decorated: {function_to_decorate}")
         if function_to_decorate is not None and not callable(function_to_decorate):
             raise TypeError("The function being decorated is not callable.")
-        self._data["function_being_decorated"] = function_to_decorate
+
+        @wrapt.decorator
+        def wrapped_function(func, *args, **kwargs):
+
+            # Double check this
+            self._data["function_being_decorated"] = function_to_decorate
 
     def __call__(self, *args, **kwargs):
         """Run decorated function if available, else decorate first arg."""
 
-        if self.function_being_decorated is not None:
+        if self.decorated_function is not None:
             return self.run_decorated_function(*args, **kwargs)
 
         if args[1:] or kwargs:
             raise ValueError("Placeholder exception; not sure if this is needed.")
 
-        self.function_being_decorated = args[0]
+        self.decorated_function = args[0]
         return self
 
     def run_decorated_function(self, *args, **kwargs):
         """
         Run
-        :meth:`~plasmapy.utils.decorators.generic.GenericDecorator.function_being_decorated`.
+        :meth:`~plasmapy.utils.decorators.generic.GenericDecorator.decorated_function`.
+
+        .. code-block:: python
+
+           self.decorated_function(*args, **kwargs)
 
         Parameters
         ----------
@@ -113,7 +120,7 @@ class GenericDecorator:
         **kwargs
             Keyword arguments to be passed to the decorated function
         """
-        return self.function_being_decorated(*args, **kwargs)
+        return self.decorated_function(*args, **kwargs)
 
 
 class OriginalGenericDecorator:
