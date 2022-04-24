@@ -256,7 +256,7 @@ def particle_input(
 
             default_arguments = bound_args.signature.parameters
             arguments = bound_args.arguments
-            argnames = bound_args.signature.parameters.keys()
+            parameters = bound_args.signature.parameters.keys()
 
             # Handle optional-only arguments in function declaration
             for default_arg in default_arguments:
@@ -310,7 +310,7 @@ def particle_input(
                     f"by the @particle_input decorator."
                 )
             elif len(args_to_become_particles) > 1:
-                if "Z" in argnames or "mass_numb" in argnames:
+                if "Z" in parameters or "mass_numb" in parameters:
                     raise ParticleError(
                         f"The arguments Z and mass_numb in {funcname} are not "
                         f"allowed when more than one argument or keyword is "
@@ -350,7 +350,7 @@ def particle_input(
 
             new_kwargs = {}
 
-            for argname in argnames:
+            for argname in parameters:
                 raw_argval = arguments[argname]
                 if isinstance(raw_argval, (tuple, list)):
                     # Input argument value is a tuple or list
