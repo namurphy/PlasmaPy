@@ -397,7 +397,7 @@ def _trilinear_jacobian(vspace, cell):
         dBzdx = bz + ez * yInput + fz * zInput + hz * yInput * zInput
         dBzdy = cz + ez * xInput + gz * zInput + hz * xInput * yInput
         dBzdz = dz + fz * xInput + gz * yInput + hz * xInput * yInput
-        jmatrix = np.array(
+        return np.array(
             [
                 float(dBxdx),
                 float(dBxdy),
@@ -410,7 +410,6 @@ def _trilinear_jacobian(vspace, cell):
                 float(dBzdz),
             ]
         ).reshape(3, 3)
-        return jmatrix
 
     return jacobian_func
 
@@ -480,9 +479,7 @@ def _reduction(vspace, cell):
         ):
             passZ = True
 
-    doesPassReduction = passX and passY and passZ
-
-    return doesPassReduction
+    return passX and passY and passZ
 
 
 def _bilinear_root(a1, b1, c1, d1, a2, b2, c2, d2):

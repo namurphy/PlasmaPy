@@ -39,8 +39,8 @@ def _particle_errmsg(
         errmsg += "with "
     if mass_numb is not None:
         errmsg += f"mass_numb = {repr(mass_numb)} "
-    if mass_numb is not None and Z is not None:
-        errmsg += "and "
+        if Z is not None:
+            errmsg += "and "
     if Z is not None:
         errmsg += f"charge number Z = {repr(Z)} "
     errmsg += "does not correspond to a valid particle."

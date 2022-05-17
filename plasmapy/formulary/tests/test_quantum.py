@@ -150,12 +150,12 @@ def test_Wigner_Seitz_radius():
 
 class Test_chemical_potential:
     @classmethod
-    def setup_class(self):
+    def setup_class(cls):
         """initializing parameters for tests"""
-        self.n_e = 1e20 * u.cm ** -3
-        self.n_e_fail = 1e23 * u.cm ** -3
-        self.T = 11604 * u.K
-        self.True1 = 1.234345958778249e-11
+        cls.n_e = 1e20 * u.cm ** -3
+        cls.n_e_fail = 1e23 * u.cm ** -3
+        cls.T = 11604 * u.K
+        cls.True1 = 1.234345958778249e-11
 
     @pytest.mark.xfail(
         reason="see issue https://github.com/PlasmaPy/PlasmaPy/issues/726"
@@ -189,11 +189,11 @@ class Test_chemical_potential:
 
 class Test__chemical_potential_interp:
     @classmethod
-    def setup_class(self):
+    def setup_class(cls):
         """initializing parameters for tests"""
-        self.n_e = 1e23 * u.cm ** -3
-        self.T = 11604 * u.K
-        self.True1 = 7.741256653579105
+        cls.n_e = 1e23 * u.cm ** -3
+        cls.T = 11604 * u.K
+        cls.True1 = 7.741256653579105
 
     @pytest.mark.xfail(
         reason="see issue https://github.com/PlasmaPy/PlasmaPy/issues/726"

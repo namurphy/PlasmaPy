@@ -1305,14 +1305,12 @@ class CartesianGrid(AbstractGrid):
 
         # Split output array into arrays with units
         # Apply units to output arrays
-        output = []
-        for arg in range(nargs):
-            output.append(weighted_ave[..., arg] * self._interp_units[arg])
+        output = [
+            weighted_ave[..., arg] * self._interp_units[arg]
+            for arg in range(nargs)
+        ]
 
-        if len(output) == 1:
-            return output[0]
-        else:
-            return tuple(output)
+        return output[0] if len(output) == 1 else tuple(output)
 
 
 class NonUniformCartesianGrid(AbstractGrid):
@@ -1401,8 +1399,7 @@ class NonUniformCartesianGrid(AbstractGrid):
 
         indgrid = np.arange(self.grid.shape[0])
 
-        interpolator = interp.NearestNDInterpolator(self.grid.to(u.m).value, indgrid)
-        return interpolator
+        return interp.NearestNDInterpolator(self.grid.to(u.m).value, indgrid)
 
     @modify_docstring(prepend=AbstractGrid.nearest_neighbor_interpolator.__doc__)
     def nearest_neighbor_interpolator(
@@ -1440,11 +1437,5 @@ class NonUniformCartesianGrid(AbstractGrid):
 
         vals[mask_particle_off] = np.nan
 
-        output = []
-        for arg in range(len(args)):
-            output.append(vals[:, arg] * self._interp_units[arg])
-
-        if len(output) == 1:
-            return output[0]
-        else:
-            return tuple(output)
+        output = [vals[:, arg] * self._interp_units[arg] for arg in range(len(args))]
+        return output[0] if len(output) == 1 else tuple(output)

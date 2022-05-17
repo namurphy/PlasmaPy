@@ -53,13 +53,15 @@ def _process_input(wrapped_function: Callable):  # coverage: ignore
                 inputs = args[0]
                 if len(inputs) not in (3, 4):
                     raise RuntimeError(f"{args} is an invalid input to run_test.")
-                new_kwargs = {"func": inputs[0], "args": inputs[1]}
-                new_kwargs["kwargs"] = inputs[2] if len(inputs) == 4 else {}
-                new_kwargs["expected_outcome"] = (
-                    inputs[3] if len(inputs) == 4 else inputs[2]
-                )
+                new_kwargs = {
+                    "func": inputs[0],
+                    "args": inputs[1],
+                    "kwargs": inputs[2] if len(inputs) == 4 else {},
+                    "expected_outcome": inputs[3] if len(inputs) == 4 else inputs[2],
+                }
+
             else:
-                new_kwargs = {argname: argval for argname, argval in arguments.items()}
+                new_kwargs = dict(arguments.items())
             return wrapped_function(**new_kwargs)
 
         return wrapper
@@ -75,7 +77,7 @@ def run_test(
     expected_outcome: Any = None,
     rtol: float = 0.0,
     atol: float = 0.0,
-):  # coverage: ignore
+):    # coverage: ignore
     """
     Test that a function or class returns the expected result, raises
     the expected exception, or issues an expected warning for the
@@ -220,7 +222,7 @@ def run_test(
     if kwargs is None:
         kwargs = {}
 
-    if not type(args) in [tuple, list]:
+    if type(args) not in [tuple, list]:
         args = (args,)
 
     if not callable(func):
@@ -245,7 +247,7 @@ def run_test(
         subclass_of_Warning = issubclass(expected_outcome, Warning)
         if subclass_of_Warning:
             expected["warning"] = expected_outcome
-        elif subclass_of_Exception and not subclass_of_Warning:
+        elif subclass_of_Exception:
             expected["exception"] = expected_outcome
 
     # If a warning is issued, then there may also be an expected result.
@@ -350,7 +352,7 @@ def run_test(
         return None
 
     if isinstance(expected["result"], (u.Quantity, const.Constant, const.EMConstant)):
-        if not result.unit == expected["result"].unit:
+        if result.unit != expected["result"].unit:
             raise u.UnitsError(
                 f"The command {call_str} returned "
                 f"{_object_name(result)} which has different units "
@@ -404,12 +406,12 @@ def run_test(
 
     if atol or rtol:
         errmsg += " with "
-        if atol:
-            errmsg += f"atol = {atol}"
-        if atol and rtol:
-            errmsg += " and "
+    if atol:
+        errmsg += f"atol = {atol}"
         if rtol:
-            errmsg += f"rtol = {rtol}"
+            errmsg += " and "
+    if rtol:
+        errmsg += f"rtol = {rtol}"
     errmsg += "."
 
     raise UnexpectedResultFail(errmsg)
@@ -691,17 +693,20 @@ def assert_can_handle_nparray(
         if param_name in kwargs.keys():
             return (kwargs[param_name],) * 4
 
-        # else, if it's a recognized variable name, give it a reasonable unit and magnitude
         elif param_name in ["particle", "ion_particle", "ion"]:
-            if not (param_default is inspect._empty or param_default is None):
-                return (param_default,) * 4
-            else:
-                return ("p",) * 4
-        elif param_name == "particles" or param_name == "species":
-            if not (param_default is inspect._empty):
-                return (param_default,) * 4
-            else:
-                return (("e", "p"),) * 4
+            return (
+                ("p",) * 4
+                if (param_default is inspect._empty or param_default is None)
+                else (param_default,) * 4
+            )
+
+        elif param_name in ["particles", "species"]:
+            return (
+                (("e", "p"),) * 4
+                if param_default is inspect._empty
+                else (param_default,) * 4
+            )
+
         elif param_name in ["T", "T_i", "T_e", "temperature"]:
             unit = u.eV
             magnitude = 1.0
@@ -724,8 +729,7 @@ def assert_can_handle_nparray(
             unit = u.m ** -1
             magnitude = 1.0
 
-        # else, last resort, if it has a default argument, go with that:
-        elif not (param_default is inspect._empty):
+        elif param_default is not inspect._empty:
             return (param_default,) * 4
 
         else:
