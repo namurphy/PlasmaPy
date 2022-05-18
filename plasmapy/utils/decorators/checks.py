@@ -616,22 +616,25 @@ class CheckUnits(CheckBase):
                 # unit annotations defined
                 _units_anno = param.annotation
 
-            if _units is None and _units_anno is None and param_checks is None:
-                # no checks specified and no unit annotations defined
-                continue
-            elif _units is None and _units_anno is None:
-                # checks specified, but NO unit checks
-                msg = "No astropy.units specified for "
-                if param.name == "checks_on_return":
-                    msg += "return value "
+            if _units is None:
+                if _units_anno is None and param_checks is None:
+                    # no checks specified and no unit annotations defined
+                    continue
+                elif _units_anno is None:
+                    # checks specified, but NO unit checks
+                    msg = "No astropy.units specified for "
+                    msg += (
+                        "return value "
+                        if param.name == "checks_on_return"
+                        else f"argument {param.name} "
+                    )
+
+                    msg += f"of function {self.f.__name__}()."
+                    raise ValueError(msg)
                 else:
-                    msg += f"argument {param.name} "
-                msg += f"of function {self.f.__name__}()."
-                raise ValueError(msg)
-            elif _units is None:
-                _units = _units_anno
-                _units_are_from_anno = True
-                _units_anno = None
+                    _units = _units_anno
+                    _units_are_from_anno = True
+                    _units_anno = None
 
             # Ensure `_units` is an iterable
             if not isinstance(_units, collections.abc.Iterable):
@@ -892,10 +895,7 @@ class CheckUnits(CheckBase):
                 equiv = arg_checks["equivalencies"]
                 if not arg_checks["pass_equivalent_units"]:
                     err = u.UnitTypeError(typeerror_msg)
-            elif arg_checks["pass_equivalent_units"]:
-                # there is a match to more than one equivalent units
-                pass
-            else:
+            elif not arg_checks["pass_equivalent_units"]:
                 # there is a match to more than 1 equivalent units
                 arg = None
                 err = u.UnitTypeError(typeerror_msg)
@@ -1167,12 +1167,7 @@ def check_units(
     if checks_on_return is not None:
         checks["checks_on_return"] = checks_on_return
 
-    if func is not None:
-        # `check_units` called as a function
-        return CheckUnits(**checks)(func)
-    else:
-        # `check_units` called as a decorator "sugar-syntax"
-        return CheckUnits(**checks)
+    return CheckUnits(**checks)(func) if func is not None else CheckUnits(**checks)
 
 
 def check_values(
@@ -1243,12 +1238,7 @@ def check_values(
     if checks_on_return is not None:
         checks["checks_on_return"] = checks_on_return
 
-    if func is not None:
-        # `check_values` called as a function
-        return CheckValues(**checks)(func)
-    else:
-        # `check_values` called as a decorator "sugar-syntax"
-        return CheckValues(**checks)
+    return CheckValues(**checks) if func is None else CheckValues(**checks)(func)
 
 
 def check_relativistic(func=None, betafrac=0.05):

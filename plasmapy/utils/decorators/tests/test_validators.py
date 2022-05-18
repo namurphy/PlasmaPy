@@ -189,12 +189,9 @@ class TestValidateQuantities:
             for arg_name in case["output"].keys():
                 arg_validations = validations[arg_name]
 
-                for key in default_validations.keys():
+                for key, val in default_validations.items():
                     if key in case["output"][arg_name]:
                         val = case["output"][arg_name][key]
-                    else:
-                        val = default_validations[key]
-
                     assert arg_validations[key] == val
 
         # method calls `_get_unit_checks` and `_get_value_checks`
@@ -302,7 +299,7 @@ class TestValidateQuantities:
         vq.f = self.foo
 
         # perform tests
-        for ii, case in enumerate(_cases):
+        for case in _cases:
             arg, arg_name = case["input"]["args"]
             validations = case["input"]["validations"]
 
@@ -324,12 +321,12 @@ class TestValidateQuantities:
             "output": 5.0 * u.cm,
         }
         with mock.patch.object(
-            CheckUnits, "_check_unit_core", return_value=(5 * u.cm, u.cm, None, None)
-        ) as mock_cu_checks, mock.patch.object(
-            CheckValues, "_check_value", return_value=None
-        ) as mock_cv_checks:
+                CheckUnits, "_check_unit_core", return_value=(5 * u.cm, u.cm, None, None)
+            ) as mock_cu_checks, mock.patch.object(
+                CheckValues, "_check_value", return_value=None
+            ) as mock_cv_checks:
 
-            args = case["input"][0:2]
+            args = case["input"][:2]
             validations = case["input"][2]
 
             vq = ValidateQuantities(**validations)
@@ -472,11 +469,7 @@ class TestValidateQuantities:
         with pytest.raises(ValueError):
             foo.bar(5 * u.cm)
 
-    @mock.patch(
-        ValidateQuantities.__module__ + "." + ValidateQuantities.__qualname__,
-        side_effect=ValidateQuantities,
-        autospec=True,
-    )
+    @mock.patch(f"{ValidateQuantities.__module__}.{ValidateQuantities.__qualname__}", side_effect=ValidateQuantities, autospec=True)
     def test_decorator_func_def(self, mock_vq_class):
         """
         Test that :func:`~plasmapy.utils.decorators.validators.validate_quantities` is

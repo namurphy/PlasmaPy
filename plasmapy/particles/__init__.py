@@ -2,6 +2,7 @@
 The `plasmapy.particles` subpackage provides access to information about
 atoms, isotopes, ions, and other particles.
 """
+
 # __all__ will be auto populated below
 __all__ = []
 
@@ -79,11 +80,13 @@ helium-4).
 """
 
 # auto populate __all__
-for name, obj in list(globals().items()):
-    if inspect.ismodule(obj) or name.startswith("__") or name.endswith("__"):
-        continue
-
-    __all__.append(name)
+__all__.extend(
+    name
+    for name, obj in list(globals().items())
+    if not inspect.ismodule(obj)
+    and not name.startswith("__")
+    and not name.endswith("__")
+)
 
 __all__.sort()
 

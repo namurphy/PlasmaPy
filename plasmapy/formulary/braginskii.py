@@ -474,8 +474,7 @@ class ClassicalTransport:
             self.T_e, self.n_e, self.ion, self.coulomb_log_ei, self.V_ei
         )
 
-        alpha = alpha_hat / (self.n_e * e ** 2 * tau_e / m_e)
-        return alpha
+        return alpha_hat / (self.n_e * e ** 2 * tau_e / m_e)
 
     @property
     def thermoelectric_conductivity(self):
@@ -549,8 +548,7 @@ class ClassicalTransport:
         tau_i = 1 / fundamental_ion_collision_freq(
             self.T_i, self.n_i, self.ion, self.coulomb_log_ii, self.V_ii
         )
-        kappa = kappa_hat * (self.n_i * k_B ** 2 * self.T_i * tau_i / self.m_i)
-        return kappa
+        return kappa_hat * (self.n_i * k_B ** 2 * self.T_i * tau_i / self.m_i)
 
     @property
     @validate_quantities
@@ -614,8 +612,7 @@ class ClassicalTransport:
         tau_e = 1 / fundamental_electron_collision_freq(
             self.T_e, self.n_e, self.ion, self.coulomb_log_ei, self.V_ei
         )
-        kappa = kappa_hat * (self.n_e * k_B ** 2 * self.T_e * tau_e / m_e)
-        return kappa
+        return kappa_hat * (self.n_e * k_B ** 2 * self.T_e * tau_e / m_e)
 
     @property
     @validate_quantities
@@ -1283,8 +1280,11 @@ def _nondim_tc_e_spitzer(Z):
     This result is for parallel field or unmagnetized plasma only.
     """
     (gamma_E, gamma_T, delta_E, delta_T) = _get_spitzer_harm_coeffs(Z)
-    kappa = (64 / np.pi) * delta_T * (5 / 3 - (gamma_T * delta_E) / (delta_T * gamma_E))
-    return kappa
+    return (
+        (64 / np.pi)
+        * delta_T
+        * (5 / 3 - (gamma_T * delta_E) / (delta_T * gamma_E))
+    )
 
 
 def _nondim_resist_spitzer(Z, field_orientation):
@@ -1316,8 +1316,7 @@ def _nondim_tec_spitzer(Z):
     This result is for parallel field or unmagnetized plasma only.
     """
     (gamma_E, gamma_T, delta_E, delta_T) = _get_spitzer_harm_coeffs(Z)
-    beta = 5 / 2 * (8 / 5 * (delta_E / gamma_E) - 1)
-    return beta
+    return 5 / 2 * (8 / 5 * (delta_E / gamma_E) - 1)
 
 
 def _nondim_tc_e_braginskii(hall, Z, field_orientation):
@@ -1381,9 +1380,7 @@ def _nondim_tc_i_braginskii(hall, field_orientation):
     hall = float(hall)
 
     if field_orientation in ["parallel", "par"]:
-        kappa_par_coeff_0 = 3.906
-        kappa_par = kappa_par_coeff_0
-        return kappa_par
+        return 3.906
 
     delta_1 = 2.70
     delta_0 = 0.677
@@ -1404,9 +1401,6 @@ def _nondim_tc_i_braginskii(hall, field_orientation):
         return kappa_cross
 
     if field_orientation == "all":
-        kappa_par_coeff_0 = 3.906
-        kappa_par = kappa_par_coeff_0
-
         kappa_perp_coeff_2 = 2.0
         kappa_perp_coeff_0 = 2.645
         kappa_perp = (kappa_perp_coeff_2 * hall ** 2 + kappa_perp_coeff_0) / Delta
@@ -1416,7 +1410,7 @@ def _nondim_tc_i_braginskii(hall, field_orientation):
         kappa_cross = (
             kappa_cross_coeff_3 * hall ** 3 + kappa_cross_coeff_1 * hall
         ) / Delta
-        return np.array((kappa_par, kappa_perp, kappa_cross))
+        return np.array((3.906, kappa_perp, kappa_cross))
 
 
 def _nondim_visc_e_braginskii(hall, Z):
@@ -2159,31 +2153,29 @@ def _nondim_visc_i_ji_held(hall, Z, mu, theta, K=3):
         Delta_perp_i2_13 = Delta_perp_i2(r13, zeta, Delta_par_i2)
 
         def f_eta_2(r, zeta, Delta_perp_i2):
-            eta_2_i = (
-                (3 / 5 * np.sqrt(2) + 2 * zeta) * r ** 4
-                + (2.680 + 25.98 * zeta + 90.71 * zeta ** 2 + 104 * zeta ** 3) * r ** 2
-                + 0.4483 * eta_0_i * Delta_par_i2 ** 2
+            return (
+                (3 / 5 * np.sqrt(2) + 2 * zeta) * r**4
+                + (2.680 + 25.98 * zeta + 90.71 * zeta**2 + 104 * zeta**3) * r**2
+                + 0.4483 * eta_0_i * Delta_par_i2**2
             ) / Delta_perp_i2
-            return eta_2_i
 
         eta_2_i = f_eta_2(r, zeta, Delta_perp_i2_24)
         eta_1_i = f_eta_2(r13, zeta, Delta_perp_i2_13)
 
         def f_eta_4(r, zeta, Delta_perp_i2):
-            eta_4_i = (
+            return (
                 r
                 * (
-                    r ** 4
-                    + (3.535 + 23.30 * zeta + 52 * zeta ** 2) * r ** 2
+                    r**4
+                    + (3.535 + 23.30 * zeta + 52 * zeta**2) * r**2
                     + 0.9538
                     + 21.81 * zeta
-                    + 174.2 * zeta ** 2
-                    + 538.4 * zeta ** 3
-                    + 576 * zeta ** 4
+                    + 174.2 * zeta**2
+                    + 538.4 * zeta**3
+                    + 576 * zeta**4
                 )
                 / Delta_perp_i2
             )
-            return eta_4_i
 
         eta_4_i = f_eta_4(r, zeta, Delta_perp_i2_24)
         eta_3_i = f_eta_4(r13, zeta, Delta_perp_i2_13)
@@ -2193,22 +2185,20 @@ def _nondim_visc_i_ji_held(hall, Z, mu, theta, K=3):
         eta_0_i = (1.357 + 5.243 * zeta) / Delta_par_i2
 
         def Delta_perp_i2(r, zeta, Delta_par_i2):
-            Delta_perp_i2 = (
-                r ** 4
-                + (2.023 + 11.68 * zeta + 20 * zeta ** 2) * r ** 2
-                + 0.5820 * Delta_par_i2 ** 2
+            return (
+                r**4
+                + (2.023 + 11.68 * zeta + 20 * zeta**2) * r**2
+                + 0.5820 * Delta_par_i2**2
             )
-            return Delta_perp_i2
 
         Delta_perp_i2_24 = Delta_perp_i2(r, zeta, Delta_par_i2)
         Delta_perp_i2_13 = Delta_perp_i2(r13, zeta, Delta_par_i2)
 
         def f_eta_2(r, zeta, Delta_perp_i2):
-            eta_2_i = (
-                (3 / 5 * np.sqrt(2) + 2 * zeta) * r ** 2
-                + 0.5820 * eta_0_i * Delta_par_i2 ** 2
+            return (
+                (3 / 5 * np.sqrt(2) + 2 * zeta) * r**2
+                + 0.5820 * eta_0_i * Delta_par_i2**2
             ) / Delta_perp_i2
-            return eta_2_i
 
         eta_2_i = f_eta_2(r, zeta, Delta_perp_i2_24)
         eta_1_i = f_eta_2(r13, zeta, Delta_perp_i2_13)
@@ -2219,10 +2209,7 @@ def _nondim_visc_i_ji_held(hall, Z, mu, theta, K=3):
                 + (2.023 + 11.68 * zeta + 20 * zeta ** 2) * r ** 2
                 + 0.5820 * Delta_par_i2 ** 2
             )
-            eta_4_i = (
-                r * (r ** 2 + 1.188 + 8.283 * zeta + 16 * zeta ** 2) / Delta_perp_i2
-            )
-            return eta_4_i
+            return r * (r**2 + 1.188 + 8.283 * zeta + 16 * zeta**2) / Delta_perp_i2
 
         eta_4_i = f_eta_4(r, zeta, Delta_perp_i2_24)
         eta_3_i = f_eta_4(r13, zeta, Delta_perp_i2_13)

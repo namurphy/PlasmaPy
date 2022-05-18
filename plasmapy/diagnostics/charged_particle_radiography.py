@@ -947,20 +947,19 @@ class Tracker:
         else:
             still_on = 0.0
 
-        if self.fract_entered > 0.1 and still_on < 0.001:
-            # Warn user if < 10% of the particles ended up on the grid
-            if self.num_entered < 0.1 * self.nparticles:
-                warnings.warn(
-                    f"Only {100*self.num_entered/self.nparticles:.2f}% of "
-                    "particles entered the field grid: consider "
-                    "decreasing the max_theta to increase this "
-                    "number.",
-                    RuntimeWarning,
-                )
-
-            return True
-        else:
+        if self.fract_entered <= 0.1 or still_on >= 0.001:
             return False
+        # Warn user if < 10% of the particles ended up on the grid
+        if self.num_entered < 0.1 * self.nparticles:
+            warnings.warn(
+                f"Only {100*self.num_entered/self.nparticles:.2f}% of "
+                "particles entered the field grid: consider "
+                "decreasing the max_theta to increase this "
+                "number.",
+                RuntimeWarning,
+            )
+
+        return True
 
     def run(
         self,
@@ -1015,11 +1014,7 @@ class Tracker:
                 f"{field_weightings}",
             )
 
-        if dt is None:
-            # Set dt as an infinite range by default (auto dt with no restrictions)
-            self.dt = np.array([0.0, np.inf]) * u.s
-        else:
-            self.dt = dt
+        self.dt = np.array([0.0, np.inf]) * u.s if dt is None else dt
         self.dt = (self.dt).to(u.s).value
 
         # Check to make sure particles have already been generated
@@ -1201,8 +1196,7 @@ class Tracker:
         v0[:, 1] = np.dot(self.v_init, self.det_hdir)
         v0[:, 2] = np.dot(self.v_init, self.det_vdir)
 
-        # Store output values in a dictionary
-        result_dict = dict(
+        return dict(
             source=self.source,
             detector=self.detector,
             mag=self.mag,
@@ -1215,8 +1209,6 @@ class Tracker:
             y0=y0loc,
             v0=v0,
         )
-
-        return result_dict
 
     def save_results(self, path):
         """
