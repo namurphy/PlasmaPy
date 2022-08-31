@@ -148,10 +148,9 @@ class IonizationStateCollection:
 
         set_abundances = True
         if isinstance(inputs, dict):
-            all_quantities = np.all(
+            if all_quantities := np.all(
                 [isinstance(fracs, u.Quantity) for fracs in inputs.values()]
-            )
-            if all_quantities:
+            ):
                 right_units = np.all(
                     [fracs[0].si.unit == u.m**-3 for fracs in inputs.values()]
                 )
@@ -496,7 +495,7 @@ class IonizationStateCollection:
             # The particles whose ionization states are to be recorded
             # should be elements or isotopes but not ions or neutrals.
 
-            for key in particles.keys():
+            for key in particles:
                 is_element = particles[key].is_category("element")
                 has_charge_info = particles[key].is_category(
                     any_of=["charged", "uncharged"]
@@ -631,14 +630,15 @@ class IonizationStateCollection:
             raise TypeError("Incorrect inputs to set ionic_fractions.")
 
         for i in range(1, len(_particle_instances)):
-            if _particle_instances[i - 1].element == _particle_instances[i].element:
-                if (
-                    not _particle_instances[i - 1].isotope
-                    and _particle_instances[i].isotope
-                ):
-                    raise ParticleError(
-                        "Cannot have an element and isotopes of that element."
-                    )
+            if _particle_instances[i - 1].element == _particle_instances[
+                i
+            ].element and (
+                not _particle_instances[i - 1].isotope
+                and _particle_instances[i].isotope
+            ):
+                raise ParticleError(
+                    "Cannot have an element and isotopes of that element."
+                )
 
         self._particle_instances = _particle_instances
         self._base_particles = _elements_and_isotopes

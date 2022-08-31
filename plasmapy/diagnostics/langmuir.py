@@ -296,10 +296,9 @@ def swept_probe_analysis(
 
     if not isinstance(probe_characteristic, Characteristic):
         raise TypeError(
-            f"For 'probe_characteristic' expected type "
-            f"{Characteristic.__module__ + '.' + Characteristic.__qualname__} "
-            f"and got {type(probe_characteristic)}"
+            f"For 'probe_characteristic' expected type {Characteristic.__module__}.{Characteristic.__qualname__} and got {type(probe_characteristic)}"
         )
+
 
     # Obtain the plasma and floating potentials
     V_P = get_plasma_potential(probe_characteristic)
@@ -473,10 +472,9 @@ def get_plasma_potential(probe_characteristic, return_arg=False):
 
     if not isinstance(probe_characteristic, Characteristic):
         raise TypeError(
-            f"For 'probe_characteristic' expected type "
-            f"{Characteristic.__module__ + '.' + Characteristic.__qualname__} "
-            f"and got {type(probe_characteristic)}"
+            f"For 'probe_characteristic' expected type {Characteristic.__module__}.{Characteristic.__qualname__} and got {type(probe_characteristic)}"
         )
+
 
     # Sort the characteristic prior to differentiation
     probe_characteristic.sort()
@@ -525,10 +523,9 @@ def get_floating_potential(probe_characteristic, return_arg=False):
 
     if not isinstance(probe_characteristic, Characteristic):
         raise TypeError(
-            f"For 'probe_characteristic' expected type "
-            f"{Characteristic.__module__ + '.' + Characteristic.__qualname__} "
-            f"and got {type(probe_characteristic)}"
+            f"For 'probe_characteristic' expected type {Characteristic.__module__}.{Characteristic.__qualname__} and got {type(probe_characteristic)}"
         )
+
 
     arg_V_F = np.argmin(np.abs(probe_characteristic.current))
 
@@ -563,10 +560,9 @@ def get_electron_saturation_current(probe_characteristic):
 
     if not isinstance(probe_characteristic, Characteristic):
         raise TypeError(
-            f"For 'probe_characteristic' expected type "
-            f"{Characteristic.__module__ + '.' + Characteristic.__qualname__} "
-            f"and got {type(probe_characteristic)}"
+            f"For 'probe_characteristic' expected type {Characteristic.__module__}.{Characteristic.__qualname__} and got {type(probe_characteristic)}"
         )
+
 
     _, arg_V_P = get_plasma_potential(probe_characteristic, return_arg=True)
 
@@ -600,10 +596,9 @@ def get_ion_saturation_current(probe_characteristic):
 
     if not isinstance(probe_characteristic, Characteristic):
         raise TypeError(
-            f"For 'probe_characteristic' expected type "
-            f"{Characteristic.__module__ + '.' + Characteristic.__qualname__} "
-            f"and got {type(probe_characteristic)}"
+            f"For 'probe_characteristic' expected type {Characteristic.__module__}.{Characteristic.__qualname__} and got {type(probe_characteristic)}"
         )
+
 
     return np.min(probe_characteristic.current)
 
@@ -765,10 +760,9 @@ def extract_exponential_section(probe_characteristic, T_e=None, ion_current=None
 
     if not isinstance(probe_characteristic, Characteristic):
         raise TypeError(
-            f"For 'probe_characteristic' expected type "
-            f"{Characteristic.__module__ + '.' + Characteristic.__qualname__} "
-            f"and got {type(probe_characteristic)}"
+            f"For 'probe_characteristic' expected type {Characteristic.__module__}.{Characteristic.__qualname__} and got {type(probe_characteristic)}"
         )
+
 
     V_F = get_floating_potential(probe_characteristic)
 
@@ -821,10 +815,9 @@ def extract_ion_section(probe_characteristic):
 
     if not isinstance(probe_characteristic, Characteristic):
         raise TypeError(
-            f"For 'probe_characteristic' expected type "
-            f"{Characteristic.__module__ + '.' + Characteristic.__qualname__} "
-            f"and got {type(probe_characteristic)}"
+            f"For 'probe_characteristic' expected type {Characteristic.__module__}.{Characteristic.__qualname__} and got {type(probe_characteristic)}"
         )
+
 
     V_F = get_floating_potential(probe_characteristic)
 

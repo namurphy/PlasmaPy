@@ -91,11 +91,7 @@ def _category_errmsg(particle, category: str) -> str:
     `~plasmapy.particles.exceptions.InvalidIsotopeError`.
     """
     article = "an" if category[0] in "aeiouAEIOU" else "a"
-    errmsg = (
-        f"The particle {particle} is not {article} {category}, "
-        f"so this attribute is not available."
-    )
-    return errmsg
+    return f"The particle {particle} is not {article} {category}, so this attribute is not available."
 
 
 class AbstractParticle(ABC):
@@ -1714,10 +1710,11 @@ class Particle(AbstractPhysicalParticle):
                 f"Cannot ionize {self.symbol} because it is not a "
                 f"neutral atom or ion."
             )
-        if not self.is_category(any_of={"charged", "uncharged"}):
-            assumed_charge_number = 0
-        else:
-            assumed_charge_number = self.charge_number
+        assumed_charge_number = (
+            self.charge_number
+            if self.is_category(any_of={"charged", "uncharged"})
+            else 0
+        )
 
         if assumed_charge_number == self.atomic_number:
             raise InvalidIonError(
