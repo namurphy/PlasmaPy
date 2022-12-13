@@ -92,3 +92,9 @@ repos:
   hooks:
   - id: rst-directive-colons
   - id: rst-inline-touching-normal
+
+- repo: https://github.com/python-formate/flake8-dunder-all
+  rev: v0.2.2
+  hooks:
+  - id: ensure-dunder-all
+    exclude: test*.py
