@@ -11,17 +11,16 @@ __aliases__ = ["cs_", "va_", "vth_", "vth_kappa_"]
 __lite_funcs__ = ["thermal_speed_lite"]
 
 import astropy.units as u
-import numbers
 import numpy as np
 import warnings
 
-from astropy.constants.si import k_B, mu0
+from astropy.constants.si import k_B, m_e, mu0
 from numba import njit
+from numbers import Real
 from typing import Optional
 
 from plasmapy.formulary import lengths, misc
-from plasmapy.particles import Particle, particle_input, particle_mass, ParticleLike
-from plasmapy.particles.exceptions import ChargeError
+from plasmapy.particles import particle_input, particle_mass, ParticleLike
 from plasmapy.utils.decorators import (
     bind_lite_func,
     check_relativistic,
@@ -37,26 +36,27 @@ k_B_si_unitless = k_B.value
 
 @check_relativistic
 @validate_quantities(density={"can_be_negative": False})
+@particle_input(categories={"any_of"})
 def Alfven_speed(
     B: u.T,
     density: (u.m**-3, u.kg / u.m**3),
     ion: Optional[ParticleLike] = None,
-    z_mean: Optional[numbers.Real] = None,
+    *,
+    Z: Optional[Real] = None,
+    mass_numb: Optional[Real] = None,
 ) -> u.m / u.s:
     r"""
     Calculate the Alfvén speed.
 
-    The Alfvén speed :math:`V_A` is the typical propagation speed of magnetic
-    disturbances in a plasma, and is given by:
+    The Alfvén speed :math:`V_A` is the characteristic propagation speed
+    of magnetic perturbations in a quasineutral plasma, and is given by:
 
     .. math::
 
         V_A = \frac{B}{\sqrt{μ_0 ρ}}
 
-    where :math:`B` is the magnetic field and :math:`ρ = n_i m_i + n_e m_e`
-    is the total mass density (:math:`n_i` is the ion number density,
-    :math:`n_e` is the electron number density, :math:`m_i` is the ion mass,
-    and :math:`m_e` is the electron mass) :cite:p:`alfven:1942`.
+    where :math:`B` is the magnetic field strength and :math:`ρ` is the
+    total mass density :cite:p:`alfven:1942`.
 
     **Aliases:** `va_`
 
@@ -70,19 +70,11 @@ def Alfven_speed(
         m\ :sup:`-3` or the total mass density :math:`ρ` in units
         convertible to kg m\ :sup:`-3`\ .
 
-    ion : `~plasmapy.particles.particle_class.Particle`, optional
-        Representation of the ion species (e.g., ``'p'`` for protons, ``'D+'`` for
-        deuterium, ``'He-4 +1'`` for singly ionized helium-4, etc.). If no charge
-        state information is provided, then the ions are assumed to be singly
-        ionized. If the density is an ion number density, then this parameter
-        is required in order to convert to mass density.
-
-    z_mean : `~numbers.Real`, optional
-        The average ionization state (arithmetic mean) of the ``ion`` composing
-        the plasma.  This is used in calculating the mass density
-        :math:`ρ = n_i (m_i + Z_{mean} m_e)`.  ``z_mean`` is ignored if
-        ``density`` is passed as a mass density and overrides any charge state
-        info provided by ``ion``.
+    ion : |particle-like|, optional
+        Representation of the ion species (e.g., ``'p'`` for protons,
+        ``'D+'`` for deuterium, ``'He-4 +1'`` for singly ionized
+        helium-4, etc.). If the density is an ion number density, then
+        this parameter is required in order to convert to mass density.
 
     Returns
     -------
@@ -101,9 +93,6 @@ def Alfven_speed(
     `TypeError`
         If ``ion`` is not of type or convertible to
         `~plasmapy.particles.particle_class.Particle`.
-
-    `TypeError`
-        If ``z_mean`` is not of type `int` or `float`.
 
     `~astropy.units.UnitTypeError`
         If the magnetic field ``B`` does not have units equivalent to
@@ -149,33 +138,22 @@ def Alfven_speed(
     <Quantity 21664.18... m / s>
     >>> Alfven_speed(B, n, ion="He++")
     <Quantity 21664.18... m / s>
-    >>> Alfven_speed(B, n, ion="He", z_mean=1.8)
+    >>> Alfven_speed(B, n, ion="He", Z=1.8)
     <Quantity 21661.51... m / s>
     """
 
-    if density.unit.is_equivalent(u.kg / u.m**3):
-        rho = density
+    def _quasineutral_mass_density(ion, n_i):
+        n_e = ion.charge_number * n_i
+        n_i * ion.mass + n_e * m_e
+
+    if density.unit.physical_type == u.physical.mass_density:
+        ρ = density
     else:
-        if not isinstance(ion, Particle):
-            try:
-                ion = Particle(ion)
-            except TypeError as ex:
-                raise TypeError(
-                    f"If passing a number density, you must pass a plasmapy Particle "
-                    f"(not type {type(ion)}) to calculate the mass density!"
-                ) from ex
-        if z_mean is None:
-            try:
-                z_mean = abs(ion.charge_number)
-            except ChargeError:
-                z_mean = 1
+        n_i = density
+        n_e = ion.charge_number * n_i
+        ρ = n_i * ion.mass + n_e * m_e
 
-        z_mean = abs(z_mean)
-        rho = misc.mass_density(density, ion) + misc.mass_density(
-            density, "e", z_ratio=z_mean
-        )
-
-    return np.abs(B) / np.sqrt(mu0 * rho)
+    return np.abs(B) / np.sqrt(mu0 * ρ)
 
 
 va_ = Alfven_speed
@@ -354,7 +332,7 @@ def ion_sound_speed(
     Z = misc._grab_charge(ion, z_mean)
 
     for gamma, species in zip([gamma_e, gamma_i], ["electrons", "ions"]):
-        if not isinstance(gamma, (numbers.Real, numbers.Integral)):
+        if not isinstance(gamma, Real):
             raise TypeError(
                 f"The adiabatic index gamma for {species} must be a float or int"
             )
@@ -477,9 +455,7 @@ def thermal_speed_coefficients(method: str, ndim: int) -> float:
 
 @preserve_signature
 @njit
-def thermal_speed_lite(
-    T: numbers.Real, mass: numbers.Real, coeff: numbers.Real
-) -> numbers.Real:
+def thermal_speed_lite(T: Real, mass: Real, coeff: Real) -> Real:
     r"""
     The :term:`lite-function` for
     `~plasmapy.formulary.speeds.thermal_speed`.  Performs the same
