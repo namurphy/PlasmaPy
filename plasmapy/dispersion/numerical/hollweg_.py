@@ -4,12 +4,12 @@ solutions to Hollweg's two fluid dispersion relation
 """
 __all__ = ["hollweg"]
 
+import warnings
+from typing import Union
+
 import astropy.units as u
 import numpy as np
-import warnings
-
 from astropy.constants.si import c
-from typing import Union
 
 from plasmapy.formulary.frequencies import gyrofrequency, plasma_frequency
 from plasmapy.formulary.speeds import Alfven_speed, ion_sound_speed

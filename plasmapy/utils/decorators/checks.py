@@ -13,15 +13,15 @@ __all__ = [
 import collections
 import functools
 import inspect
-import numpy as np
 import warnings
-
-from astropy import units as u
-from astropy.constants import c
-from astropy.units.equivalencies import Equivalency
 from functools import reduce
 from operator import add
 from typing import Any, Optional, Union
+
+import numpy as np
+from astropy import units as u
+from astropy.constants import c
+from astropy.units.equivalencies import Equivalency
 
 from plasmapy.utils.decorators.helpers import preserve_signature
 from plasmapy.utils.exceptions import (

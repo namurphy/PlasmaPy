@@ -1,7 +1,6 @@
 """Test functionality of Stix in `plasmapy.dispersion.analytical.stix_`."""
 import numpy as np
 import pytest
-
 from astropy import units as u
 from astropy.constants.si import c
 

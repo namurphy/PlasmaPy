@@ -9,12 +9,12 @@ __all__ = [
 ]
 __aliases__ = ["DB_", "pmag_", "pth_", "rho_", "ub_"]
 
-import astropy.units as u
 import numbers
-import numpy as np
-
-from astropy.constants.si import e, k_B, mu0
 from typing import Optional
+
+import astropy.units as u
+import numpy as np
+from astropy.constants.si import e, k_B, mu0
 
 from plasmapy import particles
 from plasmapy.particles import Particle, ParticleLike

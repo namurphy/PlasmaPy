@@ -6,12 +6,12 @@ __all__ = ["plasma_dispersion_func", "plasma_dispersion_func_deriv"]
 
 __lite_funcs__ = ["plasma_dispersion_func_lite", "plasma_dispersion_func_deriv_lite"]
 
-import astropy.units as u
 import numbers
-import numpy as np
-
-from scipy.special import wofz as Faddeeva_function
 from typing import Union
+
+import astropy.units as u
+import numpy as np
+from scipy.special import wofz as Faddeeva_function
 
 from plasmapy.utils.decorators import bind_lite_func, preserve_signature
 

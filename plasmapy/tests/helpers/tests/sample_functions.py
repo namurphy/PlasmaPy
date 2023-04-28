@@ -3,11 +3,11 @@ Sample functions and classes to be used for testing the test helper
 functionality.
 """
 
+import warnings
+from typing import NoReturn
+
 import astropy.units as u
 import numpy as np
-import warnings
-
-from typing import NoReturn
 
 
 class SampleException(Exception):

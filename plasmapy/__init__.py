@@ -82,7 +82,6 @@ def online_help(query: str):  # coverage: ignore
         The search query.
     """
     import webbrowser
-
     from urllib.parse import urlencode
 
     url = (

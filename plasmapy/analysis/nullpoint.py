@@ -19,10 +19,10 @@ __all__ = [
     "uniform_null_point_find",
 ]
 
-import numpy as np
 import warnings
-
 from typing import Callable
+
+import numpy as np
 
 # Declare Constants & global variables
 _EQUALITY_ATOL = 1e-10

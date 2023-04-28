@@ -2,13 +2,13 @@
 
 __all__ = ["Lorentz_factor", "relativistic_energy", "RelativisticBody"]
 
+from numbers import Integral, Real
+from typing import Optional, Union
+
 import astropy.units as u
 import numpy as np
-
 from astropy.constants import c
-from numbers import Integral, Real
 from numpy.typing import DTypeLike
-from typing import Optional, Union
 
 from plasmapy import utils
 from plasmapy.particles import particle_input

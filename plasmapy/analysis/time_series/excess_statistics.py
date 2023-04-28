@@ -4,9 +4,9 @@ __all__ = ["ExcessStatistics"]
 
 
 import numbers
-import numpy as np
-
 from collections.abc import Iterable
+
+import numpy as np
 
 
 class ExcessStatistics:

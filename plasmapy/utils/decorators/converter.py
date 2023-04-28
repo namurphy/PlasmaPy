@@ -3,9 +3,10 @@ Decorator to convert units of functions in /physics methods
 """
 __all__ = ["angular_freq_to_hz"]
 
-import astropy.units as u
 import functools
 import inspect
+
+import astropy.units as u
 
 from plasmapy.utils.decorators.helpers import preserve_signature
 

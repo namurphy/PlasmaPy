@@ -3,7 +3,6 @@
 import astropy.constants.si as const
 import numpy as np
 import pytest
-
 from astropy import units as u
 
 from plasmapy.diagnostics import langmuir

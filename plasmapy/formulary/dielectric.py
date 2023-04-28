@@ -6,10 +6,10 @@ __all__ = [
 ]
 __lite_funcs__ = ["permittivity_1D_Maxwellian_lite"]
 
-import numpy as np
-
-from astropy import units as u
 from collections import namedtuple
+
+import numpy as np
+from astropy import units as u
 
 from plasmapy.dispersion.dispersionfunction import plasma_dispersion_func_deriv_lite
 from plasmapy.formulary.frequencies import gyrofrequency, plasma_frequency
