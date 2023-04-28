@@ -2,7 +2,6 @@
 
 import numpy as np
 import pytest
-
 from astropy import units as u
 
 from plasmapy.dispersion.numerical.hollweg_ import hollweg

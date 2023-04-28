@@ -119,9 +119,9 @@ __all__ = [
     "electron_viscosity",
 ]
 
-import numpy as np
 import warnings
 
+import numpy as np
 from astropy import units as u
 from astropy.constants.si import e, k_B, m_e
 

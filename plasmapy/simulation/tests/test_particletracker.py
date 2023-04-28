@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-
 from astropy import units as u
 from astropy.modeling import fitting, models
 from scipy.optimize import curve_fit

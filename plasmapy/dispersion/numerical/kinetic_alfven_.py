@@ -4,13 +4,13 @@ solutions to the kinetic Alfvén dispersion relation.
 """
 __all__ = ["kinetic_alfven"]
 
-import astropy.units as u
 import numbers
-import numpy as np
 import warnings
-
-from astropy.constants.si import c
 from typing import Optional
+
+import astropy.units as u
+import numpy as np
+from astropy.constants.si import c
 
 from plasmapy.formulary import frequencies as pfp
 from plasmapy.formulary import speeds as speed

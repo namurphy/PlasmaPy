@@ -6,7 +6,6 @@ __all__ = ["ParticleTracker"]
 import astropy.units as u
 import numpy as np
 import scipy.interpolate as interp
-
 from astropy import constants
 
 from plasmapy.particles import atomic
@@ -233,7 +232,6 @@ class ParticleTracker:
     def plot_trajectories(self):  # coverage: ignore
         r"""Draw trajectory history."""
         import matplotlib.pyplot as plt
-
         from astropy.visualization import quantity_support
 
         quantity_support()
@@ -260,7 +258,6 @@ class ParticleTracker:
             letters included in ``plot``.
         """
         import matplotlib.pyplot as plt
-
         from astropy.visualization import quantity_support
 
         quantity_support()

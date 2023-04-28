@@ -10,17 +10,17 @@ __all__ = [
 __aliases__ = ["cs_", "va_", "vth_", "vth_kappa_"]
 __lite_funcs__ = ["thermal_speed_lite"]
 
-import astropy.units as u
 import numbers
-import numpy as np
 import warnings
-
-from astropy.constants.si import k_B, mu0
-from numba import njit
 from typing import Optional
 
+import astropy.units as u
+import numpy as np
+from astropy.constants.si import k_B, mu0
+from numba import njit
+
 from plasmapy.formulary import lengths, misc
-from plasmapy.particles import Particle, particle_input, particle_mass, ParticleLike
+from plasmapy.particles import Particle, ParticleLike, particle_input, particle_mass
 from plasmapy.particles.exceptions import ChargeError
 from plasmapy.utils.decorators import (
     bind_lite_func,

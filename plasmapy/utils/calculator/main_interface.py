@@ -3,11 +3,11 @@ Collection of private functions to load properties and construct widgets
 """
 __all__ = []
 
-import astropy.units as units
 import json
-
-from ipywidgets import widgets
 from pathlib import Path
+
+import astropy.units as units
+from ipywidgets import widgets
 
 from plasmapy.utils.calculator.widget_helpers import (
     _calculate_button,

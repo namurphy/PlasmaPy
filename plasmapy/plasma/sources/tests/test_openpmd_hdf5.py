@@ -1,10 +1,9 @@
-import pytest
-
-from astropy import units as u
 from typing import Union
 
-import plasmapy.plasma
+import pytest
+from astropy import units as u
 
+import plasmapy.plasma
 from plasmapy.particles.data.test import data_dir
 from plasmapy.plasma.exceptions import DataStandardError
 from plasmapy.plasma.sources import openpmd_hdf5

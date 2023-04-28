@@ -305,8 +305,8 @@ import inspect
 import re
 import sys
 import warnings
-
 from collections import OrderedDict
+
 from docutils.parsers.rst import directives
 from docutils.statemachine import StringList
 from sphinx.application import Sphinx
@@ -319,10 +319,11 @@ except ImportError:
         pass
 
 
-from sphinx.ext.autodoc import bool_option, ModuleDocumenter
+from typing import Any, Callable, Dict, List, Optional, Union
+
+from sphinx.ext.autodoc import ModuleDocumenter, bool_option
 from sphinx.locale import __
 from sphinx.util import logging
-from typing import Any, Callable, Dict, List, Optional, Union
 
 from ..automodsumm.core import AutomodsummOptions, option_str_list
 from ..utils import default_grouping_info

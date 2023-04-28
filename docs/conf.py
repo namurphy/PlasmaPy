@@ -18,8 +18,8 @@
 
 import os
 import sys
-
 from datetime import datetime
+
 from pkg_resources import parse_version
 from sphinx.application import Sphinx
 

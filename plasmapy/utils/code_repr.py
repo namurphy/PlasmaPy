@@ -3,11 +3,11 @@
 __all__ = ["call_string", "attribute_call_string", "method_call_string"]
 
 import inspect
-import numpy as np
-
-from astropy import units as u
 from numbers import Integral
 from typing import Any, Callable, Optional, Union
+
+import numpy as np
+from astropy import units as u
 
 
 def _code_repr_of_ndarray(array: np.ndarray, max_items=np.inf) -> str:

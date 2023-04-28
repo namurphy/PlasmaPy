@@ -6,6 +6,7 @@ __all__ = ["AutomodsummEntry", "AutomodsummRenderer", "GenDocsFromAutomodsumm"]
 
 import os
 import re
+from typing import Any, Dict, List, Union
 
 from jinja2 import TemplateNotFound
 from sphinx.ext.autodoc.mock import mock
@@ -18,7 +19,6 @@ from sphinx.ext.autosummary.generate import (
 from sphinx.locale import __
 from sphinx.util import logging
 from sphinx.util.osutil import ensuredir
-from typing import Any, Dict, List, Union
 
 from ..utils import templates_dir
 

@@ -4,11 +4,11 @@ from __future__ import annotations
 
 __all__ = []
 
-import astropy.units as u
-
 from collections.abc import Iterable
 from numbers import Number
 from typing import Optional, Union
+
+import astropy.units as u
 
 
 def _get_physical_type_dict(

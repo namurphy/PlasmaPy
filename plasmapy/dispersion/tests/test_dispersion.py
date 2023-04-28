@@ -4,7 +4,6 @@
 
 import numpy as np
 import pytest
-
 from astropy import units as u
 from hypothesis import given
 from hypothesis.strategies import complex_numbers

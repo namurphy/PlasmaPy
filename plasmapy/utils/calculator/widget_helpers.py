@@ -6,9 +6,9 @@ __all__ = []
 
 import abc
 import importlib
-import ipywidgets as widgets
-
 from inspect import signature
+
+import ipywidgets as widgets
 
 from plasmapy.particles import Particle
 

@@ -5,11 +5,11 @@ __all__ = ["particle_input"]
 import functools
 import inspect
 import warnings
-import wrapt
-
 from collections.abc import Iterable
 from numbers import Integral, Real
 from typing import Any, Callable, NoReturn, Optional, Union
+
+import wrapt
 
 from plasmapy.particles._factory import _physical_particle_factory
 from plasmapy.particles.exceptions import (

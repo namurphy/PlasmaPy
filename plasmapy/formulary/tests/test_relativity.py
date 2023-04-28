@@ -2,15 +2,14 @@
 
 import numpy as np
 import pytest
-
 from astropy import units as u
 from astropy.constants import c
 from astropy.tests.helper import assert_quantity_allclose
 
 from plasmapy.formulary.relativity import (
     Lorentz_factor,
-    relativistic_energy,
     RelativisticBody,
+    relativistic_energy,
 )
 from plasmapy.particles import CustomParticle, electron, proton
 from plasmapy.particles.exceptions import InvalidParticleError

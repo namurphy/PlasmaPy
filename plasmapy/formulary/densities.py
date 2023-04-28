@@ -4,7 +4,6 @@ __all__ = [
 ]
 
 import astropy.units as u
-
 from astropy.constants.si import e, eps0, m_e
 
 from plasmapy.utils.decorators import validate_quantities

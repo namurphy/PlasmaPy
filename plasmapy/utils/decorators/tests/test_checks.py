@@ -3,22 +3,22 @@ Tests for 'check` decorators (i.e. decorators that only check objects but do not
 change them).
 """
 import inspect
-import numpy as np
-import pytest
-
-from astropy import units as u
-from astropy.constants import c
 from types import LambdaType
 from unittest import mock
 
+import numpy as np
+import pytest
+from astropy import units as u
+from astropy.constants import c
+
 from plasmapy.utils.decorators.checks import (
+    CheckBase,
+    CheckUnits,
+    CheckValues,
     _check_relativistic,
     check_relativistic,
     check_units,
     check_values,
-    CheckBase,
-    CheckUnits,
-    CheckValues,
 )
 from plasmapy.utils.exceptions import (
     PlasmaPyWarning,

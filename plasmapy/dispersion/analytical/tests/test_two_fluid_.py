@@ -2,7 +2,6 @@
 
 import numpy as np
 import pytest
-
 from astropy import units as u
 
 from plasmapy.dispersion.analytical.two_fluid_ import two_fluid

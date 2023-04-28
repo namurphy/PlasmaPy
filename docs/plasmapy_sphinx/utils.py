@@ -12,11 +12,11 @@ __all__ = [
 
 import inspect
 import os
-
 from collections import OrderedDict
 from importlib import import_module
-from sphinx.application import Sphinx
 from typing import Any, Dict
+
+from sphinx.application import Sphinx
 
 package_dir = os.path.abspath(os.path.dirname(__file__))
 """Absolute path to the `plasmapy_sphinx` package directory."""
