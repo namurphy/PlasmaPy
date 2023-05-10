@@ -837,6 +837,33 @@ computation that should not be executed on every commit, *keep the outputs in
 the notebook* but store it in the repository with a ``preexecuted_`` prefix, e.g.,
 :file:`preexecuted_full_3d_mhd_chaotic_turbulence_simulation.ipynb`.
 
+Refactoring strategies
+======================
+
+:wikipedia:`Code refactoring` is the process of restructuring existing
+code without changing its external behavior. Refactoring helps us make
+code more readable and maintainable. Regular refactoring also helps us
+stay familiar with different parts of the code base.
+
+Extract method pattern
+----------------------
+
+It's relatively common to add a comment to sections of code in a
+function.
+
+.. code-block:: python
+
+   def do_big_thing():
+       x = 1
+       y = 2
+
+       # add the numbers
+
+
+
+Parameter object pattern
+------------------------
+
 Compatibility with Prior Versions of Python, NumPy, and Astropy
 ===============================================================
 
