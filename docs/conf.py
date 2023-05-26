@@ -18,7 +18,80 @@ sys.path.insert(0, os.path.abspath("."))  # noqa: PTH100
 
 from plasmapy import __version__ as release  # noqa: E402
 
-# -- General configuration ------------------------------------------------
+# Project information
+
+project = "PlasmaPy"
+author = "PlasmaPy Community"
+copyright = f"2015–{datetime.utcnow().year}, {author}"  # noqa: A001
+language = "en"
+
+# General configuration
+
+source_suffix = ".rst"
+root_doc = "index"
+templates_path = ["_templates"]
+default_role = "py:obj"
+html_static_path = ["_static"]
+
+# Add any Sphinx extension module names here, as strings. They can be
+# extensions coming with Sphinx (named 'sphinx.ext.*') or custom ones.
+# When extensions are removed or added, please update the section in
+# docs/doc_guide.rst on Sphinx extensions.
+
+extensions = [
+    "hoverxref.extension",
+    "IPython.sphinxext.ipython_console_highlighting",
+    "nbsphinx",
+    "notfound.extension",
+    "plasmapy_sphinx",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.extlinks",
+    "sphinx.ext.graphviz",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.todo",
+    "sphinx_changelog",
+    "sphinx_copybutton",
+    "sphinx_gallery.load_style",
+    "sphinx_issues",
+    "sphinx_reredirects",
+    "sphinx_tabs.tabs",
+    "sphinxcontrib.bibtex",
+]
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+# This patterns also effect to html_static_path and html_extra_path
+
+exclude_patterns = [
+    "**.ipynb_checkpoints",
+    "**Untitled*",
+    ".DS_Store",
+    "_build",
+    "about/_authors.rst",
+    "common_links.rst",
+    "notebooks/langmuir_samples",
+    "plasmapy_sphinx",
+    "Thumbs.db",
+]
+
+html_extra_path = ["robots.txt"]
+
+rst_prolog = """
+.. role:: py(code)
+   :language: python
+
+.. role:: bash(code)
+   :language: bash
+"""
+
+rst_epilog = ""
+with open("common_links.rst") as cl:  # noqa: PTH123
+    rst_epilog += cl.read()
+
+# Configure plasmapy_sphinx
+
 autosummary_generate = True
 automodapi_custom_groups = {
     "aliases": {
@@ -57,6 +130,7 @@ automodapi_custom_groups = {
         "dunder": "__lite_funcs__",
     },
 }
+
 automodapi_group_order = (
     "modules",
     "classes",
@@ -67,37 +141,6 @@ automodapi_group_order = (
     "lite-functions",
     "variables",
 )
-
-# If your documentation needs a minimal Sphinx version, state it here.
-
-needs_sphinx = "6.1.3"
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones. When extensions are removed or added, please update the section
-# in docs/doc_guide.rst on Sphinx extensions.
-
-extensions = [
-    "sphinx.ext.autodoc",
-    "sphinx.ext.extlinks",
-    "sphinx.ext.graphviz",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.mathjax",
-    "sphinx.ext.napoleon",
-    "sphinx.ext.todo",
-    "nbsphinx",
-    "sphinxcontrib.bibtex",
-    "sphinx_copybutton",
-    "sphinx_gallery.load_style",
-    "IPython.sphinxext.ipython_console_highlighting",
-    "sphinx_changelog",
-    "sphinx_tabs.tabs",
-    "hoverxref.extension",
-    "notfound.extension",
-    "sphinx_issues",
-    "sphinx_reredirects",
-    "plasmapy_sphinx",
-]
 
 # Configure sphinxcontrib-bibtex
 
@@ -111,34 +154,33 @@ bibtex_cite_id = "{key}"
 # the section in docs/doc_guide.rst on references to other packages.
 
 intersphinx_mapping = {
-    "readthedocs": ("https://docs.readthedocs.io/en/stable/", None),
-    "python": ("https://docs.python.org/3/", None),
-    "numpy": ("https://numpy.org/doc/stable/", None),
-    "scipy": ("https://docs.scipy.org/doc/scipy/", None),
-    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
     "astropy": ("https://docs.astropy.org/en/stable/", None),
-    "pytest": ("https://docs.pytest.org/en/stable/", None),
-    "sphinx_automodapi": (
-        "https://sphinx-automodapi.readthedocs.io/en/latest/",
-        None,
-    ),
-    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
-    "numba": ("https://numba.readthedocs.io/en/stable/", None),
     "lmfit": ("https://lmfit.github.io/lmfit-py/", None),
+    "numba": ("https://numba.readthedocs.io/en/stable/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
+    "pytest": ("https://docs.pytest.org/en/stable/", None),
+    "python": ("https://docs.python.org/3/", None),
+    "readthedocs": ("https://docs.readthedocs.io/en/stable/", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/", None),
+    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+    "sphinx_automodapi": ("https://sphinx-automodapi.readthedocs.io/en/latest/", None),
 }
 
+# Configure sphinx-hoverxref
+
 hoverxref_intersphinx = [
-    "readthedocs",
-    "python",
-    "numpy",
-    "scipy",
-    "pandas",
     "astropy",
-    "pytest",
-    "sphinx_automodapi",
-    "sphinx",
-    "numba",
     "lmfit",
+    "numba",
+    "numpy",
+    "pandas",
+    "pytest",
+    "python",
+    "readthedocs",
+    "scipy",
+    "sphinx",
+    "sphinx_automodapi",
 ]
 
 autoclass_content = "both"
@@ -148,24 +190,6 @@ autodoc_typehints_format = "short"
 
 issues_github_path = "PlasmaPy/PlasmaPy"
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
-
-# The suffix(es) of source filenames.
-# You can specify multiple suffix as a list of string:
-#
-# source_suffix = ['.rst', '.md']
-source_suffix = ".rst"
-
-# The root toctree document.
-root_doc = "index"
-
-# General information about the project.
-project = "PlasmaPy"
-author = "PlasmaPy Community"
-copyright = f"2015–{datetime.utcnow().year}, {author}"  # noqa: A001
-language = "en"
-
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
@@ -174,48 +198,18 @@ language = "en"
 #  Note: If plasmapy.__version__ can not be defined then it is set to 'unknown'.
 #        However, release needs to be a semantic style version number, so set
 #        the 'unknown' case to ''.
+
 release = "" if release == "unknown" else release
 pv = parse_version(release)
 release = pv.public
 version = ".".join(release.split(".")[:2])  # short X.Y version
 revision = pv.local[1:] if pv.local is not None else ""
 
-# This is added to the end of RST files — a good place to put substitutions to
-# be used globally.
-rst_epilog = ""
-with open("common_links.rst") as cl:  # noqa: PTH123
-    rst_epilog += cl.read()
+# Configure sphinx.ext.todo
 
-rst_prolog = """
-.. role:: py(code)
-   :language: python
-
-.. role:: bash(code)
-   :language: bash
-"""
-
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = [
-    "_build",
-    "Thumbs.db",
-    ".DS_Store",
-    "notebooks/langmuir_samples",
-    "**.ipynb_checkpoints",
-    "plasmapy_sphinx",
-    "common_links.rst",
-    "**Untitled*",
-]
-
-html_extra_path = ["robots.txt"]
-
-# If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
 
-default_role = "py:obj"
-
-# Customizations for make linkcheck using regular expressions
+# Customizations for `make linkcheck` using regular expressions
 
 linkcheck_allowed_redirects = {
     r"https://doi\.org/.+": r"https://.+",  # DOI links are more persistent
@@ -411,25 +405,18 @@ nitpick_ignore_regex = [
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_logo = "./_static/with-text-light-190px.png"
-html_theme_options = {
-    "logo_only": True,
-    #
-    # TOC options
-    #   https://sphinx-rtd-theme.readthedocs.io/en/stable/configuring.html#theme-options
-    "includehidden": False,
-}
 
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+# Configure sphinx_rtd_theme
+# https://sphinx-rtd-theme.readthedocs.io/en/stable/configuring.html#theme-options
+
+html_theme = "sphinx_rtd_theme"
+html_logo = "./_static/with-text-light-190px.png"
+html_theme_options = {"logo_only": True, "includehidden": False}
 
 # A list of prefixes that are ignored for sorting the Python module
 # index (e.g., if this is set to ['foo.'], then foo.bar is shown under
@@ -440,35 +427,6 @@ modindex_common_prefix = ["plasmapy."]
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = "PlasmaPydoc"
-
-# -- Options for LaTeX output ---------------------------------------------
-
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    # 'papersize': 'letterpaper',
-    #
-    # The font size ('10pt', '11pt' or '12pt').
-    # 'pointsize': '10pt',
-    #
-    # Additional stuff for the LaTeX preamble.
-    # 'preamble': '',
-    #
-    # Latex figure (float) alignment
-    # 'figure_align': 'htbp',
-}
-
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (
-        root_doc,
-        "PlasmaPy.tex",
-        "PlasmaPy Documentation",
-        "PlasmaPy Community",
-        "manual",
-    )
-]
 
 # -- Options for manual page output ---------------------------------------
 
