@@ -973,11 +973,6 @@ extensions:
 These extensions are specified in :confval:`extensions` configuration
 value in |docs/conf.py|_.
 
-When an extension contains new |roles| or |directives|, it may be
-necessary to add them to ``rst-roles`` and ``rst-directives`` in the
-``[flake8]`` section of |tox.ini|_ to avoid linter errors during
-continuous integration tests in pull requests.
-
 .. _external-references:
 
 Cross-referencing external packages
@@ -1355,6 +1350,17 @@ single really long line, rewording the changelog entry, or using
 .. _Sphinx's documentation on lists:
   https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#lists-and-quote-like-blocks
 
+Could not match a code example to HTML
+--------------------------------------
+
+This warning occurs when `sphinx-codeautolink`_ cannot match a
+code object to its corresponding documentation. Double check that the
+code is correct, and consider adding any missing :py:`import`
+statements. The documentation for this extension contains `examples
+<https://sphinx-codeautolink.readthedocs.io/en/latest/examples.html>`__
+on how to skip blocks with ``.. autolink-skip::`` and how to do
+invisible imports with ``.. autolink-preface::``.
+
 Errors that are unrelated to a pull request
 -------------------------------------------
 
@@ -1406,6 +1412,7 @@ version of the package that can be revisited later.
 .. _raises: https://numpydoc.readthedocs.io/en/latest/format.html#raises
 .. _raw string: https://docs.python.org/3/reference/lexical_analysis.html#literals
 .. _Read the Docs Sphinx Theme: https://sphinx-rtd-theme.readthedocs.io
+.. _sphinx-codeautolink: https://sphinx-codeautolink.readthedocs.io
 .. _Sphinx's glossary: https://www.sphinx-doc.org/en/master/glossary.html
 .. _Sphinx's templating page: https://www.sphinx-doc.org/en/master/templating.html
 .. _style overrides: https://docs.readthedocs.io/en/stable/guides/adding-custom-css.html
