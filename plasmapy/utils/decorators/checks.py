@@ -138,7 +138,9 @@ class CheckValues(CheckBase):
     }
 
     def __init__(
-        self, checks_on_return: dict[str, bool] = None, **checks: dict[str, bool]
+        self,
+        checks_on_return: Optional[dict[str, bool]] = None,
+        **checks: dict[str, bool],
     ):
         super().__init__(checks_on_return=checks_on_return, **checks)
 
@@ -639,7 +641,7 @@ class CheckUnits(CheckBase):
                     msg += f"argument {param.name} "
                 msg += f"of function {self.f.__name__}()."
                 raise ValueError(msg)
-            elif _units is None:  # noqa: RET507
+            elif _units is None:
                 _units = _units_anno
                 _units_are_from_anno = True
                 _units_anno = None
@@ -957,7 +959,7 @@ class CheckUnits(CheckBase):
         return allowed_units
 
     @staticmethod
-    def _normalize_equivalencies(equivalencies):  # noqa: D400
+    def _normalize_equivalencies(equivalencies):
         """
         Normalize equivalencies to ensure each is in a 4-tuple of the
         form `(from_unit, to_unit, forward_func, backward_func)`.
@@ -1041,7 +1043,9 @@ class CheckUnits(CheckBase):
 
 
 def check_units(
-    func=None, checks_on_return: dict[str, Any] = None, **checks: dict[str, Any]
+    func=None,
+    checks_on_return: Optional[dict[str, Any]] = None,
+    **checks: dict[str, Any],
 ):
     """
     A decorator to 'check' — limit/control — the units of input and return
@@ -1176,7 +1180,9 @@ def check_units(
 
 
 def check_values(
-    func=None, checks_on_return: dict[str, bool] = None, **checks: dict[str, bool]
+    func=None,
+    checks_on_return: Optional[dict[str, bool]] = None,
+    **checks: dict[str, bool],
 ):
     """
     A decorator to 'check' — limit/control — the values of input and

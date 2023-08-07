@@ -545,7 +545,7 @@ def test_Particle_class(arg, kwargs, expected_dict):
 
         else:
             try:
-                result = eval(f"particle.{key}")  # noqa: PGH001
+                result = eval(f"particle.{key}")  # noqa: PGH001, S307
                 assert result == expected or u.isclose(result, expected, equal_nan=True)
             except AssertionError:
                 errmsg += (
@@ -556,7 +556,7 @@ def test_Particle_class(arg, kwargs, expected_dict):
                 errmsg += f"\n{call}.{key} raises an unexpected exception."
 
     if errmsg:
-        raise Exception(f"Problems with {call}:{errmsg}")  # noqa: BLE001, TRY002
+        raise Exception(f"Problems with {call}:{errmsg}")  # noqa: TRY002
 
 
 equivalent_particles_table = [

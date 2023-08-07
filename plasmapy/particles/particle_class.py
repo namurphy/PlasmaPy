@@ -223,9 +223,9 @@ class AbstractPhysicalParticle(AbstractParticle):
     def is_category(
         self,
         *category_tuple,
-        require: Union[str, Iterable[str]] = None,
-        any_of: Union[str, Iterable[str]] = None,
-        exclude: Union[str, Iterable[str]] = None,
+        require: Optional[Union[str, Iterable[str]]] = None,
+        any_of: Optional[Union[str, Iterable[str]]] = None,
+        exclude: Optional[Union[str, Iterable[str]]] = None,
     ) -> bool:
         """Determine if the particle meets categorization criteria.
 
@@ -1876,7 +1876,13 @@ class DimensionlessParticle(AbstractParticle):
     'ξ'
     """
 
-    def __init__(self, *, mass: Real = None, charge: Real = None, symbol: str = None):
+    def __init__(
+        self,
+        *,
+        mass: Optional[Real] = None,
+        charge: Optional[Real] = None,
+        symbol: Optional[str] = None,
+    ):
         try:
             self.mass = mass
             self.charge = charge
@@ -1913,9 +1919,7 @@ class DimensionlessParticle(AbstractParticle):
         elif isinstance(obj, bool):
             raise TypeError("Expecting a real number, not a bool.")
         elif isinstance(obj, u.Quantity) and not isinstance(obj.value, Real):
-            raise ValueError(  # noqa: TRY004
-                "The value of a Quantity must be a real number."
-            )
+            raise ValueError("The value of a Quantity must be a real number.")
 
         try:
             new_obj = np.float64(obj)
