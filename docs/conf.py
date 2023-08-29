@@ -415,6 +415,8 @@ nitpick_ignore_regex = [
     # plasmapy_sphinx
     (python_role, "automod.*"),
     (python_role, "Builder"),
+    (python_role, "Documenter"),
+    (python_role, "Node"),
     (python_role, "docutils.*"),
     (python_role, "level"),
     (python_role, ".*member.*"),
