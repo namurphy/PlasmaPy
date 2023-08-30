@@ -2,11 +2,11 @@
 Tests for 'check` decorators (i.e. decorators that only check objects but do not
 change them).
 """
+import astropy.units as u
 import inspect
 import numpy as np
 import pytest
 
-from astropy import units as u
 from astropy.constants import c
 from types import LambdaType
 from unittest import mock
@@ -75,11 +75,11 @@ class TestCheckUnits:
         return x.value + y.value
 
     @staticmethod
-    def foo_stars(x: u.Quantity, *args, y=3 * u.cm, **kwargs):
+    def foo_stars(x: u.Quantity, *args, y=3 * u.cm, **kwargs):  # noqa: ANN205
         return x.value + y.value
 
     @staticmethod
-    def foo_with_none(x: u.Quantity, y: u.cm = None):
+    def foo_with_none(x: u.Quantity, y: u.cm = None):  # noqa: ANN205
         return x.value + y.value
 
     def test_inheritance(self):
