@@ -1,6 +1,6 @@
 name: 💡 Feature request
 description: |
-  Help shape the future of PlasmaPy by requesting a new feature
+  Help shape the future of PlasmaPy by requesting a new feature.
 labels: [feature request]
 body:
 - type: textarea

@@ -1,6 +1,6 @@
 name: 🛠️ Package improvements
 description: |
-  Improve package infrastructure or refactor existing functionality
+  Improve package infrastructure or refactor existing functionality.
 labels: [refactoring]
 body:
 - type: textarea
