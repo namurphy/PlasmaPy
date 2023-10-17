@@ -37,7 +37,7 @@ from plasmapy.particles.exceptions import (
     ParticleError,
     ParticleWarning,
 )
-from plasmapy.utils import PlasmaPyDeprecationWarning, roman
+from plasmapy.utils import roman
 from plasmapy.utils._units_helpers import _get_physical_type_dict
 
 if TYPE_CHECKING:
@@ -240,17 +240,17 @@ class AbstractPhysicalParticle(AbstractParticle):
             Required categories in the form of one or more `str` objects
             or an iterable.
 
-        require : `str` or iterable of `str`, optional, |keyword-only|
+        require : `str` or iterable of `str`, |keyword-only|, optional
             One or more particle categories. This method will return
             `False` if the particle does not belong to all of these
             categories.
 
-        any_of : `str` or iterable of `str`, optional, |keyword-only|
+        any_of : `str` or iterable of `str`, |keyword-only|, optional
             One or more particle categories. This method will return
             `False` if the particle does not belong to at least one of
             these categories.
 
-        exclude : `str` or iterable of `str`, optional, |keyword-only|
+        exclude : `str` or iterable of `str`, |keyword-only|, optional
             One or more particle categories.  This method will return
             `False` if the particle belongs to any of these categories.
 
@@ -393,10 +393,10 @@ class Particle(AbstractPhysicalParticle):
         integer representing the atomic number of an element; or a
         |Particle|.
 
-    mass_numb : integer, optional, |keyword-only|
+    mass_numb : integer, |keyword-only|, optional
         The mass number of an isotope.
 
-    Z : integer, optional, |keyword-only|
+    Z : integer, |keyword-only|, optional
         The |charge number| of an ion or neutral atom.
 
     Raises
@@ -1697,7 +1697,7 @@ class Particle(AbstractPhysicalParticle):
 
         Parameters
         ----------
-        n : positive integer, optional, default: ``1``
+        n : positive integer, default: ``1``
             The number of bound electrons to remove from the |Particle|
             object.
 
@@ -1848,13 +1848,13 @@ class DimensionlessParticle(AbstractParticle):
 
     Parameters
     ----------
-    mass : positive real number, optional, |keyword-only|, default: |nan|
+    mass : positive real number, |keyword-only|, default: |nan|
         The mass of the dimensionless particle.
 
-    charge : real number, optional, |keyword-only|, default: |nan|
+    charge : real number, |keyword-only|, default: |nan|
         The electric charge of the dimensionless particle.
 
-    symbol : str, optional, |keyword-only|
+    symbol : str, |keyword-only|, optional
         The symbol to be assigned to the dimensionless particle.
 
     See Also
@@ -2041,7 +2041,7 @@ class CustomParticle(AbstractPhysicalParticle):
         `~astropy.units.Quantity`, then it must be in units of electric
         charge. Defaults to |nan| C.
 
-    Z : ~numbers.Real, optional, |keyword-only|
+    Z : ~numbers.Real, |keyword-only|, optional
         The :term:`charge number`, which is equal to the ratio of the
         charge to the elementary charge.
 
@@ -2255,16 +2255,10 @@ class CustomParticle(AbstractPhysicalParticle):
         if np.isnan(q):
             self._charge = q
         elif isinstance(q, Real):
-            self._charge = q * const.e.si
-            warnings.warn(
-                f"CustomParticle charge set to {q} times the elementary charge."
-            )
-            warnings.warn(
-                "Providing a real number to 'charge' is deprecated. To "
-                "specify the charge as a multiple of the elementary "
-                "charge, use 'Z' as a keyword argument instead, or pass, "
-                "e.g., '2 * astropy.constants.e.si' into 'charge'.",
-                PlasmaPyDeprecationWarning,
+            raise TypeError(
+                "'charge' must be a Quantity with units of electrical charge. "
+                "To specify the charge as a multiple of the elementary charge, "
+                "use 'Z' as a keyword argument instead."
             )
         elif isinstance(q, u.Quantity):
             if not isinstance(q.value, Real):
