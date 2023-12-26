@@ -714,7 +714,7 @@ class ClassicalTransport:
 
         See Also
         --------
-        ~plasmapy.formulary.braginskii.ClassicalTransport.ion_viscosity
+        plasmapy.formulary.braginskii.ClassicalTransport.ion_viscosity
         """
         eta_hat = _nondim_viscosity(
             self.hall_e,

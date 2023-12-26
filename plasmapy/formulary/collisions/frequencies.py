@@ -141,7 +141,7 @@ class SingleParticleCollisionFrequencies:
 
     See Also
     --------
-    ~plasmapy.formulary.collisions.coulomb.Coulomb_logarithm
+    plasmapy.formulary.collisions.coulomb.Coulomb_logarithm
     """
 
     @particles.particle_input

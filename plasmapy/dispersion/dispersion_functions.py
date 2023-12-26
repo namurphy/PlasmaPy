@@ -46,7 +46,7 @@ def plasma_dispersion_func(
 
     See Also
     --------
-    `~plasmapy.dispersion.dispersion_functions.plasma_dispersion_func_deriv`
+    plasma_dispersion_func_deriv
 
     Notes
     -----
@@ -111,7 +111,7 @@ def plasma_dispersion_func_deriv(
 
     See Also
     --------
-    `~plasmapy.dispersion.dispersion_functions.plasma_dispersion_func`
+    plasma_dispersion_func
 
     Examples
     --------

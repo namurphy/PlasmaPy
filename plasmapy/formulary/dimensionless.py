@@ -182,10 +182,10 @@ def Hall_parameter(
 
     See Also
     --------
-    ~plasmapy.formulary.frequencies.gyrofrequency
-    ~plasmapy.formulary.collisions.frequencies.fundamental_electron_collision_freq
-    ~plasmapy.formulary.collisions.frequencies.fundamental_ion_collision_freq
-    ~plasmapy.formulary.collisions.coulomb.Coulomb_logarithm
+    plasmapy.formulary.frequencies.gyrofrequency
+    plasmapy.formulary.collisions.frequencies.fundamental_electron_collision_freq
+    plasmapy.formulary.collisions.frequencies.fundamental_ion_collision_freq
+    plasmapy.formulary.collisions.coulomb.Coulomb_logarithm
 
     Returns
     -------

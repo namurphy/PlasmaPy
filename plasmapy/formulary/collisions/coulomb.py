@@ -417,7 +417,7 @@ def Coulomb_logarithm(
 
     See Also
     --------
-    ~plasmapy.formulary.collisions.lengths.impact_parameter : Computes
+    plasmapy.formulary.collisions.lengths.impact_parameter : Computes
         :math:`b_{min}` and :math:`b_{max}`.
     """
     # fetching impact min and max impact parameters

@@ -365,8 +365,8 @@ class AlfvenWave(AbstractMHDWave):
 
     See Also
     --------
-    ~plasmapy.dispersion.analytical.mhd_waves_.FastMagnetosonicWave
-    ~plasmapy.dispersion.analytical.mhd_waves_.SlowMagnetosonicWave
+    plasmapy.dispersion.analytical.mhd_waves_.FastMagnetosonicWave
+    plasmapy.dispersion.analytical.mhd_waves_.SlowMagnetosonicWave
 
     Examples
     --------
@@ -583,8 +583,8 @@ class FastMagnetosonicWave(AbstractMHDWave):
 
     See Also
     --------
-    ~plasmapy.dispersion.analytical.mhd_waves_.AlfvenWave
-    ~plasmapy.dispersion.analytical.mhd_waves_.SlowMagnetosonicWave
+    plasmapy.dispersion.analytical.mhd_waves_.AlfvenWave
+    plasmapy.dispersion.analytical.mhd_waves_.SlowMagnetosonicWave
 
     Notes
     -----
@@ -829,8 +829,8 @@ class SlowMagnetosonicWave(AbstractMHDWave):
 
     See Also
     --------
-    ~plasmapy.dispersion.analytical.mhd_waves_.AlfvenWave
-    ~plasmapy.dispersion.analytical.mhd_waves_.FastMagnetosonicWave
+    plasmapy.dispersion.analytical.mhd_waves_.AlfvenWave
+    plasmapy.dispersion.analytical.mhd_waves_.FastMagnetosonicWave
 
     Notes
     -----
