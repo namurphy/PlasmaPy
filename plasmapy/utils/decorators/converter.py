@@ -6,8 +6,13 @@ import astropy.units as u
 import inspect
 import wrapt
 
+from collections.abc import Callable, Iterable, MutableMapping
+from typing import Any, Union
 
-def angular_freq_to_hz(fn):
+
+def angular_freq_to_hz(
+    fn: Callable[..., Any],
+) -> Union[u.Quantity[u.Hz], u.Quantity[u.rad / u.s]]:
     """
     A decorator that enables a function to convert its return
     value from angular frequency (rad/s) to frequency (Hz).
@@ -109,10 +114,15 @@ def angular_freq_to_hz(fn):
     new_sig = inspect.Signature(
         parameters=new_params, return_annotation=sig.return_annotation
     )
-    fn.__signature__ = new_sig
+    fn.__signature__ = new_sig  # type: ignore[attr-defined]
 
     @wrapt.decorator
-    def wrapper(fn, instance, args, kwargs):  # noqa: ARG001
+    def wrapper(
+        fn: Callable[..., Any],
+        instance: Any,
+        args: Iterable[Any],
+        kwargs: MutableMapping[str, Any],
+    ) -> Union[u.Quantity[u.Hz], u.Quantity[u.rad / u.s]]:
         to_hz = kwargs.pop("to_hz", False)
         _result = fn(*args, **kwargs)
         if to_hz:
