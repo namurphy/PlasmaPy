@@ -119,7 +119,7 @@ def angular_freq_to_hz(
     @wrapt.decorator
     def wrapper(
         fn: Callable[..., Any],
-        instance: Any,
+        instance: Any,  # noqa: ARG001
         args: Iterable[Any],
         kwargs: MutableMapping[str, Any],
     ) -> Union[u.Quantity[u.Hz], u.Quantity[u.rad / u.s]]:
