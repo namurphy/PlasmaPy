@@ -10,7 +10,6 @@ __all__ = ["ParticleTracker"]
 import astropy.units as u
 import numpy as np
 import scipy.interpolate as interp
-
 from astropy import constants
 
 from plasmapy.particles import atomic
@@ -94,12 +93,12 @@ class ParticleTracker:
         self,
         plasma,
         particle_type="p",
-        n_particles=1,
+        n_particles: int = 1,
         scaling=1,
         dt=np.inf * u.s,
         nt=np.inf,
         integrator="explicit_boris",
-    ):
+    ) -> None:
         if np.isinf(dt) and np.isinf(nt):
             raise ValueError("Both dt and nt are infinite.")
 
@@ -162,7 +161,7 @@ class ParticleTracker:
         """
         return (self.velocity_history**2).sum(axis=-1) * self.eff_m / 2
 
-    def boris_push(self, init=False):
+    def boris_push(self, init: bool = False):
         r"""
         Implement the Boris algorithm for moving particles and updating their
         velocities.
@@ -241,7 +240,6 @@ class ParticleTracker:
     def plot_trajectories(self):
         r"""Draw trajectory history."""
         import matplotlib.pyplot as plt
-
         from astropy.visualization import quantity_support
 
         quantity_support()
@@ -268,7 +266,6 @@ class ParticleTracker:
             letters included in ``plot``.
         """
         import matplotlib.pyplot as plt
-
         from astropy.visualization import quantity_support
 
         quantity_support()

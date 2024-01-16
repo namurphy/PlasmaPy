@@ -6,19 +6,19 @@ __all__ = [
     "Knudsen_number",
 ]
 
+from numbers import Real
+
 import astropy.units as u
 import numpy as np
-
 from astropy.constants.si import e, eps0, k_B
-from numbers import Real
 
 from plasmapy import particles
 from plasmapy.formulary.collisions import lengths, misc
 from plasmapy.formulary.mathematics import Fermi_integral
 from plasmapy.formulary.quantum import (
+    Wigner_Seitz_radius,
     chemical_potential,
     thermal_deBroglie_wavelength,
-    Wigner_Seitz_radius,
 )
 from plasmapy.utils.decorators import validate_quantities
 
@@ -28,13 +28,13 @@ from plasmapy.utils.decorators import validate_quantities
     n_e={"can_be_negative": False},
 )
 def coupling_parameter(
-    T: u.K,
-    n_e: u.m**-3,
+    T: u.Quantity[u.K],
+    n_e: u.Quantity[u.m**-3],
     species,
     z_mean: Real = np.nan,
-    V: u.m / u.s = np.nan * u.m / u.s,
+    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
     method="classical",
-) -> u.dimensionless_unscaled:
+) -> u.Quantity[u.dimensionless_unscaled]:
     r"""
     Ratio of the Coulomb energy to the kinetic (usually thermal) energy.
 
@@ -225,13 +225,13 @@ def coupling_parameter(
 )
 def Knudsen_number(
     characteristic_length,
-    T: u.K,
-    n_e: u.m**-3,
+    T: u.Quantity[u.K],
+    n_e: u.Quantity[u.m**-3],
     species,
     z_mean: Real = np.nan,
-    V: u.m / u.s = np.nan * u.m / u.s,
+    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
     method="classical",
-) -> u.dimensionless_unscaled:
+) -> u.Quantity[u.dimensionless_unscaled]:
     r"""
     Knudsen number (dimensionless).
 

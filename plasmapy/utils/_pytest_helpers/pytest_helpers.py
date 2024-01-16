@@ -6,18 +6,19 @@ __all__ = [
     "run_test_equivalent_calls",
 ]
 
-import astropy.constants as const
-import astropy.tests.helper as astrohelper
-import astropy.units as u
 import collections
 import contextlib
 import functools
 import inspect
+import warnings
+from collections.abc import Callable
+from typing import Any, Optional
+
+import astropy.constants as const
+import astropy.tests.helper as astrohelper
+import astropy.units as u
 import numpy as np
 import pytest
-import warnings
-
-from typing import Any, Callable, Optional
 
 from plasmapy.tests._helpers.exceptions import (
     InvalidTestError,
@@ -632,7 +633,7 @@ def assert_can_handle_nparray(  # noqa: C901
     insert_some_nans=None,
     insert_all_nans=None,
     kwargs=None,
-):
+) -> None:
     """
     Test for ability to handle numpy array quantities.
 
@@ -684,7 +685,7 @@ def assert_can_handle_nparray(  # noqa: C901
         kwargs = {}
 
     def _prepare_input(  # noqa: C901
-        param_name, param_default, insert_some_nans, insert_all_nans, kwargs
+        param_name: str, param_default, insert_some_nans, insert_all_nans, kwargs
     ):
         """
         Parse parameter names and set up values to input for 0d, 1d, and 2d array tests.

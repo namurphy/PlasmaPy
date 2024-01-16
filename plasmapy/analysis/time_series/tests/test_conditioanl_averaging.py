@@ -3,7 +3,6 @@
 import astropy.units as u
 import numpy as np
 import pytest
-
 from astropy.units import UnitsError
 
 from plasmapy.analysis.time_series.conditional_averaging import ConditionalEvents
@@ -47,7 +46,7 @@ def test_ConditionalEvents_Errors(
     length_of_return,
     distance,
     exception,
-):
+) -> None:
     """Test whether exception is risen"""
     with pytest.raises(exception):
         ConditionalEvents(
@@ -228,7 +227,7 @@ def test_ConditionalEvents_class(
     length_of_return,
     distance,
     expected,
-):
+) -> None:
     """Tests for ConditionalEvents class"""
     cond_events = ConditionalEvents(
         signal,
@@ -311,7 +310,7 @@ def test_peak_not_max_value(
     distance,
     remove_non_max_peaks,
     expected,
-):
+) -> None:
     """Tests for ConditionalEvents class"""
     cond_events = ConditionalEvents(
         signal,

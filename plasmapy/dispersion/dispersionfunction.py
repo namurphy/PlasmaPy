@@ -10,15 +10,15 @@ Module containing functionality focused on the plasma dispersion function
 """
 __all__ = ["plasma_dispersion_func", "plasma_dispersion_func_deriv"]
 
-import astropy.units as u
-import numpy as np
 import warnings
-
 from typing import Union
 
+import astropy.units as u
+import numpy as np
+
 from plasmapy.dispersion import dispersion_functions
-from plasmapy.utils import PlasmaPyFutureWarning
 from plasmapy.utils.decorators import bind_lite_func, preserve_signature
+from plasmapy.utils.exceptions import PlasmaPyFutureWarning
 
 
 @preserve_signature
@@ -49,7 +49,7 @@ def plasma_dispersion_func_lite(zeta):
 
 @bind_lite_func(plasma_dispersion_func_lite)
 def plasma_dispersion_func(
-    zeta: Union[complex, np.ndarray, u.Quantity]
+    zeta: Union[complex, np.ndarray, u.Quantity],
 ) -> Union[complex, np.ndarray, u.Quantity]:
     r"""
     Calculate the plasma dispersion function.
@@ -100,7 +100,7 @@ def plasma_dispersion_func_deriv_lite(zeta):
 
 @bind_lite_func(plasma_dispersion_func_deriv_lite)
 def plasma_dispersion_func_deriv(
-    zeta: Union[complex, np.ndarray, u.Quantity]
+    zeta: Union[complex, np.ndarray, u.Quantity],
 ) -> Union[complex, np.ndarray, u.Quantity]:
     r"""
     Calculate the derivative of the plasma dispersion function.
