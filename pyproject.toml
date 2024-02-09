@@ -21,7 +21,7 @@ keywords = [
   "space plasmas",
 ]
 license = {file = "LICENSE.md"}
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Education",
@@ -67,7 +67,8 @@ docs = [
   "pygments >= 2.17.2",
   # install setuptools to get pkg_resources for doc build
   "setuptools; python_version >= '3.12'",
-  "sphinx >= 7.2.6",
+  # see issue 2497
+  "sphinx == 7.2.6",
   "sphinx-changelog >= 1.5.0",
   "sphinx-codeautolink >= 0.15.0",
   "sphinx-copybutton >= 0.5.2",
@@ -213,7 +214,24 @@ type_incorrect = "Incorrect changelog type (see `changelog/README.rst`)"
 type_incorrect_long = "The filename of the changelog entry must be of the form `changelog/NUMBER.TYPE.rst` where `TYPE` is one of `feature`, `trivial`, `doc`, `bugfix`, `breaking`, or `removal`.\n\nFor details, see: https://docs.plasmapy.org/en/latest/contributing/changelog_guide.html#adding-a-changelog-entry"
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
+namespace-packages = [".github/workflows", "docs"]
+output-format = "grouped"
+show-fixes = true
+extend-exclude = [
+  "docs/plasmapy_sphinx",
+  ".idea",
+  ".hypothesis",
+  ".jupyter",
+  "__pycache__",
+  "_dev",
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+line-ending = "lf"
+
+[tool.ruff.lint]
 extend-select = [
   "A", # flake8-builtins
   "ANN204", # missing-return-type-special-method
@@ -261,7 +279,6 @@ extend-select = [
   "RUF008", # mutable-dataclass-default
   "RUF009", # function-call-in-dataclass-default-argument
   "RUF010", # explicit-f-string-type-conversion
-  "RUF011", # static-key-dict-comprehension
   "RUF013", # implicit-optional
   "RUF015", # unnecessary-iterable-allocation-for-first-element
   "RUF016", # invalid-index-type
@@ -318,38 +335,41 @@ ignore = [
   "TD003", # missing-todo-link
   "TRY003", # raise-vanilla-args
   "TRY301", # raise-within-try
-  "UP006", # non-pep585-annotation
-  "UP007", # non-pep604-annotation
   "UP025", # unicode-kind-prefix
   "W191", # tab-indentation (formatter conflict)
 ]
-extend-exclude = [
-  "docs/plasmapy_sphinx",
-  ".jupyter",
-  "__pycache__",
-  "_build",
-  "_dev",
-]
 dummy-variable-rgx = "Z|mass_numb|request|event"
-namespace-packages = [".github/workflows", "docs"]
-show-fixes = true
-show-source = true
+ignore-init-module-imports = true
 
-[tool.ruff.flake8-annotations]
+[tool.ruff.lint.flake8-annotations]
 allow-star-arg-any = true
 ignore-fully-untyped = true
 mypy-init-return = true
 suppress-dummy-args = true
 suppress-none-returning = true
 
-[tool.ruff.flake8-import-conventions.aliases]
+[tool.ruff.lint.flake8-import-conventions]
+banned-from = [
+  "astropy.units",
+  "matplotlib.pyplot",
+  "numpy",
+  "pytest",
+  "warnings",
+]
+
+[tool.ruff.lint.flake8-import-conventions.aliases]
+"astropy.constants" = "const"
 "astropy.units" = "u"
+"matplotlib" = "mpl"
 "matplotlib.pyplot" = "plt"
 numpy = "np"
 pandas = "pd"
 
-[tool.ruff.flake8-unused-arguments]
+[tool.ruff.lint.flake8-unused-arguments]
 ignore-variadic-names = true
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "typing.Callable".msg = "Deprecated alias. Change to collections.abc.Callable"
@@ -367,10 +387,10 @@ ignore-variadic-names = true
 "typing.Tuple".msg = "Deprecated alias. Change to tuple"
 "typing.Type".msg = "Deprecated alias. Change to type"
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 10
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["D104", "E402", "F401", "F402", "F403"] # ignore import errors
 ".github/scripts/*.py" = ["D103", "INP001"]
 "docs/conf.py" = ["D100", "D103", "E402", "EXE001", "EXE005", "F401"]
@@ -386,7 +406,7 @@ max-complexity = 10
 "test_*" = ["D100", "D101", "D102", "D103", "D104", "D209", "D400", "D401", "N801", "SLF001"]
 "*/*/tests/__init__.py" = ["D104"]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
 
 [tool.towncrier]
