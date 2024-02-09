@@ -67,8 +67,12 @@ def _test_grid(  # noqa: C901, PLR0912
     if L.size > 1:
         L = np.max(L)
 
-    if name == "empty":
-        pass
+    if name == "axially_magnetized_cylinder":
+        if a is None:
+            a = L / 4
+        radius = np.linalg.norm(grid.grid[..., 0:2] * grid.unit, axis=3)
+        Bz = np.where(radius < a, B0, 0 * u.T)
+        grid.add_quantities(B_z=Bz)
 
     elif name == "constant_bz":
         Bz = np.ones(grid.shape) * B0
@@ -77,13 +81,6 @@ def _test_grid(  # noqa: C901, PLR0912
     elif name == "constant_ex":
         Ex = np.ones(grid.shape) * E0
         grid.add_quantities(E_x=Ex)
-
-    elif name == "axially_magnetized_cylinder":
-        if a is None:
-            a = L / 4
-        radius = np.linalg.norm(grid.grid[..., 0:2] * grid.unit, axis=3)
-        Bz = np.where(radius < a, B0, 0 * u.T)
-        grid.add_quantities(B_z=Bz)
 
     elif name == "electrostatic_discontinuity":
         if a is None:
@@ -116,7 +113,7 @@ def _test_grid(  # noqa: C901, PLR0912
 
         grid.add_quantities(E_x=-Ex, E_y=-Ey, E_z=-Ez, phi=potential)
 
-    else:
+    elif name != "empty":
         raise ValueError(
             f"No example corresponding to the provided name ({name}) exists."
         )

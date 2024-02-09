@@ -969,9 +969,9 @@ class Test__nondim_visc_e_braginskii:
         beta_hat = _nondim_visc_e_braginskii(self.big_hall, Z)
         if idx == 0:
             assert np.isclose(beta_hat[idx], expected, atol=1e-2)
-        elif idx in (1, 2):
+        elif idx in {1, 2}:
             assert np.isclose(beta_hat[idx] * self.big_hall**2, expected, atol=1e-2)
-        elif idx in (3, 4):
+        elif idx in {3, 4}:
             assert np.isclose(beta_hat[idx] * self.big_hall, expected, atol=1e-1)
 
 

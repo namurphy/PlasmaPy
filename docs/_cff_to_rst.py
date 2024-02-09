@@ -122,10 +122,7 @@ def begin_author_line(author: dict[str, str]) -> str:
     if not alias or alias in obsolete_github_usernames:
         return f"- {name}"
 
-    if alias == name:
-        return f"- :user:`{alias}`"
-
-    return f"- :user:`{name} <{alias}>`"
+    return f"- :user:`{alias}`" if alias == name else f"- :user:`{name} <{alias}>`"
 
 
 def get_orcid(author: dict[str, str]) -> str:

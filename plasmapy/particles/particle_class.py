@@ -1760,11 +1760,10 @@ class Particle(AbstractPhysicalParticle):
         base_particle = self.isotope or self.element
         new_charge_number = assumed_charge_number + n
 
-        if inplace:
-            self.__init__(base_particle, Z=new_charge_number)
-            return None
-        else:
+        if not inplace:
             return Particle(base_particle, Z=new_charge_number)
+        self.__init__(base_particle, Z=new_charge_number)
+        return None
 
     def recombine(self, n: int = 1, inplace: bool = False):
         """
@@ -1834,11 +1833,10 @@ class Particle(AbstractPhysicalParticle):
         base_particle = self.isotope or self.element
         new_charge_number = self.charge_number - n
 
-        if inplace:
-            self.__init__(base_particle, Z=new_charge_number)
-            return None
-        else:
+        if not inplace:
             return Particle(base_particle, Z=new_charge_number)
+        self.__init__(base_particle, Z=new_charge_number)
+        return None
 
 
 class DimensionlessParticle(AbstractParticle):

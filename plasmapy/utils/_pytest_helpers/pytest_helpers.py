@@ -690,8 +690,8 @@ def assert_can_handle_nparray(  # noqa: C901
         kwargs = {}
 
     def _prepare_input(  # noqa: C901
-        param_name: str, param_default, insert_some_nans, insert_all_nans, kwargs
-    ):
+            param_name: str, param_default, insert_some_nans, insert_all_nans, kwargs
+        ):
         """
         Parse parameter names and set up values to input for 0d, 1d, and 2d array tests.
         """
@@ -699,27 +699,26 @@ def assert_can_handle_nparray(  # noqa: C901
         if param_name in kwargs:
             return (kwargs[param_name],) * 4
 
-        # else, if it's a recognized variable name, give it a reasonable unit and magnitude
-        elif param_name in ("particle", "ion_particle", "ion"):
+        elif param_name in {"particle", "ion_particle", "ion"}:
             if param_default not in (inspect._empty, None):
                 return (param_default,) * 4
             else:
                 return ("p",) * 4
-        elif param_name in ("particles", "species"):
+        elif param_name in {"particles", "species"}:
             if param_default is not inspect._empty:
                 return (param_default,) * 4
             else:
                 return (("e", "p"),) * 4
-        elif param_name in ("T", "T_i", "T_e", "temperature"):
+        elif param_name in {"T", "T_i", "T_e", "temperature"}:
             unit = u.eV
             magnitude = 1.0
-        elif param_name in ("n", "n_i", "n_e", "density"):
+        elif param_name in {"n", "n_i", "n_e", "density"}:
             unit = u.m**-3
             magnitude = 1e20
         elif param_name == "B":
             unit = u.G
             magnitude = 1e3
-        elif param_name in ("V", "Vperp"):
+        elif param_name in {"V", "Vperp"}:
             unit = u.m / u.s
             magnitude = 1e5
         elif param_name == "coulomb_log":
@@ -732,7 +731,6 @@ def assert_can_handle_nparray(  # noqa: C901
             unit = u.m**-1
             magnitude = 1.0
 
-        # else, last resort, if it has a default argument, go with that:
         elif param_default is not inspect._empty:
             return (param_default,) * 4
 
