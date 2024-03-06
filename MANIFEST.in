@@ -16,7 +16,14 @@ include plasmapy/py.typed
 include pyproject.toml
 include tox.ini
 
+exclude binder
 exclude plasmapy/_version.py
+exclude CODEOWNERS
+exclude requirements.txt
+exclude requirements
+exclude .editorconfig
+exclude .sourcery.yaml
+
 
 global-exclude *.o
 global-exclude *.py[cod]
