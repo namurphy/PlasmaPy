@@ -21,6 +21,7 @@ exclude plasmapy/_version.py
 global-exclude *.o
 global-exclude *.py[cod]
 global-exclude _build build
+global-exclude tests
 
 prune docs/api
 
