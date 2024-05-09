@@ -122,6 +122,11 @@ tests = [
   "tox-uv >= 1.7.0",
 ]
 
+lint = [
+  "cffconvert >= 2.0.0",
+  "mypy >= 1.10.0",
+]
+
 [project.urls]
 Changelog = "https://docs.plasmapy.org/en/stable/whatsnew/index.html"
 Chat = "https://plasmapy.org/chat"
