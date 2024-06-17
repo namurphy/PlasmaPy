@@ -5,20 +5,18 @@ Decorators
 
 .. _particles-decorators-particle-input:
 
-Passing |Particle| objects to functions and methods
-===================================================
+Passing particle objects to functions and methods
+=================================================
 
-When calculating plasma parameters, we frequently need to access the
-properties of the particles that make up that plasma. The
-|particle_input| decorator allows functions and methods to easily
-access properties of different particles.
+Calculations of plasma parameters frequently require access to the
+properties of particles that make up that plasma. Decorating functions
+and methods with |particle_input| provides them with straightforward
+acecss to particle properties.
 
-The |particle_input| decorator takes valid representations of particles
-given in arguments to functions and passes through the corresponding
-|Particle| object. The arguments must be annotated with
-|Particle| so that the decorator knows to create the |Particle|
-object. The decorated function can then access particle properties by
-using |Particle| attributes. This decorator will raise an
+The |particle_input| decorator converts |particle-like| and/or
+|particle-list-like| arguments (e.g., :py:`"p+"` or :py:`["p+", "e-"]`)
+into the corresponding |Particle|, |CustomParticle|, or |ParticleList|
+object for use within the function. This decorator will raise an
 |InvalidParticleError| if the input does not correspond to a valid
 particle.
 
@@ -26,22 +24,25 @@ Here is an example of a decorated function.
 
 .. code-block:: python
 
-  from plasmapy.particles import Particle, particle_input
+  from plasmapy.particles import ParticleLike, particle_input
 
 
   @particle_input
-  def particle_mass(particle: Particle):
+  def particle_mass(particle: ParticleLike):
       return particle.mass
 
-This function can now accept either
-|Particle| objects or valid
-representations of particles.
+This function accepts |particle-like| or |particle-list-like| objects as
+arguments. Inside the body of the function, ``particle`` will be a
+|Particle|, |CustomParticle|, or |ParticleList|.
 
->>> particle_mass('p+')  # string input
+>>> particle_mass('p+')
 <Quantity 1.67262192e-27 kg>
+
 >>> proton = Particle("proton")
->>> particle_mass(proton)  # Particle object input
+>>> particle_mass(proton)
 <Quantity 1.67262192e-27 kg>
+
+
 
 If only one positional or keyword argument is annotated with
 |Particle|, then the keywords ``mass_numb`` and ``Z`` may be used when
