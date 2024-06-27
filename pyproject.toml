@@ -267,7 +267,7 @@ verify_pr_number = true
 changelog_skip_label = "no changelog entry needed"
 changelog_noop_label = "skip changelog checks"
 whatsnew_label = "needs changelog entry"
-whatsnew_pattern = '''changelog\/\d+\.\d+\.rst'''
+whatsnew_pattern = '''changelog\/\d+\.[a-zA-Z]+(\.\d+)?\.rst'''
 
 [tool.ruff]
 target-version = "py310"
