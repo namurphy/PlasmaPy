@@ -64,4 +64,6 @@ jobs:
 
     - name: Print troubleshooting information on failure
       if: ${{ failure() }}
-      run: echo -e $CHANGELOG_INSTRUCTIONS
+      run: |
+        echo -e $CHANGELOG_INSTRUCTIONS
+        exit 1
