@@ -158,7 +158,7 @@ def temp_ratio(  # noqa: C901
          \right)^{1/2}\right |
 
     With :math:`η = \frac{n_2}{n_1}`, :math:`θ =
-    \frac{T_2}{T_1}`, :math:`A = 2.60 \times 10^{7} \, {\rm cm}^3
+    \frac{T_2}{T_1}`, :math:`A = 2.60 × 10^{7} \, {\rm cm}^3
     \, {\rm km} \, {\rm K}^{3/2} \, {\rm s}^{-1} \, {\rm au}^{-1}`,
     and :math:`B = 1 \, {\rm cm}^{-3/2}{~\rm K}^{-3/2}`.
 
