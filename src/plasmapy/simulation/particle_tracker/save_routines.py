@@ -209,7 +209,7 @@ class IntervalSaveRoutine(AbstractSaveRoutine):
     def save_now(self) -> bool:
         """Save at every interval given in instantiation."""
 
-        return bool(self.tracker.time - self.time_of_last_save >= self.save_interval)
+        return self.tracker.time - self.time_of_last_save >= self.save_interval
 
     def save(self) -> None:
         """Save the current state of the simulation.
