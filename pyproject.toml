@@ -119,6 +119,7 @@ tests = [
   "pytest-filter-subpackage >= 0.2.0",
   "pytest-regressions >= 2.5.0",
   "pytest-rerunfailures >= 14.0",
+  "pytest-rich >= 0.2.0",
   "pytest-xdist >= 3.6.1",
   "tomli >= 2.0.1",
 ]

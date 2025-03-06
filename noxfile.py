@@ -108,8 +108,9 @@ pytest_command: tuple[str, ...] = (
     "--pyargs",
     "--durations=5",
     "--tb=short",
-    "-n=auto",
-    "--dist=loadfile",
+#    "-n=auto",
+#    "--dist=loadfile",
+    "--rich",
 )
 
 with_doctests: tuple[str, ...] = ("--doctest-modules", "--doctest-continue-on-failure")
