@@ -434,6 +434,13 @@ def mypy(session: nox.Session) -> None:
     session.run(*MYPY_COMMAND, *session.posargs)
 
 
+@nox.session(python=maxpython)
+def basedpyright(session: nox.Session) -> None:
+    """Perform static type checking with basedpyright."""
+    session.install(uv_requirement)
+    session.run("uvx", "basedpyright", "--pythonversion", minpython)
+
+
 @nox.session(name="import")
 def try_import(session: nox.Session) -> None:
     """Install PlasmaPy and import it."""
