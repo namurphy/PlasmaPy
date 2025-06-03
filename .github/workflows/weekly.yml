@@ -50,6 +50,11 @@ jobs:
           python: '3.11'
           nox_session: tests-3.11(lowest-direct)
 
+        - name: Tests, Python 3.13, lowest direct dependencies, Windows
+          os: windows-latest
+          python: '3.13'
+          nox_session: tests-3.13(lowest-direct)
+
         - name: Tests, Python 3.13, astropy-dev, Ubuntu
           os: ubuntu-latest
           python: '3.13'
