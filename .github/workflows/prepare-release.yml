@@ -77,7 +77,7 @@ jobs:
       with:
         title: "Build the changelog and update package metadata prior to v${VERSION}"
         commit-message: "Build changelog and update package metadata"
-        body: This automated pull request builds the changelog and updates package metadata prior to a forthcoming release. After merging, go to this link to [perform the release](https://github.com/PlasmaPy/PlasmaPy/releases/new?tag=v${VERSION}&title=v${VERSION})
+        body: "This automated pull request builds the changelog and updates package metadata prior to a forthcoming release. After merging, go to this link to [perform the release](https://github.com/PlasmaPy/PlasmaPy/releases/new?tag=v${VERSION}&title=v${VERSION}&target=main)."
         labels: skip changelog checks
         delete-branch: true
 #        token: ${{ steps.generate_token.outputs.token }}
