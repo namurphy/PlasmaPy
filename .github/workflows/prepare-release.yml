@@ -64,12 +64,12 @@ jobs:
     # do this are in the documentation for the create-pull-request
     # action.
 
-    - name: Generate token
-      uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
-      id: generate_token
-      with:
-        app_id: ${{ secrets.APP_ID }}
-        private_key: ${{ secrets.APP_PRIVATE_KEY }}
+#    - name: Generate token
+#      uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+#      id: generate_token
+#      with:
+#        app_id: ${{ secrets.APP_ID }}
+#        private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
     - name: Create pull request
       id: cpr
@@ -80,5 +80,5 @@ jobs:
         body: This automated pull request builds the changelog and updates package metadata prior to a forthcoming release.
         labels: no changelog entry needed
         delete-branch: true
-        token: ${{ steps.generate_token.outputs.token }}
+#        token: ${{ steps.generate_token.outputs.token }}
 
