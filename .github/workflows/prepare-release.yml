@@ -1,4 +1,4 @@
-name: Prepare pre-release pull request
+name: Build changelog and update package metadata
 
 on:
   workflow_dispatch:
@@ -11,9 +11,10 @@ on:
         description: Reserved DOI from Zenodo
         required: true
         default: 10.5281/zenodo.16747747
+
 jobs:
-  prepare-release:
-    name: Update citation information and build changelog
+  metadata-and-changelog:
+    name: Build changelog and update package metadata
     runs-on: ubuntu-latest
 
     steps:
@@ -51,7 +52,7 @@ jobs:
         VERSION: ${{ github.event.inputs.version }}
         DOI: ${{ github.event.inputs.doi }}
 
-    - name: Build the changelog
+    - name: Build the changelog with towncrier
       run: |
         uvx nox -s "changelog(final)" -- $VERSION
       env:
@@ -72,13 +73,13 @@ jobs:
 #        private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
     - name: Create pull request
-      id: cpr
       uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
       with:
-        title: Prepare a release
-        commit-message: Build changelog and update package metadata
-        body: This automated pull request builds the changelog and updates package metadata prior to a forthcoming release.
-        labels: no changelog entry needed
+        title: "Build the changelog and update package metadata prior to v${VERSION}"
+        commit-message: "Build changelog and update package metadata"
+        body: This automated pull request builds the changelog and updates package metadata prior to a forthcoming release. After merging, go to this link to [perform the release](https://github.com/PlasmaPy/PlasmaPy/releases/new?tag=v${VERSION}&title=v${VERSION})
+        labels: skip changelog checks
         delete-branch: true
 #        token: ${{ steps.generate_token.outputs.token }}
-
+      env:
+        VERSION: ${{ github.event.inputs.version }}
