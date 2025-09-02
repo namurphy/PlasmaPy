@@ -116,6 +116,11 @@ repos:
   - id: validate-pyproject
     additional_dependencies: ['validate-pyproject-schema-store[all]']
 
+- repo: https://github.com/pysentry/pysentry-pre-commit
+  rev: v0.3.7
+  hooks:
+  - id: pysentry
+
 - repo: https://github.com/tox-dev/pyproject-fmt
   rev: v2.6.0
   hooks:
