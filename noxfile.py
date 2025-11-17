@@ -188,7 +188,7 @@ def requirements(session: nox.Session) -> None:
 
     #if running_on_ci:
     if True:
-        session.log(uv_output)
+        session.warn(uv_output)
         _create_requirements_pr_message(uv_output=uv_output, session=session)
 
 
