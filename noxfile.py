@@ -104,15 +104,18 @@ def _create_requirements_pr_message(uv_output: str, session: nox.Session) -> Non
     ]
 
     for package_update in uv_output.splitlines():
+        if package_update.startswith("Resolved"):
+            continue
+
         if not package_update.startswith("Updated"):
-            session.debug(f"Line not added to table: {package_update}")
+            session.warn(f"Line not added to table: {package_update}")
             continue
 
         try:
             # An example line is "Updated nbsphinx v0.9.6 -> v0.9.7"
             _, package_, old_version_, _, new_version_ = package_update.split()
         except ValueError:
-            session.debug(f"Line not added to table: {package_update}:")
+            session.warn(f"Line not added to table: {package_update}:")
             continue
 
         old_version = f"{old_version_.removeprefix('v')}"
@@ -183,7 +186,8 @@ def requirements(session: nox.Session) -> None:
         silent=running_on_ci,  # return a multi-line string with stdout & stderr if true
     )
 
-    if running_on_ci:
+    #if running_on_ci:
+    if True:
         session.log(uv_output)
         _create_requirements_pr_message(uv_output=uv_output, session=session)
 
