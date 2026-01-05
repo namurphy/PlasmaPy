@@ -94,9 +94,7 @@ def _create_lockfile_pr_message(uv_output: str, session: nox.Session) -> None:
     pr_template = pathlib.Path(
         root_dir / "./.github/content/update-uv-lock-pr-template.md"
     )
-    pr_message = pathlib.Path(
-        root_dir / "./.github/content/update-uv-lock-pr-body.md"
-    )
+    pr_message = pathlib.Path(root_dir / "./.github/content/update-uv-lock-pr-body.md")
 
     shutil.copy(pr_template, pr_message)
 
@@ -176,7 +174,9 @@ def lock(session: nox.Session) -> None:
     """
 
     # Use a cooldown period to allow security vulnerabilities and bugs
-    # in upstream dependencies to be identified and fixed.
+    # in upstream dependencies to be identified and fixed. This must be
+    # consistent with the cooldown period defined in the `uv-lock`
+    # pre-commit hook.
     cooldown = "3 days"
 
     uv_lock = (
