@@ -42,8 +42,6 @@ repos:  # https://pre-commit.com/#adding-pre-commit-plugins-to-your-project
     # Labels with spaces must be put in quotes in `labeler.yml`.
     # pretty-format-yaml removes those quotes and breaks the action.
     exclude: .github/labeler.yml
-  - id: pretty-format-ini
-    args: [--autofix]
 
 - repo: https://github.com/python-jsonschema/check-jsonschema
   rev: 0.36.0
