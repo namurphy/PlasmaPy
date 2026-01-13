@@ -82,7 +82,7 @@ repos:  # https://pre-commit.com/#adding-pre-commit-plugins-to-your-project
     exclude: CITATION.cff|docs/notebooks/dispersion/stix_dispersion.ipynb
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.14.10
+  rev: v0.14.11
   hooks:
   - id: ruff-check
     name: ruff-check (see https://docs.astral.sh/ruff/rules)
