@@ -273,7 +273,7 @@ class ValidateQuantities(CheckUnits, CheckValues):
                 try:
                     del value_checks[arg_name]["none_shall_pass"]
                 except KeyError:
-                    dvc = self._CheckValues__check_defaults.copy()
+                    dvc = self._CheckValues__check_defaults.copy()  # ty:ignore[unresolved-attribute]
                     del dvc["none_shall_pass"]
                     value_checks[arg_name] = dvc
 

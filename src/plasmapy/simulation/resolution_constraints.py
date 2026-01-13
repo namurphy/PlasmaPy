@@ -13,7 +13,7 @@ __all__ = [
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import c
+from astropy.constants.si import c  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.decorators import validate_quantities
 
@@ -26,7 +26,7 @@ from plasmapy.utils.decorators import validate_quantities
         "can_be_zero": False,
     },
 )
-def CFL_limit_electromagnetic_yee(dx: u.Quantity[u.m]) -> u.Quantity[u.s]:
+def CFL_limit_electromagnetic_yee(dx: u.Quantity[u.m]) -> u.Quantity[u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Calculates the limiting time-step for a finite difference time-domain
     electromagnetic Yee solver which uses a Cartesian grid.

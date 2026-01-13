@@ -29,7 +29,7 @@ from plasmapy.utils._units_definitions import (
 )
 
 
-def _v_drift_conversion(v_drift: float | u.Quantity[u.m / u.s]):
+def _v_drift_conversion(v_drift: float | u.Quantity[u.m / u.s]):  # ty:ignore[invalid-type-form]
     # Helper method to assign equivalent value in SPEED_UNITS and/or remove units
     if isinstance(v_drift, u.Quantity):
         v_drift = v_drift.to_value(SPEED_UNITS)
@@ -41,7 +41,7 @@ def Maxwellian_1D(
     v,
     T,
     particle: ParticleLike = "e-",
-    v_drift: float | u.Quantity[u.m / u.s] = 0,
+        v_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
     vTh=np.nan,
     units: str = "units",
     *,
@@ -138,7 +138,7 @@ def Maxwellian_1D(
         T = T.to_value(u.K, equivalencies=u.temperature_energy())
         if not np.isnan(vTh):
             # check units of thermal velocity
-            vTh = vTh.to_value(SPEED_UNITS)
+            vTh = vTh.to_value(SPEED_UNITS)  # ty:ignore[possibly-missing-attribute]
 
     if np.isnan(vTh):
         # get thermal speed
@@ -168,8 +168,8 @@ def Maxwellian_velocity_2D(
     vy,
     T,
     particle: ParticleLike = "e-",
-    vx_drift: float | u.Quantity[u.m / u.s] = 0,
-    vy_drift: float | u.Quantity[u.m / u.s] = 0,
+        vx_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
+        vy_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
     vTh=np.nan,
     units: str = "units",
     *,
@@ -288,7 +288,7 @@ def Maxwellian_velocity_2D(
         T = T.to_value(u.K, equivalencies=u.temperature_energy())
         if not np.isnan(vTh):
             # check units of thermal velocity
-            vTh = vTh.to_value(SPEED_UNITS)
+            vTh = vTh.to_value(SPEED_UNITS)  # ty:ignore[possibly-missing-attribute]
 
     if np.isnan(vTh):
         # get thermal speed
@@ -319,9 +319,9 @@ def Maxwellian_velocity_3D(
     vz,
     T,
     particle: ParticleLike = "e-",
-    vx_drift: float | u.Quantity[u.m / u.s] = 0,
-    vy_drift: float | u.Quantity[u.m / u.s] = 0,
-    vz_drift: float | u.Quantity[u.m / u.s] = 0,
+        vx_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
+        vy_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
+        vz_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
     vTh=np.nan,
     units: str = "units",
     *,
@@ -454,7 +454,7 @@ def Maxwellian_velocity_3D(
         T = T.to_value(u.K, equivalencies=u.temperature_energy())
         if not np.isnan(vTh):
             # check units of thermal velocity
-            vTh = vTh.to_value(SPEED_UNITS)
+            vTh = vTh.to_value(SPEED_UNITS)  # ty:ignore[possibly-missing-attribute]
 
     if np.isnan(vTh):
         # get thermal velocity and thermal velocity squared
@@ -483,7 +483,7 @@ def Maxwellian_speed_1D(
     v,
     T,
     particle: ParticleLike = "e-",
-    v_drift: float | u.Quantity[u.m / u.s] = 0,
+        v_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
     vTh=np.nan,
     units: str = "units",
     *,
@@ -580,7 +580,7 @@ def Maxwellian_speed_1D(
         T = T.to_value(u.K, equivalencies=u.temperature_energy())
         if not np.isnan(vTh):
             # check units of thermal velocity
-            vTh = vTh.to_value(SPEED_UNITS)
+            vTh = vTh.to_value(SPEED_UNITS)  # ty:ignore[possibly-missing-attribute]
 
     if np.isnan(vTh):
         # get thermal velocity and thermal velocity squared
@@ -609,7 +609,7 @@ def Maxwellian_speed_2D(
     v,
     T,
     particle: ParticleLike = "e-",
-    v_drift: float | u.Quantity[u.m / u.s] = 0,
+        v_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
     vTh=np.nan,
     units: str = "units",
     *,
@@ -713,7 +713,7 @@ def Maxwellian_speed_2D(
         T = T.to_value(u.K, equivalencies=u.temperature_energy())
         if not np.isnan(vTh):
             # check units of thermal velocity
-            vTh = vTh.to_value(SPEED_UNITS)
+            vTh = vTh.to_value(SPEED_UNITS)  # ty:ignore[possibly-missing-attribute]
 
     if np.isnan(vTh):
         # get thermal velocity and thermal velocity squared
@@ -743,7 +743,7 @@ def Maxwellian_speed_3D(
     v,
     T,
     particle: ParticleLike = "e-",
-    v_drift: float | u.Quantity[u.m / u.s] = 0,
+        v_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
     vTh=np.nan,
     units: str = "units",
     *,
@@ -847,7 +847,7 @@ def Maxwellian_speed_3D(
         T = T.to_value(u.K, equivalencies=u.temperature_energy())
         if not np.isnan(vTh):
             # check units of thermal velocity
-            vTh = vTh.to_value(SPEED_UNITS)
+            vTh = vTh.to_value(SPEED_UNITS)  # ty:ignore[possibly-missing-attribute]
 
     if np.isnan(vTh):
         # get thermal velocity and thermal velocity squared
@@ -878,7 +878,7 @@ def kappa_velocity_1D(
     T,
     kappa,
     particle: ParticleLike = "e-",
-    v_drift: float | u.Quantity[u.m / u.s] = 0,
+        v_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
     vTh=np.nan,
     units: str = "units",
     *,
@@ -1002,7 +1002,7 @@ def kappa_velocity_1D(
         T = T.to_value(u.K, equivalencies=u.temperature_energy())
         if not np.isnan(vTh):
             # check units of thermal velocity
-            vTh = vTh.to_value(SPEED_UNITS)
+            vTh = vTh.to_value(SPEED_UNITS)  # ty:ignore[possibly-missing-attribute]
 
     if np.isnan(vTh):
         # get thermal velocity and thermal velocity squared
@@ -1035,9 +1035,9 @@ def kappa_velocity_3D(
     T,
     kappa,
     particle: ParticleLike = "e-",
-    vx_drift: float | u.Quantity[u.m / u.s] = 0,
-    vy_drift: float | u.Quantity[u.m / u.s] = 0,
-    vz_drift: float | u.Quantity[u.m / u.s] = 0,
+        vx_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
+        vy_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
+        vz_drift: float | u.Quantity[u.m / u.s] = 0,  # ty:ignore[invalid-type-form]
     vTh=np.nan,
     units: str = "units",
     *,
@@ -1184,7 +1184,7 @@ def kappa_velocity_3D(
         T = T.to_value(u.K, equivalencies=u.temperature_energy())
         if not np.isnan(vTh):
             # check units of thermal velocity
-            vTh = vTh.to_value(SPEED_UNITS)
+            vTh = vTh.to_value(SPEED_UNITS)  # ty:ignore[possibly-missing-attribute]
 
     if np.isnan(vTh):
         # get thermal velocity and thermal velocity squared

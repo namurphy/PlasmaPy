@@ -17,7 +17,7 @@ from numbers import Real
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import k_B
+from astropy.constants.si import k_B  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.dimensionless import beta
 from plasmapy.formulary.frequencies import gyrofrequency, plasma_frequency
@@ -38,11 +38,11 @@ class AbstractMHDWave(ABC):
     )
     def __init__(
         self,
-        B: u.Quantity[u.T],
-        density: (u.m**-3, u.kg / u.m**3),
+            B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
+            density: (u.m ** -3, u.kg / u.m ** 3),  # ty:ignore[invalid-type-form]
         ion: ParticleLike,
         *,
-        T: u.Quantity[u.K] = 0 * u.K,
+            T: u.Quantity[u.K] = 0 * u.K,  # ty:ignore[invalid-type-form]
         gamma: float = 5 / 3,
         mass_numb: int | None = None,
         Z: float | None = None,
@@ -63,26 +63,26 @@ class AbstractMHDWave(ABC):
             )
 
         if density.unit.physical_type == u.physical.mass_density:
-            _n = density / (ion.mass + ion.charge_number * electron.mass)
+            _n = density / (ion.mass + ion.charge_number * electron.mass)  # ty:ignore[possibly-missing-attribute]
             _rho = density
         else:
             _n = density
-            _rho = (ion.mass + ion.charge_number * electron.mass) * density
+            _rho = (ion.mass + ion.charge_number * electron.mass) * density  # ty:ignore[possibly-missing-attribute]
 
         self._Alfven_speed = Alfven_speed(B, _rho)
-        self._sound_speed = np.sqrt(gamma * k_B * T / ion.mass).to(u.m / u.s)
+        self._sound_speed = np.sqrt(gamma * k_B * T / ion.mass).to(u.m / u.s)  # ty:ignore[possibly-missing-attribute]
         self._magnetosonic_speed = np.sqrt(self._Alfven_speed**2 + self._sound_speed**2)
         self._beta = beta(T, _n, B)
         self._gyrofrequency = gyrofrequency(B, ion)
         self._plasma_frequency = plasma_frequency(_n, ion)
 
     @property
-    def alfven_speed(self) -> u.Quantity[u.m / u.s]:
+    def alfven_speed(self) -> u.Quantity[u.m / u.s]:  # ty:ignore[invalid-type-form]
         """The Alfvén speed of the plasma."""
         return self._Alfven_speed
 
     @property
-    def sound_speed(self) -> u.Quantity[u.m / u.s]:
+    def sound_speed(self) -> u.Quantity[u.m / u.s]:  # ty:ignore[invalid-type-form]
         r"""
         The sound speed of the plasma.
 
@@ -95,7 +95,7 @@ class AbstractMHDWave(ABC):
         return self._sound_speed
 
     @property
-    def magnetosonic_speed(self) -> u.Quantity[u.m / u.s]:
+    def magnetosonic_speed(self) -> u.Quantity[u.m / u.s]:  # ty:ignore[invalid-type-form]
         r"""
         The magnetosonic speed of the plasma.
 
@@ -112,7 +112,8 @@ class AbstractMHDWave(ABC):
     @staticmethod
     @validate_quantities
     def _validate_k_theta(
-        k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]
+            k: u.Quantity[u.rad / u.m],
+            theta: u.Quantity[u.rad],  # ty:ignore[invalid-type-form]
     ) -> list[u.Quantity]:
         """Validate and return wavenumber and angle."""
         # validate argument k
@@ -137,7 +138,7 @@ class AbstractMHDWave(ABC):
         return np.meshgrid(theta, k)
 
     @validate_quantities
-    def _validate_angular_frequency(self, omega: u.Quantity[u.rad / u.s]):
+    def _validate_angular_frequency(self, omega: u.Quantity[u.rad / u.s]):  # ty:ignore[invalid-type-form]
         """Validate and return angular frequency."""
         omega_gyrofrequency_max = np.max(omega / self._gyrofrequency)
         omega_plasma_frequency_max = np.max(omega / self._plasma_frequency)
@@ -153,9 +154,9 @@ class AbstractMHDWave(ABC):
     @abstractmethod
     def angular_frequency(
         self,
-        k: u.Quantity[u.rad / u.m],
-        theta: u.Quantity[u.rad],
-    ) -> u.Quantity[u.rad / u.s]:
+            k: u.Quantity[u.rad / u.m],  # ty:ignore[invalid-type-form]
+            theta: u.Quantity[u.rad],  # ty:ignore[invalid-type-form]
+    ) -> u.Quantity[u.rad / u.s]:  # ty:ignore[invalid-type-form]
         r"""
         Calculate the angular frequency of magnetohydrodynamic waves.
 
@@ -200,8 +201,10 @@ class AbstractMHDWave(ABC):
     @check_relativistic
     @validate_quantities
     def group_velocity(
-        self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]
-    ) -> u.Quantity[u.m / u.s]:
+            self,
+            k: u.Quantity[u.rad / u.m],
+            theta: u.Quantity[u.rad],  # ty:ignore[invalid-type-form]
+    ) -> u.Quantity[u.m / u.s]:  # ty:ignore[invalid-type-form]
         r"""
         Calculate the group velocities of magnetohydrodynamic waves.
 
@@ -264,8 +267,10 @@ class AbstractMHDWave(ABC):
     @check_relativistic
     @validate_quantities
     def phase_velocity(
-        self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]
-    ) -> u.Quantity[u.m / u.s]:
+            self,
+            k: u.Quantity[u.rad / u.m],
+            theta: u.Quantity[u.rad],  # ty:ignore[invalid-type-form]
+    ) -> u.Quantity[u.m / u.s]:  # ty:ignore[invalid-type-form]
         r"""
         Calculate the phase velocities of magnetohydrodynamic waves.
 
@@ -390,7 +395,7 @@ class AlfvenWave(AbstractMHDWave):
     <Quantity 218060.97295233 m / s>
     """
 
-    def angular_frequency(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):
+    def angular_frequency(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):  # ty:ignore[invalid-type-form]
         r"""
         Calculate the angular frequency of magnetohydrodynamic
         Alfvén waves.
@@ -462,7 +467,7 @@ class AlfvenWave(AbstractMHDWave):
         omega = k * self._Alfven_speed * np.abs(np.cos(theta))
         return super()._validate_angular_frequency(omega)
 
-    def group_velocity(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):
+    def group_velocity(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):  # ty:ignore[invalid-type-form]
         r"""
         Calculate the group velocities of magnetohydrodynamic Alfvén
         waves.
@@ -613,7 +618,7 @@ class FastMagnetosonicWave(AbstractMHDWave):
     <Quantity 218060.97295233 m / s>
     """
 
-    def angular_frequency(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):
+    def angular_frequency(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):  # ty:ignore[invalid-type-form]
         r"""
         Calculate the angular frequency of a fast magnetosonic waves.
 
@@ -704,7 +709,7 @@ class FastMagnetosonicWave(AbstractMHDWave):
         )
         return super()._validate_angular_frequency(omega)
 
-    def group_velocity(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):
+    def group_velocity(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):  # ty:ignore[invalid-type-form]
         r"""
         Calculate the group velocities of fast magnetosonic waves.
 
@@ -859,7 +864,7 @@ class SlowMagnetosonicWave(AbstractMHDWave):
     <Quantity 185454.39417735 m / s>
     """
 
-    def angular_frequency(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):
+    def angular_frequency(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):  # ty:ignore[invalid-type-form]
         r"""
         Calculate the angular frequency of slow magnetosonic waves.
 
@@ -947,7 +952,7 @@ class SlowMagnetosonicWave(AbstractMHDWave):
         )
         return super()._validate_angular_frequency(omega)
 
-    def group_velocity(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):
+    def group_velocity(self, k: u.Quantity[u.rad / u.m], theta: u.Quantity[u.rad]):  # ty:ignore[invalid-type-form]
         r"""
         Calculate the group velocities of slow magnetosonic waves.
 

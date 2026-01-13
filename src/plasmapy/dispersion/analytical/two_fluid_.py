@@ -10,7 +10,7 @@ from numbers import Real
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import c
+from astropy.constants.si import c  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.frequencies import gyrofrequency, plasma_frequency
 from plasmapy.formulary.speeds import Alfven_speed, ion_sound_speed
@@ -27,14 +27,14 @@ from plasmapy.utils.exceptions import PhysicsWarning
     T_i={"can_be_negative": False, "equivalencies": u.temperature_energy()},
 )
 def two_fluid(
-    B: u.Quantity[u.T],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
     ion: ParticleLike,
-    k: u.Quantity[u.rad / u.m],
-    n_i: u.Quantity[u.m**-3],
-    theta: u.Quantity[u.rad],
+        k: u.Quantity[u.rad / u.m],  # ty:ignore[invalid-type-form]
+        n_i: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        theta: u.Quantity[u.rad],  # ty:ignore[invalid-type-form]
     *,
-    T_e: u.Quantity[u.K],
-    T_i: u.Quantity[u.K],
+        T_e: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        T_i: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
     gamma_e: float = 1,
     gamma_i: float = 3,
     mass_numb: int | None = None,
@@ -272,7 +272,7 @@ def two_fluid(
         )
 
     # Calc needed plasma parameters
-    n_e = n_i * ion.charge_number
+    n_e = n_i * ion.charge_number  # ty:ignore[possibly-missing-attribute]
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", category=PhysicsWarning)
         c_s = ion_sound_speed(

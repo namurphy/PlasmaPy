@@ -1,4 +1,4 @@
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.particles import Particle
 from plasmapy.particles._parsing import (

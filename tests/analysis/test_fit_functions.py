@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from contextlib import nullcontext as does_not_raise
 
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 import plasmapy.analysis.fit_functions as ffuncs
 
@@ -180,14 +180,14 @@ class BaseFFTests(ABC):
             params = self._test_params
         elif params == "default+":
             params = self._test_params
-            params = list(params)
+            params = list(params)  # ty:ignore[invalid-argument-type]
             params.append(5)
 
         if param_errors == "default":
             param_errors = self._test_param_errors
         elif param_errors == "default+":
             param_errors = self._test_param_errors
-            param_errors = list(param_errors)
+            param_errors = list(param_errors)  # ty:ignore[invalid-argument-type]
             param_errors.append(5)
 
         with with_condition:
@@ -285,7 +285,7 @@ class BaseFFTests(ABC):
 
         params = self._test_params
         if replace_a_param is not None:
-            params = list(params)
+            params = list(params)  # ty:ignore[invalid-argument-type]
             params[0] = replace_a_param
 
         with with_condition:
@@ -413,7 +413,7 @@ class TestFFExponential(BaseFFTests):
     _test__str__ = "f(x) = a exp(alpha x)"
 
     @staticmethod
-    def func(x, a, alpha):
+    def func(x, a, alpha):  # ty:ignore[invalid-method-override]
         return a * np.exp(alpha * x)
 
     def func_err(self, x, params, param_errors, x_err=None):
@@ -453,7 +453,7 @@ class TestFFExponentialPlusLinear(BaseFFTests):
     _test__str__ = "f(x) = a exp(alpha x) + m x + b"
 
     @staticmethod
-    def func(x: float, a: float, alpha: float, m: float, b: float) -> float:
+    def func(x: float, a: float, alpha: float, m: float, b: float) -> float:  # ty:ignore[invalid-method-override]
         return a * np.exp(alpha * x) + m * x + b
 
     def func_err(self, x, params, param_errors, x_err=None):
@@ -499,7 +499,7 @@ class TestFFExponentialPlusOffset(BaseFFTests):
     _test__str__ = "f(x) = a exp(alpha x) + b"
 
     @staticmethod
-    def func(x: float, a: float, alpha: float, b: float) -> float:
+    def func(x: float, a: float, alpha: float, b: float) -> float:  # ty:ignore[invalid-method-override]
         return a * np.exp(alpha * x) + b
 
     def func_err(self, x, params, param_errors, x_err=None):
@@ -546,7 +546,7 @@ class TestFFLinear(BaseFFTests):
     _test__str__ = "f(x) = m x + b"
 
     @staticmethod
-    def func(x, m, b):
+    def func(x, m, b):  # ty:ignore[invalid-method-override]
         return m * x + b
 
     def func_err(self, x, params, param_errors, x_err=None):

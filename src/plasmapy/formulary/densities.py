@@ -8,7 +8,7 @@ __aliases__ = ["rho_"]
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import e, eps0, m_e
+from astropy.constants.si import e, eps0, m_e  # ty:ignore[unresolved-import]
 
 from plasmapy.particles.particle_class import Particle, ParticleLike
 from plasmapy.utils.decorators import validate_quantities
@@ -22,7 +22,7 @@ __all__ += __aliases__
         "units": [u.m**-3],
     },
 )
-def critical_density(omega: u.Quantity[u.rad / u.s]) -> u.Quantity[u.m**-3]:
+def critical_density(omega: u.Quantity[u.rad / u.s]) -> u.Quantity[u.m ** -3]:  # ty:ignore[invalid-type-form]
     r"""Calculate the plasma critical density for a radiation of a given frequency.
 
     Parameters
@@ -67,10 +67,10 @@ def critical_density(omega: u.Quantity[u.rad / u.s]) -> u.Quantity[u.m**-3]:
     density={"can_be_negative": False}, validations_on_return={"can_be_negative": False}
 )
 def mass_density(
-    density: (u.m**-3, u.kg / (u.m**3)),
+        density: (u.m ** -3, u.kg / (u.m ** 3)),  # ty:ignore[invalid-type-form]
     particle: ParticleLike,
     z_ratio: float | None = 1,
-) -> u.Quantity[u.kg / u.m**3]:
+) -> u.Quantity[u.kg / u.m ** 3]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the mass density from a number density.
 

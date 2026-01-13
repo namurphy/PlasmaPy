@@ -8,7 +8,7 @@ import itertools
 
 import astropy.units as u
 import numpy as np
-from astropy.constants import mu0
+from astropy.constants import mu0  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.magnetostatics import MagnetoStatics
 from plasmapy.plasma.plasma_base import GenericPlasma

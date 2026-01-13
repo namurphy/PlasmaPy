@@ -3,7 +3,7 @@ from numbers import Real
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 from astropy.tests.helper import assert_quantity_allclose
 
 from plasmapy.particles import (
@@ -155,7 +155,7 @@ class TestIonizationStateCollection:
         ],
     )
     def test_that_particles_were_set_correctly(self, test_name: str) -> None:
-        input_particles = tests[test_name]["inputs"].keys()
+        input_particles = tests[test_name]["inputs"].keys()  # ty:ignore[possibly-missing-attribute]
         particles = [Particle(input_particle) for input_particle in input_particles]
         expected_particles = {p.symbol for p in particles}
         actual_particles = set(self.instances[test_name].ionic_fractions)
@@ -212,7 +212,7 @@ class TestIonizationStateCollection:
         inputs = tests[test_name]["inputs"]
 
         if isinstance(inputs, dict):
-            input_keys = list(tests[test_name]["inputs"].keys())
+            input_keys = list(tests[test_name]["inputs"].keys())  # ty:ignore[possibly-missing-attribute]
 
             def sort_key(k):
                 return atomic_number(k), mass_number(k) if Particle(k).isotope else 0
@@ -220,7 +220,7 @@ class TestIonizationStateCollection:
             input_keys = sorted(input_keys, key=sort_key)
 
             for element, input_key in zip(elements_actual, input_keys, strict=False):
-                expected = tests[test_name]["inputs"][input_key]
+                expected = tests[test_name]["inputs"][input_key]  # ty:ignore[not-subscriptable]
 
                 if isinstance(expected, u.Quantity):
                     expected = np.array(expected.value / np.sum(expected.value))
@@ -240,7 +240,7 @@ class TestIonizationStateCollection:
                         f"\n\nNot a numpy.ndarray: ({test_name}, {element})"
                     )
         else:
-            elements_expected = {particle_symbol(element) for element in inputs}
+            elements_expected = {particle_symbol(element) for element in inputs}  # ty:ignore[not-iterable]
 
             assert set(self.instances[test_name].base_particles) == elements_expected
 
@@ -343,7 +343,8 @@ def test_abundances_consistency() -> None:
 
     for element in elements:
         assert np.allclose(
-            instance_log.abundances[element], instance_nolog.abundances[element]
+            instance_log.abundances[element],
+            instance_nolog.abundances[element],  # ty:ignore[not-subscriptable]
         ), "abundances not consistent."
 
     for element in elements:
@@ -380,14 +381,14 @@ class TestIonizationStateCollectionItemAssignment:
             pytest.fail(
                 "Unable to change ionic fractions for an IonizationStateCollection instance."
             )
-        resulting_states = self.states[element].ionic_fractions
+        resulting_states = self.states[element].ionic_fractions  # ty:ignore[possibly-missing-attribute]
 
         assert np.any(
             [
                 np.allclose(resulting_states, new_states),
                 np.all(np.isnan(resulting_states)) and np.all(np.isnan(new_states)),
             ]
-        )
+        )  # ty:ignore[no-matching-overload]
 
     @pytest.mark.parametrize(
         ("base_particle", "new_states", "expected_exception"),
@@ -594,7 +595,8 @@ class TestIonizationStateCollectionAttributes:
             pytest(f"Could not set abundances to {new_abundances}.")
         else:
             check_abundances_consistency(
-                self.instance.abundances, self.instance.log_abundances
+                self.instance.abundances,
+                self.instance.log_abundances,  # ty:ignore[invalid-argument-type]
             )
 
         try:
@@ -603,7 +605,8 @@ class TestIonizationStateCollectionAttributes:
             pytest.fail(f"Could not set log_abundances to {log_new_abundances}.")
         else:
             check_abundances_consistency(
-                self.instance.abundances, self.instance.log_abundances
+                self.instance.abundances,
+                self.instance.log_abundances,  # ty:ignore[invalid-argument-type]
             )
 
     @pytest.mark.parametrize(
@@ -713,7 +716,7 @@ class TestIonizationStateCollectionAttributes:
 
     def test_elemental_abundances_not_quantities(self) -> None:
         for element in self.instance.base_particles:
-            assert not isinstance(self.instance.abundances[element], u.Quantity)
+            assert not isinstance(self.instance.abundances[element], u.Quantity)  # ty:ignore[not-subscriptable]
 
     @pytest.mark.parametrize("element", ["H", "He", "Fe"])
     def test_ionic_fractions_not_quantities(self, element) -> None:

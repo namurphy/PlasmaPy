@@ -52,7 +52,7 @@ class AbstractFitFunction(ABC):
 
         """
 
-        self._FitParamTuple = namedtuple("FitParamTuple", self._param_names)
+        self._FitParamTuple = namedtuple("FitParamTuple", self._param_names)  # ty:ignore[invalid-argument-type]
 
         if params is None:
             self._params = None
@@ -475,7 +475,7 @@ class Linear(AbstractFitFunction):
         """LaTeX friendly representation of the fit function."""
         return r"m x + b"
 
-    def func(self, x, m, b):
+    def func(self, x, m, b):  # ty:ignore[invalid-method-override]
         """
         The fit function, a linear function.
 
@@ -522,8 +522,8 @@ class Linear(AbstractFitFunction):
         """
         x, x_err = self._check_func_err_params(x, x_err)
 
-        m, b = self.params
-        m_err, b_err = self.param_errors
+        m, b = self.params  # ty:ignore[not-iterable]
+        m_err, b_err = self.param_errors  # ty:ignore[not-iterable]
 
         m_term = (m_err * x) ** 2
         b_term = b_err**2
@@ -580,7 +580,7 @@ class Linear(AbstractFitFunction):
             The uncertainty in the calculated root for the given fit
             :attr:`params` and :attr:`param_errors`.
         """
-        m, b = self.params
+        m, b = self.params  # ty:ignore[not-iterable]
 
         if m == 0.0:
             warnings.warn(
@@ -591,7 +591,7 @@ class Linear(AbstractFitFunction):
 
         root = -b / m
 
-        m_err, b_err = self.param_errors
+        m_err, b_err = self.param_errors  # ty:ignore[not-iterable]
         m_term = (root * m_err / m) ** 2
         b_term = (b_err / m) ** 2
         err = np.sqrt(m_term + b_term)
@@ -665,7 +665,7 @@ class Exponential(AbstractFitFunction):
         """LaTeX friendly representation of the fit function."""
         return r"a \, \exp(\alpha x)"
 
-    def func(self, x: float, a: float, alpha: float):
+    def func(self, x: float, a: float, alpha: float):  # ty:ignore[invalid-method-override]
         """
         The fit function, a exponential function.
 
@@ -713,8 +713,8 @@ class Exponential(AbstractFitFunction):
         """
         x, x_err = self._check_func_err_params(x, x_err)
 
-        a, alpha = self.params
-        a_err, alpha_err = self.param_errors
+        a, alpha = self.params  # ty:ignore[not-iterable]
+        a_err, alpha_err = self.param_errors  # ty:ignore[not-iterable]
         y = self.func(x, a, alpha)
 
         a_term = (a_err / a) ** 2
@@ -811,19 +811,19 @@ class ExponentialPlusLinear(AbstractFitFunction):
     @AbstractFitFunction.params.setter
     def params(self, val) -> None:  # noqa: D102
         AbstractFitFunction.params.fset(self, val)
-        self._exponential.params = (self.params.a, self.params.alpha)
-        self._linear.params = (self.params.m, self.params.b)
+        self._exponential.params = (self.params.a, self.params.alpha)  # ty:ignore[unresolved-attribute]
+        self._linear.params = (self.params.m, self.params.b)  # ty:ignore[unresolved-attribute]
 
     @AbstractFitFunction.param_errors.setter
     def param_errors(self, val) -> None:  # noqa: D102
         AbstractFitFunction.param_errors.fset(self, val)
         self._exponential.param_errors = (
-            self.param_errors.a,
-            self.param_errors.alpha,
+            self.param_errors.a,  # ty:ignore[unresolved-attribute]
+            self.param_errors.alpha,  # ty:ignore[unresolved-attribute]
         )
-        self._linear.param_errors = (self.param_errors.m, self.param_errors.b)
+        self._linear.param_errors = (self.param_errors.m, self.param_errors.b)  # ty:ignore[unresolved-attribute]
 
-    def func(self, x: float, a: float, alpha: float, m: float, b: float):
+    def func(self, x: float, a: float, alpha: float, m: float, b: float):  # ty:ignore[invalid-method-override]
         """
         The fit function, an exponential with a linear offset.
 
@@ -884,7 +884,7 @@ class ExponentialPlusLinear(AbstractFitFunction):
         """
         x, x_err = self._check_func_err_params(x, x_err)
 
-        a, alpha, m, _b = self.params
+        a, alpha, m, _b = self.params  # ty:ignore[not-iterable]
 
         exp_y, exp_err = self._exponential(x, x_err=x_err, reterr=True)
         lin_y, lin_err = self._linear(x, x_err=x_err, reterr=True)
@@ -945,23 +945,23 @@ class ExponentialPlusOffset(AbstractFitFunction):
     def params(self, val) -> None:  # noqa: D102
         AbstractFitFunction.params.fset(self, val)
         self._explin.params = (
-            self.params.a,
-            self.params.alpha,
+            self.params.a,  # ty:ignore[unresolved-attribute]
+            self.params.alpha,  # ty:ignore[unresolved-attribute]
             0.0,
-            self.params.b,
+            self.params.b,  # ty:ignore[unresolved-attribute]
         )
 
     @AbstractFitFunction.param_errors.setter
     def param_errors(self, val) -> None:  # noqa: D102
         AbstractFitFunction.param_errors.fset(self, val)
         self._explin.param_errors = (
-            self.param_errors.a,
-            self.param_errors.alpha,
+            self.param_errors.a,  # ty:ignore[unresolved-attribute]
+            self.param_errors.alpha,  # ty:ignore[unresolved-attribute]
             0.0,
-            self.param_errors.b,
+            self.param_errors.b,  # ty:ignore[unresolved-attribute]
         )
 
-    def func(self, x: float, a: float, alpha: float, b: float):
+    def func(self, x: float, a: float, alpha: float, b: float):  # ty:ignore[invalid-method-override]
         """
         The fit function, an exponential with a constant offset.
 
@@ -1046,8 +1046,8 @@ class ExponentialPlusOffset(AbstractFitFunction):
             The uncertainty in the calculated root for the given fit
             :attr:`params` and :attr:`param_errors`.
         """
-        a, alpha, b = self.params
-        a_err, b_err, c_err = self.param_errors
+        a, alpha, b = self.params  # ty:ignore[not-iterable]
+        a_err, b_err, c_err = self.param_errors  # ty:ignore[not-iterable]
 
         root = np.log(-b / a) / alpha
 

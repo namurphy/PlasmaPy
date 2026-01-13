@@ -1,7 +1,7 @@
 """Tests for the mathematics.py module."""
 
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary import mathematics
 

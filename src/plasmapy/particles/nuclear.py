@@ -14,7 +14,7 @@ from plasmapy.particles.particle_class import Particle
 @particle_input(any_of={"isotope", "baryon"})
 def nuclear_binding_energy(
     particle: Particle, mass_numb: int | None = None
-) -> u.Quantity[u.J]:
+) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
     """
     Return the nuclear binding energy associated with an isotope.
 
@@ -69,7 +69,7 @@ def nuclear_binding_energy(
 
 
 @particle_input
-def mass_energy(particle: Particle, mass_numb: int | None = None) -> u.Quantity[u.J]:
+def mass_energy(particle: Particle, mass_numb: int | None = None) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
     """
     Return a particle's mass energy.  If the particle is an isotope or
     nuclide, return the nuclear mass energy only.
@@ -107,7 +107,7 @@ def mass_energy(particle: Particle, mass_numb: int | None = None) -> u.Quantity[
     return particle.mass_energy
 
 
-def nuclear_reaction_energy(*args, **kwargs) -> u.Quantity[u.J]:  # noqa: C901, PLR0915
+def nuclear_reaction_energy(*args, **kwargs) -> u.Quantity[u.J]:  # noqa: C901, PLR0915  # ty:ignore[invalid-type-form]
     """
     Return the released energy from a nuclear reaction.
 
@@ -204,7 +204,7 @@ def nuclear_reaction_energy(*args, **kwargs) -> u.Quantity[u.J]:  # noqa: C901, 
 
         for original_item in unformatted_particles_list:
             try:
-                item = original_item.strip()
+                item = original_item.strip()  # ty:ignore[possibly-missing-attribute]
 
                 if item.count("*") == 1 and item[0].isdigit():
                     multiplier_str, item = item.split("*")
@@ -250,7 +250,7 @@ def nuclear_reaction_energy(*args, **kwargs) -> u.Quantity[u.J]:  # noqa: C901, 
                 total_charge += particle.charge_number
         return total_charge
 
-    def add_mass_energy(particles: list[Particle]) -> u.Quantity[u.J]:
+    def add_mass_energy(particles: list[Particle]) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
         """
         Find the total mass energy from a list of particles, while
         taking the masses of the fully ionized isotopes.

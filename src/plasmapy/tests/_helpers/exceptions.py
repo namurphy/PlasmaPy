@@ -13,7 +13,7 @@ __all__ = [
     "WarningMismatchFail",
 ]
 
-from _pytest.outcomes import Failed
+from _pytest.outcomes import Failed  # ty:ignore[unresolved-import]
 
 
 class TestFailed(Failed):

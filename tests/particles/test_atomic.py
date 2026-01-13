@@ -1,7 +1,7 @@
 import astropy.constants as const
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.particles._isotopes import data_about_isotopes
 from plasmapy.particles.atomic import (
@@ -172,13 +172,13 @@ table_functions_args_kwargs_output = [
     [standard_atomic_weight, [1], {}, (1.008 * u.u).to(u.kg)],
     [standard_atomic_weight, ["Hydrogen"], {}, (1.008 * u.u).to(u.kg)],
     [standard_atomic_weight, ["Au"], {}, u.kg],
-    [particle_mass, ["proton"], {}, const.m_p],
-    [particle_mass, ["H-1+"], {}, const.m_p],
-    [particle_mass, ["H-1 +1"], {}, const.m_p],
-    [particle_mass, ["H-1 1+"], {}, const.m_p],
-    [particle_mass, ["H-1"], {"Z": 1}, const.m_p],
-    [particle_mass, ["hydrogen-1"], {"Z": 1}, const.m_p],
-    [particle_mass, ["p+"], {}, const.m_p],
+    [particle_mass, ["proton"], {}, const.m_p],  # ty:ignore[unresolved-attribute]
+    [particle_mass, ["H-1+"], {}, const.m_p],  # ty:ignore[unresolved-attribute]
+    [particle_mass, ["H-1 +1"], {}, const.m_p],  # ty:ignore[unresolved-attribute]
+    [particle_mass, ["H-1 1+"], {}, const.m_p],  # ty:ignore[unresolved-attribute]
+    [particle_mass, ["H-1"], {"Z": 1}, const.m_p],  # ty:ignore[unresolved-attribute]
+    [particle_mass, ["hydrogen-1"], {"Z": 1}, const.m_p],  # ty:ignore[unresolved-attribute]
+    [particle_mass, ["p+"], {}, const.m_p],  # ty:ignore[unresolved-attribute]
     [particle_mass, ["F-19"], {"Z": 3}, u.kg],
     [particle_mass, ["H"], {}, standard_atomic_weight("H")],
     [is_stable, ["H-1"], {}, True],
@@ -248,19 +248,19 @@ def test_functions_and_values(tested_function, args, kwargs, expected_output) ->
 class TestInvalidPeriodicElement:
     def test_periodic_table_period(self) -> None:
         with pytest.raises(TypeError):
-            periodic_table_period(("Ne", "Na"))
+            periodic_table_period(("Ne", "Na"))  # ty:ignore[invalid-argument-type]
 
     def test_periodic_table_block(self) -> None:
         with pytest.raises(TypeError):
-            periodic_table_block(("N", "C", "F"))
+            periodic_table_block(("N", "C", "F"))  # ty:ignore[invalid-argument-type]
 
     def test_periodic_table_category(self) -> None:
         with pytest.raises(TypeError):
-            periodic_table_category(["Rb", "He", "Li"])
+            periodic_table_category(["Rb", "He", "Li"])  # ty:ignore[invalid-argument-type]
 
     def test_periodic_table_group(self) -> None:
         with pytest.raises(TypeError):
-            periodic_table_group(("B", "Ti", "Ge"))
+            periodic_table_group(("B", "Ti", "Ge"))  # ty:ignore[invalid-argument-type]
 
 
 # Next we have tests that do not fall nicely into equality comparisons.
@@ -286,8 +286,8 @@ def test_particle_mass_for_hydrogen_with_no_mass_number() -> None:
     mass number is specified for hydrogen.  In this case, the
     standard atomic weight should be used to account for the small
     fraction of deuterium."""
-    assert particle_mass("H", Z=1) > const.m_p
-    assert particle_mass("hydrogen", Z=1) > const.m_p
+    assert particle_mass("H", Z=1) > const.m_p  # ty:ignore[unresolved-attribute]
+    assert particle_mass("hydrogen", Z=1) > const.m_p  # ty:ignore[unresolved-attribute]
 
 
 def test_particle_mass_helium() -> None:
@@ -297,7 +297,7 @@ def test_particle_mass_helium() -> None:
 
 # (arg1, kwargs1, arg2, kwargs2, expected)
 equivalent_particle_mass_args = [
-    ["e+", {}, "positron", {}, const.m_e],
+    ["e+", {}, "positron", {}, const.m_e],  # ty:ignore[unresolved-attribute]
     ["alpha", {}, "He-4++", {}, None],
     ["alpha", {}, "helium-4 2+", {}, None],
     ["deuteron", {}, "H", {"Z": 1, "mass_numb": 2}, None],
@@ -313,7 +313,7 @@ equivalent_particle_mass_args = [
         {},
         "Fe",
         {"mass_numb": 56, "Z": 1},
-        particle_mass("Fe-56 1-") - 2 * const.m_e,
+        particle_mass("Fe-56 1-") - 2 * const.m_e,  # ty:ignore[unresolved-attribute]
     ],
     ["Fe-56 +1", {}, 26, {"mass_numb": 56, "Z": 1}, None],
 ]

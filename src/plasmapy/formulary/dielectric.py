@@ -44,10 +44,10 @@ RotatingTensorElements = namedtuple(
 
 @validate_quantities(B={"can_be_negative": False}, omega={"can_be_negative": False})
 def cold_plasma_permittivity_SDP(
-    B: u.Quantity[u.T],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
     species: ParticleListLike,
-    n: Sequence[u.Quantity[u.m**-3]] | u.Quantity[u.m**-3],
-    omega: u.Quantity[u.rad / u.s],
+        n: Sequence[u.Quantity[u.m ** -3]] | u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        omega: u.Quantity[u.rad / u.s],  # ty:ignore[invalid-type-form]
 ) -> StixTensorElements:
     r"""
     Magnetized cold plasma dielectric permittivity tensor elements.
@@ -142,10 +142,10 @@ def cold_plasma_permittivity_SDP(
 
 @validate_quantities(B={"can_be_negative": False}, omega={"can_be_negative": False})
 def cold_plasma_permittivity_LRP(
-    B: u.Quantity[u.T],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
     species: ParticleListLike,
-    n: list[u.Quantity[u.m**-3]] | u.Quantity[u.m**-3],
-    omega: u.Quantity[u.rad / u.s],
+        n: list[u.Quantity[u.m ** -3]] | u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        omega: u.Quantity[u.rad / u.s],  # ty:ignore[invalid-type-form]
 ) -> RotatingTensorElements:
     r"""
     Magnetized cold plasma dielectric permittivity tensor elements.
@@ -300,13 +300,13 @@ def permittivity_1D_Maxwellian_lite(omega, kWave, vth, wp):
     kWave={"none_shall_pass": True}, validations_on_return={"can_be_complex": True}
 )
 def permittivity_1D_Maxwellian(
-    omega: u.Quantity[u.rad / u.s],
-    kWave: u.Quantity[u.rad / u.m],
-    T: u.Quantity[u.K],
-    n: u.Quantity[u.m**-3],
+        omega: u.Quantity[u.rad / u.s],  # ty:ignore[invalid-type-form]
+        kWave: u.Quantity[u.rad / u.m],  # ty:ignore[invalid-type-form]
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     particle: ParticleLike,
     z_mean: float | None = None,
-) -> u.Quantity[u.dimensionless_unscaled]:
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Compute the classical dielectric permittivity for a 1D Maxwellian
     plasma.

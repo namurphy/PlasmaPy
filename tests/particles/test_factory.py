@@ -1,5 +1,5 @@
 import astropy.units as u
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.particles import deuteron, electron, proton
 from plasmapy.particles._factory import _physical_particle_factory

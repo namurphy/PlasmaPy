@@ -2,7 +2,7 @@
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.analysis.time_series.conditional_averaging import ConditionalEvents
 

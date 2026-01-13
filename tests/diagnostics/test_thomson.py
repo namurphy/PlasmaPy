@@ -7,7 +7,7 @@ import copy
 import astropy.constants as const
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 from lmfit import Parameter, Parameters
 
 from plasmapy.diagnostics import thomson
@@ -106,9 +106,9 @@ def args_to_lite_args(kwargs):  # noqa: C901
     if "n" in keys:
         kwargs["n"] = kwargs["n"].to(u.m**-3).value
     if "T_e" in keys:
-        kwargs["T_e"] = (kwargs["T_e"] / const.k_B).to(u.K).value
+        kwargs["T_e"] = (kwargs["T_e"] / const.k_B).to(u.K).value  # ty:ignore[unresolved-attribute]
     if "T_i" in keys:
-        kwargs["T_i"] = (kwargs["T_i"] / const.k_B).to(u.K).value
+        kwargs["T_i"] = (kwargs["T_i"] / const.k_B).to(u.K).value  # ty:ignore[unresolved-attribute]
     if "electron_vel" in keys:
         kwargs["electron_vel"] = kwargs["electron_vel"].to(u.m / u.s).value
     if "ion_vel" in keys:

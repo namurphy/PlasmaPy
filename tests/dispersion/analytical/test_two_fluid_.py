@@ -2,7 +2,7 @@
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.dispersion.analytical.two_fluid_ import two_fluid
 from plasmapy.formulary.frequencies import wc_

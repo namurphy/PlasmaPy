@@ -1,6 +1,6 @@
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.dispersion.analytical.mhd_waves_ import mhd_waves
 from plasmapy.particles.exceptions import InvalidIonError

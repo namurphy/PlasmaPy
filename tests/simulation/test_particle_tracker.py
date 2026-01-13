@@ -8,9 +8,9 @@ import warnings
 import astropy.constants as const
 import astropy.units as u
 import numpy as np
-import pytest
-from hypothesis import given, settings
-from hypothesis import strategies as st
+import pytest  # ty:ignore[unresolved-import]
+from hypothesis import given, settings  # ty:ignore[unresolved-import]
+from hypothesis import strategies as st  # ty:ignore[unresolved-import]
 from scipy.optimize import fsolve
 
 from plasmapy.formulary.frequencies import gyrofrequency
@@ -672,7 +672,7 @@ class TestParticleTrajectory:
             / ν.si.value
             * (
                 ν.si.value * 𝜏
-                - vd.si.value**2 / const.c.si.value**2 * np.sin(ν.si.value * 𝜏)
+                - vd.si.value ** 2 / const.c.si.value ** 2 * np.sin(ν.si.value * 𝜏)  # ty:ignore[unresolved-attribute]
             )
         )
 
@@ -682,8 +682,8 @@ class TestParticleTrajectory:
         t,
         E,
         B,
-        q=const.e.si,
-        m=const.m_p.si,
+            q=const.e.si,  # ty:ignore[unresolved-attribute]
+            m=const.m_p.si,  # ty:ignore[unresolved-attribute]
         is_relativistic: bool = True,
     ):
         """
@@ -696,18 +696,18 @@ class TestParticleTrajectory:
 
         """
 
-        if E >= const.c.si * B:
+        if E >= const.c.si * B:  # ty:ignore[unresolved-attribute]
             raise ValueError("Currently this function only works for E<cB")
 
         # Just after Eq. 41
         vd = (E / B).to(u.m / u.s)
 
         # Eq. 34
-        ν = q * np.sqrt((const.c.si * B) ** 2 - E**2) / (m * const.c.si)
+        ν = q * np.sqrt((const.c.si * B) ** 2 - E ** 2) / (m * const.c.si)  # ty:ignore[unresolved-attribute]
 
         if is_relativistic:
             # Eq. 45
-            γd = 1 / np.sqrt(1 - vd**2 / const.c.si**2)
+            γd = 1 / np.sqrt(1 - vd ** 2 / const.c.si ** 2)  # ty:ignore[unresolved-attribute]
 
             # Numerically invert Eq. 72 to calculate the proper time for each time
             # t in the lab frame
@@ -770,15 +770,15 @@ class TestParticleTrajectory:
 
         N_PERIODS_RECORDED = 5
         B_0 = 10 * u.T
-        E_0 = regime * const.c * B_0
+        E_0 = regime * const.c * B_0  # ty:ignore[unresolved-attribute]
         B_dir = np.asarray([0, 0, 1])
         E_dir = np.asarray([0, 1, 0])
 
         q = particle.charge
         m = particle.mass
         vd = E_0 / B_0
-        ν = q * np.sqrt((const.c * B_0) ** 2 - E_0**2) / (m * const.c)
-        γd = 1 / np.sqrt(1 - vd**2 / const.c**2)
+        ν = q * np.sqrt((const.c * B_0) ** 2 - E_0 ** 2) / (m * const.c)  # ty:ignore[unresolved-attribute]
+        γd = 1 / np.sqrt(1 - vd ** 2 / const.c ** 2)  # ty:ignore[unresolved-attribute]
 
         # Convert period in proper time to the time elapsed in the laboratory frame
         proper_period = np.abs(2 * np.pi / ν).to(
@@ -895,15 +895,15 @@ class TestParticleTrajectory:
 
         N_PERIODS_RECORDED = 5
         B_0 = 10 * u.T
-        E_0 = regime * const.c * B_0
+        E_0 = regime * const.c * B_0  # ty:ignore[unresolved-attribute]
         B_dir = np.asarray([0, 0, 1])
         E_dir = np.asarray([0, 1, 0])
 
         q = particle.charge
         m = particle.mass
         vd = E_0 / B_0
-        ν = q * np.sqrt((const.c * B_0) ** 2 - E_0**2) / (m * const.c)
-        γd = 1 / np.sqrt(1 - vd**2 / const.c**2)
+        ν = q * np.sqrt((const.c * B_0) ** 2 - E_0 ** 2) / (m * const.c)  # ty:ignore[unresolved-attribute]
+        γd = 1 / np.sqrt(1 - vd ** 2 / const.c ** 2)  # ty:ignore[unresolved-attribute]
 
         # Convert period in proper time to the time elapsed in the laboratory frame
         proper_period = np.abs(2 * np.pi / ν).to(
@@ -999,15 +999,15 @@ class TestParticleTrajectory:
 
         N_PERIODS_RECORDED = 5
         B_0 = 10 * u.T
-        E_0 = regime * const.c * B_0
+        E_0 = regime * const.c * B_0  # ty:ignore[unresolved-attribute]
         B_dir = np.asarray([0, 0, 1])
         E_dir = np.asarray([0, 1, 0])
 
         q = particle.charge
         m = particle.mass
         vd = E_0 / B_0
-        ν = q * np.sqrt((const.c * B_0) ** 2 - E_0**2) / (m * const.c)
-        γd = 1 / np.sqrt(1 - vd**2 / const.c**2)
+        ν = q * np.sqrt((const.c * B_0) ** 2 - E_0 ** 2) / (m * const.c)  # ty:ignore[unresolved-attribute]
+        γd = 1 / np.sqrt(1 - vd ** 2 / const.c ** 2)  # ty:ignore[unresolved-attribute]
 
         # Convert period in proper time to the time elapsed in the laboratory frame
         proper_period = np.abs(2 * np.pi / ν).to(

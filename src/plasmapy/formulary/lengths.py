@@ -7,7 +7,7 @@ import warnings
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import c, e, eps0, k_B
+from astropy.constants.si import c, e, eps0, k_B  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary import frequencies, speeds
 from plasmapy.formulary.relativity import RelativisticBody
@@ -22,7 +22,7 @@ __all__ += __aliases__
     T_e={"can_be_negative": False, "equivalencies": u.temperature_energy()},
     n_e={"can_be_negative": False},
 )
-def Debye_length(T_e: u.Quantity[u.K], n_e: u.Quantity[u.m**-3]) -> u.Quantity[u.m]:
+def Debye_length(T_e: u.Quantity[u.K], n_e: u.Quantity[u.m ** -3]) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the exponential scale length for charge screening in an
     electron plasma with stationary ions.
@@ -105,16 +105,16 @@ lambdaD_ = Debye_length
 )
 @particle_input(any_of={"charged", "uncharged"})
 def gyroradius(
-    B: u.Quantity[u.T],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
     particle: ParticleLike,
     *,
-    Vperp: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
-    T: u.Quantity[u.K] = None,
+        Vperp: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
+        T: u.Quantity[u.K] = None,  # ty:ignore[invalid-type-form]
     lorentzfactor=np.nan,
     relativistic: bool = True,
     mass_numb: int | None = None,
     Z: float | None = None,
-) -> u.Quantity[u.m]:
+) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the radius of circular motion for a charged particle in a
     uniform magnetic field (including relativistic effects by default).
@@ -253,7 +253,7 @@ def gyroradius(
         T = np.nan * u.K
 
     # Determine output shape and broadcast inputs accordingly
-    target_shape = np.broadcast(T, Vperp, lorentzfactor, particle).shape
+    target_shape = np.broadcast(T, Vperp, lorentzfactor, particle).shape  # ty:ignore[invalid-argument-type]
     lorentzfactor_in = lorentzfactor
     lorentzfactor = np.array(np.broadcast_to(lorentzfactor, target_shape))
     Vperp = np.array(np.broadcast_to(Vperp, target_shape, subok=True), subok=True)
@@ -325,12 +325,12 @@ rhoc_ = gyroradius
 )
 @particle_input(require="charged")
 def inertial_length(
-    n: u.Quantity[u.m**-3],
+        n: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     particle: ParticleLike,
     *,
     mass_numb: int | None = None,
     Z: float | None = None,
-) -> u.Quantity[u.m]:
+) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate a charged particle's inertial length.
 

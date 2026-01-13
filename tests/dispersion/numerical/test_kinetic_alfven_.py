@@ -2,8 +2,8 @@
 
 import astropy.units as u
 import numpy as np
-import pytest
-from astropy.constants.si import c
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants.si import c  # ty:ignore[unresolved-import]
 
 from plasmapy.dispersion.numerical.kinetic_alfven_ import kinetic_alfven
 from plasmapy.particles import Particle

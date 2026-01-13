@@ -1,4 +1,4 @@
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.datatype_factory_base import (
     BasicRegistrationFactory,

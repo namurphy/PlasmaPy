@@ -13,7 +13,7 @@ __lite_funcs__ = ["plasma_frequency_lite"]
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import e, eps0
+from astropy.constants.si import e, eps0  # ty:ignore[unresolved-import]
 
 from plasmapy import particles
 from plasmapy.particles.decorators import particle_input
@@ -41,12 +41,12 @@ eps0_si_unitless = eps0.value
 )
 @angular_freq_to_hz
 def gyrofrequency(
-    B: u.Quantity[u.T],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
     particle: ParticleLike,
     signed: bool = False,
     Z: float | None = None,
     mass_numb: int | None = None,
-) -> u.Quantity[u.rad / u.s]:
+) -> u.Quantity[u.rad / u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the particle gyrofrequency in units of radians per second.
 
@@ -140,8 +140,8 @@ def gyrofrequency(
     >>> print(f_ce)
     279924... Hz
     """
-    q = particle.charge if signed else abs(particle.charge)
-    return u.rad * (q * np.abs(B) / particle.mass).to(1 / u.s)
+    q = particle.charge if signed else abs(particle.charge)  # ty:ignore[possibly-missing-attribute]
+    return u.rad * (q * np.abs(B) / particle.mass).to(1 / u.s)  # ty:ignore[possibly-missing-attribute]
 
 
 oc_ = gyrofrequency
@@ -232,12 +232,12 @@ def plasma_frequency_lite(
 )
 @angular_freq_to_hz
 def plasma_frequency(
-    n: u.Quantity[u.m**-3],
+        n: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     particle: ParticleLike,
     *,
     mass_numb: int | None = None,
     Z: float | None = None,
-) -> u.Quantity[u.rad / u.s]:
+) -> u.Quantity[u.rad / u.s]:  # ty:ignore[invalid-type-form]
     r"""Calculate the particle plasma frequency.
 
     **Aliases:** `wp_`
@@ -329,8 +329,8 @@ def plasma_frequency(
     return (
         plasma_frequency_lite(
             n=n.value,
-            mass=particle.mass.value,
-            Z=np.abs(particle.charge_number),
+            mass=particle.mass.value,  # ty:ignore[possibly-missing-attribute]
+            Z=np.abs(particle.charge_number),  # ty:ignore[possibly-missing-attribute]
         )
         * u.rad
         / u.s
@@ -350,8 +350,10 @@ wp_ = plasma_frequency
 )
 @angular_freq_to_hz
 def lower_hybrid_frequency(
-    B: u.Quantity[u.T], n_i: u.Quantity[u.m**-3], ion: ParticleLike
-) -> u.Quantity[u.rad / u.s]:
+        B: u.Quantity[u.T],
+        n_i: u.Quantity[u.m ** -3],
+        ion: ParticleLike,  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.rad / u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Return the lower hybrid frequency.
 
@@ -450,8 +452,9 @@ wlh_ = lower_hybrid_frequency
 )
 @angular_freq_to_hz
 def upper_hybrid_frequency(
-    B: u.Quantity[u.T], n_e: u.Quantity[u.m**-3]
-) -> u.Quantity[u.rad / u.s]:
+        B: u.Quantity[u.T],
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.rad / u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Return the upper hybrid frequency.
 
@@ -532,14 +535,14 @@ wuh_ = upper_hybrid_frequency
 )
 @angular_freq_to_hz
 def Buchsbaum_frequency(
-    B: u.Quantity[u.T],
-    n1: u.Quantity[u.m**-3],
-    n2: u.Quantity[u.m**-3],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
+        n1: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        n2: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     ion1: ParticleLike,
     ion2: ParticleLike,
     Z1: float | None = None,
     Z2: float | None = None,
-) -> u.Quantity[u.rad / u.s]:
+) -> u.Quantity[u.rad / u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Return the Buchsbaum frequency for a two-ion-species plasma.
 

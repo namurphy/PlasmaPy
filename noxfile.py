@@ -37,7 +37,7 @@ import shutil
 import sys
 import tomllib
 
-import nox
+import nox  # ty:ignore[unresolved-import]
 from packaging.requirements import Requirement
 
 # SPEC 0 indicates that scientific Python packages should support
@@ -149,9 +149,9 @@ def _get_dependencies_from_pyproject_toml(extras: str | None = None):
     ):
         return dependencies
 
-    extras = [extras] if extras != "all" else list(config["optional-dependencies"])
+    extras = [extras] if extras != "all" else list(config["optional-dependencies"])  # ty:ignore[invalid-assignment]
     op_deps = {}
-    for extra in extras:
+    for extra in extras:  # ty:ignore[not-iterable]
         for dep in config["optional-dependencies"][extra]:
             op_deps[Requirement(dep)] = dep
 
@@ -362,7 +362,7 @@ def test_upstream(session: nox.Session, package: str) -> None:
 
 
 if running_on_rtd:
-    rtd_output_path = pathlib.Path(os.environ.get("READTHEDOCS_OUTPUT")) / "html"
+    rtd_output_path = pathlib.Path(os.environ.get("READTHEDOCS_OUTPUT")) / "html"  # ty:ignore[invalid-argument-type]
     rtd_output_path.mkdir(parents=True, exist_ok=True)
     doc_build_dir = str(rtd_output_path)
 else:

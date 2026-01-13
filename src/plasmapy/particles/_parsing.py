@@ -24,7 +24,7 @@ from plasmapy.particles.exceptions import (
 from plasmapy.utils import roman
 
 
-def create_alias_dicts(particles: dict) -> (dict[str, str], dict[str, str]):
+def create_alias_dicts(particles: dict) -> (dict[str, str], dict[str, str]):  # ty:ignore[invalid-type-form]
     """
     Create dictionaries for case sensitive aliases and case
     insensitive aliases of special particles and antiparticles.
@@ -124,7 +124,7 @@ def dealias_particle_aliases(alias: str | int) -> str:
     elif isinstance(alias, str) and alias.lower() in case_insensitive_aliases:
         return case_insensitive_aliases[alias.lower()]
 
-    return alias
+    return alias  # ty:ignore[invalid-return-type]
 
 
 def invalid_particle_errmsg(
@@ -210,8 +210,8 @@ def extract_charge(arg: str):  # noqa: C901
             r"\s*(?P<isotope>\w+(-[0-9]+)?)(?P<charge>[-+]+)\s*",
             isotope_info,
         )
-        isotope_info = match.groupdict()["isotope"]
-        charge_info = match.groupdict()["charge"]
+        isotope_info = match.groupdict()["isotope"]  # ty:ignore[possibly-missing-attribute]
+        charge_info = match.groupdict()["charge"]  # ty:ignore[possibly-missing-attribute]
 
         if len(set(charge_info)) != 1:
             raise InvalidParticleError(invalid_charge_errmsg) from None
@@ -329,7 +329,7 @@ def parse_and_check_atomic_input(  # noqa: C901, PLR0912, PLR0915
             raise InvalidParticleError(
                 f"The string '{element_info}' does not correspond to a valid element."
             )
-        return element
+        return element  # ty:ignore[invalid-return-type]
 
     def reconstruct_isotope_symbol(element: str, mass_numb: int) -> str:
         """
@@ -401,7 +401,7 @@ def parse_and_check_atomic_input(  # noqa: C901, PLR0912, PLR0915
         arg = int(arg)
 
     if isinstance(arg, Integral):
-        element = atomic_number_to_symbol(arg)
+        element = atomic_number_to_symbol(arg)  # ty:ignore[invalid-argument-type]
         Z_from_arg = None
         mass_numb_from_arg = None
     elif isinstance(arg, str):
@@ -442,11 +442,13 @@ def parse_and_check_atomic_input(  # noqa: C901, PLR0912, PLR0915
         Z = Z_from_arg
 
     if isinstance(Z, Integral):
-        if Z > _elements.data_about_elements[element]["atomic number"]:
+        if Z > _elements.data_about_elements[element][
+            "atomic number"]:  # ty:ignore[invalid-argument-type, not-subscriptable]
             raise InvalidParticleError(
                 f"The charge number Z = {Z} cannot exceed the atomic number "
                 f"of {element}, which is "
                 f"{_elements.data_about_elements[element]['atomic number']}."
+                # ty:ignore[invalid-argument-type, not-subscriptable]
             )
         elif Z <= -3:
             warnings.warn(
@@ -456,8 +458,8 @@ def parse_and_check_atomic_input(  # noqa: C901, PLR0912, PLR0915
                 ParticleWarning,
             )
 
-    isotope = reconstruct_isotope_symbol(element, mass_numb)
-    ion = reconstruct_ion_symbol(element, isotope, Z)
+    isotope = reconstruct_isotope_symbol(element, mass_numb)  # ty:ignore[invalid-argument-type]
+    ion = reconstruct_ion_symbol(element, isotope, Z)  # ty:ignore[invalid-argument-type]
 
     if ion:
         symbol = ion

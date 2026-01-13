@@ -2,7 +2,7 @@ import itertools
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.particles import IonizationState, IonizationStateCollection
 from plasmapy.particles.atomic import (

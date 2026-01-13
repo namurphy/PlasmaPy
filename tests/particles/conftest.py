@@ -1,6 +1,6 @@
 """Define fixtures for tests of `plasmapy.particles`."""
 
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.particles import Particle
 from plasmapy.particles._special_particles import particle_zoo

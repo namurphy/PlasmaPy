@@ -1,4 +1,4 @@
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.decorators.deprecation import deprecated
 from plasmapy.utils.exceptions import PlasmaPyDeprecationWarning

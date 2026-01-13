@@ -3,7 +3,7 @@ import warnings
 from typing import Any
 
 import astropy.units as u
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.particles import Particle
 from plasmapy.tests._helpers import (
@@ -144,14 +144,14 @@ def test_run_test(f, args, kwargs, expected, whaterror):
                 run_test(f, args, kwargs, expected)
                 pytest.fail(
                     f"run_test did not raise an exception for "
-                    f"{call_string(f, args, kwargs, color=None)} "
+                    f"{call_string(f, args, kwargs, color=None)} "  # ty:ignore[unknown-argument]
                     f"with expected = {expected!r} and "
                     f"whaterror = {whaterror!r}."
                 )
     except Exception as spectacular_exception:
         raise Exception(
             f"An unexpected exception was raised while running "
-            f"{call_string(f, args, kwargs, color=None)} with "
+            f"{call_string(f, args, kwargs, color=None)} with "  # ty:ignore[unknown-argument]
             f"expected = {expected!r} and "
             f"whaterror = {whaterror!r}."
         ) from spectacular_exception

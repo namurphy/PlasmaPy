@@ -40,7 +40,7 @@ class _CallableDataDict(TypedDict, total=False):
     signature: inspect.Signature
 
 
-_basic_particle_input_annotations: tuple[type | TypeAlias, ...] = (
+_basic_particle_input_annotations: tuple[type | TypeAlias, ...] = (  # ty:ignore[invalid-type-form]
     Particle,  # deprecated
     ParticleLike,
     ParticleListLike,
@@ -243,7 +243,7 @@ class _ParticleInput:
         -------
         `dict` of `str` to `object`
         """
-        return self._data.get("annotations")
+        return self._data.get("annotations")  # ty:ignore[invalid-return-type]
 
     @property
     def require(self) -> Iterable[str] | None:
@@ -362,7 +362,7 @@ class _ParticleInput:
 
         if isinstance(uncharged, Iterable):
             uncharged = any(uncharged)
-            lacks_charge_info = any(lacks_charge_info)
+            lacks_charge_info = any(lacks_charge_info)  # ty:ignore[invalid-argument-type]
 
         if must_be_charged and (uncharged or must_have_charge_info):
             raise ChargeError(f"{self.callable_} can only accept charged particles.")
@@ -442,7 +442,7 @@ class _ParticleInput:
                 self.require,
                 self.exclude,
                 self.any_of,
-                self.callable_.__name__,
+                self.callable_.__name__,  # ty:ignore[unresolved-attribute]
             )
             raise ParticleError(errmsg)
 
@@ -486,12 +486,12 @@ class _ParticleInput:
                 meets_name_criteria = particle.is_category(**categorization)
 
             if isinstance(particle, Iterable) and not isinstance(particle, str):
-                meets_name_criteria = all(meets_name_criteria)
+                meets_name_criteria = all(meets_name_criteria)  # ty:ignore[invalid-argument-type]
 
             if not meets_name_criteria:
                 raise exception(
                     f"The argument {parameter} = {particle!r} to "
-                    f"{self.callable_.__name__} does not correspond to a "
+                    f"{self.callable_.__name__} does not correspond to a "  # ty:ignore[unresolved-attribute]
                     f"valid {parameter}."
                 )
 
@@ -504,23 +504,23 @@ class _ParticleInput:
         """
         if not self.allow_custom_particles and isinstance(particle, CustomParticle):
             raise InvalidParticleError(
-                f"{self.callable_.__name__} does not accept CustomParticle "
+                f"{self.callable_.__name__} does not accept CustomParticle "  # ty:ignore[unresolved-attribute]
                 f"or CustomParticle-like inputs."
             )
 
         if not self.allow_particle_lists and isinstance(particle, ParticleList):
             raise InvalidParticleError(
-                f"{self.callable_.__name__} does not accept ParticleList "
+                f"{self.callable_.__name__} does not accept ParticleList "  # ty:ignore[unresolved-attribute]
                 "or particle-list-like inputs."
             )
 
         if (
             not self.allow_custom_particles
             and isinstance(particle, ParticleList)
-                and any(particle.is_category("custom", particlewise=True))
+                and any(particle.is_category("custom", particlewise=True))  # ty:ignore[invalid-argument-type]
         ):
             raise InvalidParticleError(
-                f"{self.callable_.__name__} does not accept CustomParticle "
+                f"{self.callable_.__name__} does not accept CustomParticle "  # ty:ignore[unresolved-attribute]
                 f"or CustomParticle-like inputs."
             )
 
@@ -599,7 +599,7 @@ class _ParticleInput:
         if annotation in _basic_particle_input_annotations and argument is None:
             raise TypeError(f"{parameter} may not be None.")
 
-        particle = _physical_particle_factory(argument, Z=Z, mass_numb=mass_numb)
+        particle = _physical_particle_factory(argument, Z=Z, mass_numb=mass_numb)  # ty:ignore[invalid-argument-type]
 
         self.verify_charge_categorization(particle)
         self.verify_particle_categorization(particle)
@@ -1002,4 +1002,4 @@ def particle_input(
             **bound_arguments.kwargs,
         )
 
-    return wrapper(callable_, instance=None, args=(), kwargs={})
+    return wrapper(callable_, instance=None, args=(), kwargs={})  # ty:ignore[unknown-argument]

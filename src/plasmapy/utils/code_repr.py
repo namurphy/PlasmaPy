@@ -36,12 +36,12 @@ def _code_repr_of_ndarray(array: np.ndarray, max_items=np.inf) -> str:
         closing = f", ...{closing_brackets})"
         return to_comma_before_ellipsis + closing
 
-    s = np.array_repr(array, max_line_width=np.inf, suppress_small=False)
+    s = np.array_repr(array, max_line_width=np.inf, suppress_small=False)  # ty:ignore[invalid-argument-type]
     s = remove_excess_spaces(s)
     s = put_np_before_infs_and_nans(s)
 
     if array.size > max_items:
-        s = replace_excess_items_with_ellipsis(s, max_items)
+        s = replace_excess_items_with_ellipsis(s, max_items)  # ty:ignore[invalid-argument-type]
 
     return f"np.{s}"
 
@@ -125,7 +125,7 @@ def _name_with_article(ex: Exception) -> str:
     follow the general rule, or use a library like `inflect` on PyPI.
     """
     starts_with_vowel_but_uses_a = ["use", "uni"]
-    name = ex.__name__
+    name = ex.__name__  # ty:ignore[unresolved-attribute]
     use_an = all(
         [
             name[0] in "aeiouAEIOU",
@@ -163,7 +163,7 @@ def _object_name(obj: Any, showmodule: bool = False) -> str:
         return module_name
 
     obj_name = obj.__name__ if hasattr(obj, "__name__") else repr(obj)
-    module_name = inspect.getmodule(obj).__name__ if showmodule else ""
+    module_name = inspect.getmodule(obj).__name__ if showmodule else ""  # ty:ignore[possibly-missing-attribute]
     module_name = substitute_module_shortcuts(module_name)
     if module_name:
         obj_name = f"{module_name}.{obj_name}"
@@ -244,7 +244,7 @@ def call_string(
     args = () if args is None else args
     kwargs = {} if kwargs is None else kwargs
     args_and_kwargs = _code_repr_of_args_and_kwargs(args, kwargs, max_items)
-    return f"{f.__name__}({args_and_kwargs})"
+    return f"{f.__name__}({args_and_kwargs})"  # ty:ignore[unresolved-attribute]
 
 
 def attribute_call_string(

@@ -10,7 +10,7 @@ from numbers import Real
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import c
+from astropy.constants.si import c  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.frequencies import gyrofrequency, plasma_frequency
 from plasmapy.formulary.speeds import Alfven_speed, ion_sound_speed
@@ -29,14 +29,14 @@ c_si_unitless = c.value
 )
 @particle_input
 def hollweg(  # noqa: C901, PLR0912, PLR0915
-    B: u.Quantity[u.T],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
     ion: ParticleLike,
-    k: u.Quantity[u.rad / u.m],
-    n_i: u.Quantity[u.m**-3],
-    theta: u.Quantity[u.rad],
+        k: u.Quantity[u.rad / u.m],  # ty:ignore[invalid-type-form]
+        n_i: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        theta: u.Quantity[u.rad],  # ty:ignore[invalid-type-form]
     *,
-    T_e: u.Quantity[u.K],
-    T_i: u.Quantity[u.K],
+        T_e: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        T_i: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
     gamma_e: float = 1,
     gamma_i: float = 3,
     mass_numb: int | None = None,
@@ -261,7 +261,7 @@ def hollweg(  # noqa: C901, PLR0912, PLR0915
     # Calc needed plasma parameters
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", category=PhysicsWarning)
-        n_e = ion.charge_number * n_i
+        n_e = ion.charge_number * n_i  # ty:ignore[possibly-missing-attribute]
         c_s = ion_sound_speed(
             T_e=T_e,
             T_i=T_i,

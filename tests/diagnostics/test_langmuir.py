@@ -3,7 +3,7 @@
 import astropy.constants.si as const
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.diagnostics import langmuir
 
@@ -155,14 +155,15 @@ def characteristic_simulated():
     n_e_sim = 1e18 * u.m**-3
     probe_area_sim = 1 * u.cm**2
     I_es_sim = (
-        n_e_sim * probe_area_sim * const.e * np.sqrt(T_e_sim / (2 * np.pi * const.m_e))
+            n_e_sim * probe_area_sim * const.e * np.sqrt(T_e_sim / (2 * np.pi * const.m_e))
+        # ty:ignore[unresolved-attribute]
     )
 
     # Create bias array
     bias_simarr = np.arange(-20, 15, 0.1) * u.V
 
     # Calculate electron current and limit to electron saturation current
-    current_simarr = np.exp(const.e * bias_simarr / T_e_sim) * u.A
+    current_simarr = np.exp(const.e * bias_simarr / T_e_sim) * u.A  # ty:ignore[unresolved-attribute]
     current_simarr[current_simarr > I_es_sim] = I_es_sim
 
     # Add simulated linear sheath expansion current

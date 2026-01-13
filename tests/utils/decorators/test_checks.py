@@ -12,8 +12,8 @@ from unittest import mock
 import astropy
 import astropy.units as u
 import numpy as np
-import pytest
-from astropy.constants import c
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants import c  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.decorators.checks import (
     CheckBase,
@@ -50,7 +50,7 @@ class TestCheckBase:
             },
         ]
         for case in _cases:
-            cb = CheckBase(checks_on_return=case["input"][0], **case["input"][1])
+            cb = CheckBase(checks_on_return=case["input"][0], **case["input"][1])  # ty:ignore[invalid-argument-type]
             assert cb.checks == case["output"]
 
 
@@ -63,18 +63,18 @@ class TestCheckUnits:
     decorator class :class:`~plasmapy.utils.decorators.checks.CheckUnits`.
     """
 
-    check_defaults = CheckUnits._CheckUnits__check_defaults  # type: Dict[str, Any]
+    check_defaults = CheckUnits._CheckUnits__check_defaults  # type: Dict[str, Any]  # ty:ignore[unresolved-attribute]
 
     @staticmethod
     def foo_no_anno(x, y):
         return x + y
 
     @staticmethod
-    def foo_partial_anno(x: u.Quantity, y: u.cm) -> u.Quantity:
+    def foo_partial_anno(x: u.Quantity, y: u.cm) -> u.Quantity:  # ty:ignore[invalid-type-form]
         return x.value + y.value
 
     @staticmethod
-    def foo_return_anno(x, y) -> u.um:
+    def foo_return_anno(x, y) -> u.um:  # ty:ignore[invalid-type-form]
         return x.value + y.value
 
     @staticmethod
@@ -82,7 +82,7 @@ class TestCheckUnits:
         return x.value + y.value
 
     @staticmethod
-    def foo_with_none(x: u.Quantity, y: u.cm = None):  # noqa: ANN205
+    def foo_with_none(x: u.Quantity, y: u.cm = None):  # noqa: ANN205  # ty:ignore[invalid-type-form]
         return x.value + y.value
 
     def test_inheritance(self) -> None:
@@ -106,7 +106,7 @@ class TestCheckUnits:
     def test_cu_default_check_values(self) -> None:
         """Test the default check dictionary for CheckUnits."""
         cu = CheckUnits()
-        assert isinstance(cu._CheckUnits__check_defaults, dict)
+        assert isinstance(cu._CheckUnits__check_defaults, dict)  # ty:ignore[unresolved-attribute]
         _defaults = [
             ("units", None),
             ("equivalencies", None),
@@ -114,7 +114,7 @@ class TestCheckUnits:
             ("none_shall_pass", False),
         ]
         for key, val in _defaults:
-            assert cu._CheckUnits__check_defaults[key] == val
+            assert cu._CheckUnits__check_defaults[key] == val  # ty:ignore[unresolved-attribute]
 
     def test_cu_method__flatten_equivalencies_list(self) -> None:
         cu = CheckUnits()
@@ -130,10 +130,10 @@ class TestCheckUnits:
         targets = ["cm", u.km, u.Quantity, float]
         conditioned_targets = [u.cm, u.km]
         with pytest.raises(TypeError):
-            cu._condition_target_units(targets)
+            cu._condition_target_units(targets)  # ty:ignore[invalid-argument-type]
 
         assert (
-            cu._condition_target_units(targets, from_annotations=True)
+                cu._condition_target_units(targets, from_annotations=True)  # ty:ignore[invalid-argument-type]
             == conditioned_targets
         )
 
@@ -605,16 +605,17 @@ class TestCheckUnits:
 
         # perform tests
         for case in _cases:
-            arg, arg_name, arg_checks = case["input"]
+            arg, arg_name, arg_checks = case["input"]  # ty:ignore[invalid-assignment]
             _results = cu._check_unit_core(arg, arg_name, arg_checks)
             assert _results[:3] == case["output"][:3]
 
             if _results[3] is None:
-                assert _results[3] is case["output"][3]
+                assert _results[3] is case["output"][3]  # ty:ignore[index-out-of-bounds]
                 assert cu._check_unit(arg, arg_name, arg_checks) is None
             else:
-                assert isinstance(_results[3], case["output"][3])
-                with pytest.raises(case["output"][3]):
+                assert isinstance(_results[3],
+                                  case["output"][3])  # ty:ignore[index-out-of-bounds, invalid-argument-type]
+                with pytest.raises(case["output"][3]):  # ty:ignore[index-out-of-bounds]
                     cu._check_unit(arg, arg_name, arg_checks)
 
     def test_cu_called_as_decorator(self) -> None:
@@ -662,25 +663,26 @@ class TestCheckUnits:
 
         # test
         for case in _cases:
-            wfoo = CheckUnits(**case["setup"]["checks"])(case["setup"]["function"])
+            wfoo = CheckUnits(**case["setup"]["checks"])(
+                case["setup"]["function"])  # ty:ignore[invalid-argument-type, not-subscriptable]
 
-            args = case["setup"]["args"]
-            kwargs = case["setup"]["kwargs"]
+            args = case["setup"]["args"]  # ty:ignore[not-subscriptable]
+            kwargs = case["setup"]["kwargs"]  # ty:ignore[not-subscriptable]
 
             if "raises" in case:
                 with pytest.raises(case["raises"]):
-                    wfoo(*args, **kwargs)
+                    wfoo(*args, **kwargs)  # ty:ignore[invalid-argument-type]
             else:
-                assert wfoo(*args, **kwargs) == case["output"]
+                assert wfoo(*args, **kwargs) == case["output"]  # ty:ignore[invalid-argument-type]
 
         # test on class method
         class Foo:
             @CheckUnits()
-            def __init__(self, y: u.cm) -> None:
+            def __init__(self, y: u.cm) -> None:  # ty:ignore[invalid-type-form]
                 self.y = y
 
             @CheckUnits(x=u.cm)
-            def bar(self, x) -> u.cm:
+            def bar(self, x) -> u.cm:  # ty:ignore[invalid-type-form]
                 return x + self.y
 
         foo = Foo(10.0 * u.cm)
@@ -742,7 +744,7 @@ class TestCheckUnits:
                 # decorate
                 if ii == 0:
                     # functional decorator call
-                    wfoo = check_units(mock_foo, **case["setup"]["checks"])
+                    wfoo = check_units(mock_foo, **case["setup"]["checks"])  # ty:ignore[invalid-argument-type]
                 elif ii == 1:
                     # sugar decorator call
                     #
@@ -750,24 +752,24 @@ class TestCheckUnits:
                     #      def foo(x):
                     #          return x
                     #
-                    wfoo = check_units(**case["setup"]["checks"])(mock_foo)
+                    wfoo = check_units(**case["setup"]["checks"])(mock_foo)  # ty:ignore[invalid-argument-type]
                 else:
                     continue
 
                 # test
                 args = case["setup"]["args"]
                 kwargs = case["setup"]["kwargs"]
-                assert wfoo(*args, **kwargs) == case["output"]
+                assert wfoo(*args, **kwargs) == case["output"]  # ty:ignore[invalid-argument-type]
 
                 assert mock_cu_class.called
                 assert mock_foo.called
 
                 assert mock_cu_class.call_args[0] == ()
                 assert sorted(mock_cu_class.call_args[1].keys()) == sorted(
-                    case["setup"]["checks"].keys()
+                    case["setup"]["checks"].keys()  # ty:ignore[possibly-missing-attribute]
                 )
 
-                for arg_name, checks in case["setup"]["checks"].items():
+                for arg_name, checks in case["setup"]["checks"].items():  # ty:ignore[possibly-missing-attribute]
                     assert mock_cu_class.call_args[1][arg_name] == checks
 
                 # reset
@@ -784,7 +786,7 @@ class TestCheckValues:
     decorator class :class:`~plasmapy.utils.decorators.checks.CheckValues`.
     """
 
-    check_defaults = CheckValues._CheckValues__check_defaults  # type: Dict[str, bool]
+    check_defaults = CheckValues._CheckValues__check_defaults  # type: Dict[str, bool]  # ty:ignore[unresolved-attribute]
 
     @staticmethod
     def foo(x, y):
@@ -811,7 +813,7 @@ class TestCheckValues:
             ("can_be_zero", True),
         ]
         for key, val in _defaults:
-            assert cv._CheckValues__check_defaults[key] == val
+            assert cv._CheckValues__check_defaults[key] == val  # ty:ignore[invalid-argument-type]
 
     def test_cv_method__get_value_checks(self) -> None:
         """
@@ -888,13 +890,13 @@ class TestCheckValues:
 
         # perform tests
         for case in _cases:
-            sig = inspect.signature(case["setup"]["function"])
-            args = case["setup"]["args"]
-            kwargs = case["setup"]["kwargs"]
-            bound_args = sig.bind(*args, **kwargs)
+            sig = inspect.signature(case["setup"]["function"])  # ty:ignore[invalid-argument-type, not-subscriptable]
+            args = case["setup"]["args"]  # ty:ignore[not-subscriptable]
+            kwargs = case["setup"]["kwargs"]  # ty:ignore[not-subscriptable]
+            bound_args = sig.bind(*args, **kwargs)  # ty:ignore[invalid-argument-type]
 
-            cv = CheckValues(**case["setup"]["checks"])
-            cv.f = case["setup"]["function"]
+            cv = CheckValues(**case["setup"]["checks"])  # ty:ignore[invalid-argument-type, not-subscriptable]
+            cv.f = case["setup"]["function"]  # ty:ignore[not-subscriptable]
             if "warns" in case:
                 with pytest.warns(case["warns"]):
                     checks = cv._get_value_checks(bound_args)
@@ -906,15 +908,15 @@ class TestCheckValues:
                 checks = cv._get_value_checks(bound_args)
 
             # only expected keys exist
-            assert sorted(checks.keys()) == sorted(case["output"].keys())
+            assert sorted(checks.keys()) == sorted(case["output"].keys())  # ty:ignore[possibly-missing-attribute]
 
             # if check key-value not specified then default is assumed
-            for arg_name in case["output"]:
-                arg_checks = checks[arg_name]
+            for arg_name in case["output"]:  # ty:ignore[not-iterable]
+                arg_checks = checks[arg_name]  # ty:ignore[invalid-argument-type]
 
                 for key in default_checks:
-                    if key in case["output"][arg_name]:
-                        val = case["output"][arg_name][key]
+                    if key in case["output"][arg_name]:  # ty:ignore[not-subscriptable, unsupported-operator]
+                        val = case["output"][arg_name][key]  # ty:ignore[not-subscriptable]
                     else:
                         val = default_checks[key]
 
@@ -1088,18 +1090,18 @@ class TestCheckValues:
 
         # test
         for case in _cases:
-            arg_name = case["input"]["arg_name"]
-            checks = case["input"]["checks"]
+            arg_name = case["input"]["arg_name"]  # ty:ignore[not-subscriptable]
+            checks = case["input"]["checks"]  # ty:ignore[not-subscriptable]
 
-            for arg in case["input"]["args"]:
+            for arg in case["input"]["args"]:  # ty:ignore[not-subscriptable]
                 if "raises" in case:
                     with pytest.raises(case["raises"]):
-                        cv._check_value(arg, arg_name, checks)
+                        cv._check_value(arg, arg_name, checks)  # ty:ignore[invalid-argument-type]
                 elif "warns" in case:
                     with pytest.warns(case["warns"]):
-                        cv._check_value(arg, arg_name, checks)
+                        cv._check_value(arg, arg_name, checks)  # ty:ignore[invalid-argument-type]
                 else:
-                    assert cv._check_value(arg, arg_name, checks) is None
+                    assert cv._check_value(arg, arg_name, checks) is None  # ty:ignore[invalid-argument-type]
 
     def test_cv_called_as_decorator(self) -> None:
         """
@@ -1158,16 +1160,17 @@ class TestCheckValues:
 
         # test on function
         for case in _cases:
-            wfoo = CheckValues(**case["setup"]["checks"])(case["setup"]["function"])
+            wfoo = CheckValues(**case["setup"]["checks"])(
+                case["setup"]["function"])  # ty:ignore[invalid-argument-type, not-subscriptable]
 
-            args = case["setup"]["args"]
-            kwargs = case["setup"]["kwargs"]
+            args = case["setup"]["args"]  # ty:ignore[not-subscriptable]
+            kwargs = case["setup"]["kwargs"]  # ty:ignore[not-subscriptable]
 
             if "raises" in case:
                 with pytest.raises(case["raises"]):
-                    wfoo(*args, **kwargs)
+                    wfoo(*args, **kwargs)  # ty:ignore[invalid-argument-type]
             else:
-                assert wfoo(*args, **kwargs) == case["output"]
+                assert wfoo(*args, **kwargs) == case["output"]  # ty:ignore[invalid-argument-type]
 
         # test on class method
         class Foo:
@@ -1246,7 +1249,8 @@ class TestCheckValues:
                 # decorate
                 if ii == 0:
                     # functional decorator call
-                    wfoo = check_values(mock_foo, **case["setup"]["checks"])
+                    wfoo = check_values(mock_foo, **case["setup"][
+                        "checks"])  # ty:ignore[invalid-argument-type, not-subscriptable]
                 elif ii == 1:
                     # sugar decorator call
                     #
@@ -1254,24 +1258,26 @@ class TestCheckValues:
                     #      def foo(x):
                     #          return x
                     #
-                    wfoo = check_values(**case["setup"]["checks"])(mock_foo)
+                    wfoo = check_values(**case["setup"]["checks"])(
+                        mock_foo)  # ty:ignore[invalid-argument-type, not-subscriptable]
                 else:
                     continue
 
                 # test
-                args = case["setup"]["args"]
-                kwargs = case["setup"]["kwargs"]
-                assert wfoo(*args, **kwargs) == case["output"]
+                args = case["setup"]["args"]  # ty:ignore[not-subscriptable]
+                kwargs = case["setup"]["kwargs"]  # ty:ignore[not-subscriptable]
+                assert wfoo(*args, **kwargs) == case["output"]  # ty:ignore[invalid-argument-type]
 
                 assert mock_cv_class.called
                 assert mock_foo.called
 
                 assert mock_cv_class.call_args[0] == ()
                 assert sorted(mock_cv_class.call_args[1].keys()) == sorted(
-                    case["setup"]["checks"].keys()
+                    case["setup"]["checks"].keys()  # ty:ignore[not-subscriptable, possibly-missing-attribute]
                 )
 
-                for arg_name, checks in case["setup"]["checks"].items():
+                for arg_name, checks in case["setup"][
+                    "checks"].items():  # ty:ignore[not-subscriptable, possibly-missing-attribute]
                     assert mock_cv_class.call_args[1][arg_name] == checks
 
                 # reset

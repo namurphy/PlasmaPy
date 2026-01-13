@@ -14,7 +14,7 @@ def deprecated(*args, warning_type=PlasmaPyDeprecationWarning, **kwargs):
     A wrapper of `astropy.utils.decorators.deprecated` that by default assumes
     a warning type of `~plasmapy.utils.exceptions.PlasmaPyDeprecationWarning`.
     """
-    return astropy_deprecated(*args, warning_type=warning_type, **kwargs)
+    return astropy_deprecated(*args, warning_type=warning_type, **kwargs)  # ty:ignore[parameter-already-assigned]
 
 
 # override deprecated's signature
@@ -28,4 +28,4 @@ new_sig = inspect.Signature(
     parameters=tuple(new_sig.values()),
     return_annotation=asig.return_annotation,
 )
-deprecated.__signature__ = new_sig
+deprecated.__signature__ = new_sig  # ty:ignore[unresolved-attribute]

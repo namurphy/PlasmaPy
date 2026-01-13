@@ -37,8 +37,8 @@ from plasmapy.simulation.particle_tracker.termination_conditions import (
 )
 from plasmapy.utils.exceptions import PhysicsWarning, RelativityWarning
 
-_c = const.c
-_m_p = const.m_p
+_c = const.c  # ty:ignore[unresolved-attribute]
+_m_p = const.m_p  # ty:ignore[unresolved-attribute]
 
 
 class ParticleTracker:
@@ -240,7 +240,7 @@ class ParticleTracker:
         self.dt_range = dt_range.to(u.s).value
 
         # Update the `tracker` attribute so that the stop condition & save routine can be used
-        termination_condition.tracker = self
+        termination_condition.tracker = self  # ty:ignore[invalid-assignment]
 
         save_routine.tracker = self
 
@@ -425,7 +425,7 @@ class ParticleTracker:
         self,
         method: Literal["NIST", "Bethe"],
         materials: list[str | None] | None = None,
-        I: list[u.Quantity[u.J] | None] | None = None,  # noqa: E741
+            I: list[u.Quantity[u.J] | None] | None = None,  # noqa: E741  # ty:ignore[invalid-type-form]
     ) -> bool:
         r"""
         Validate inputs to the `add_stopping` method. Raises errors if the
@@ -465,7 +465,7 @@ class ParticleTracker:
         self,
         method: Literal["NIST", "Bethe"],
         materials: list[str | None] | None = None,
-        I: list[u.Quantity[u.J] | None] | None = None,  # noqa: E741
+            I: list[u.Quantity[u.J] | None] | None = None,  # noqa: E741  # ty:ignore[invalid-type-form]
     ):
         r"""
         Enable particle stopping using experimental stopping powers.
@@ -511,7 +511,7 @@ class ParticleTracker:
                     stopping_power(self._particle, material, return_interpolator=True)
                     if material is not None
                     else None
-                    for material in materials
+                    for material in materials  # ty:ignore[not-iterable]
                 ]
 
             case "Bethe":
@@ -532,7 +532,7 @@ class ParticleTracker:
                     wrapped_Bethe_stopping(I_grid.si.value)
                     if I_grid is not None
                     else None
-                    for I_grid in I
+                    for I_grid in I  # ty:ignore[not-iterable]
                 ]
 
             case _:
@@ -609,7 +609,7 @@ class ParticleTracker:
 
         for i, grid in enumerate(self.grids):
             quantities = set(self._required_quantities).intersection(grid.quantities)
-            self._interpolated_quantities_per_grid.append(quantities)
+            self._interpolated_quantities_per_grid.append(quantities)  # ty:ignore[invalid-argument-type]
             self._interpolated_quantities_any_grid = (
                 self._interpolated_quantities_any_grid.union(quantities)
             )
@@ -688,10 +688,10 @@ class ParticleTracker:
         # Setting sys.stdout lets this play nicely with regular print()
         pbar = tqdm(
             initial=0,
-            total=self.termination_condition.total,
+            total=self.termination_condition.total,  # ty:ignore[possibly-missing-attribute]
             disable=not self.verbose,
-            desc=self.termination_condition.progress_description,
-            unit=self.termination_condition.units_string,
+            desc=self.termination_condition.progress_description,  # ty:ignore[possibly-missing-attribute]
+            unit=self.termination_condition.units_string,  # ty:ignore[possibly-missing-attribute]
             bar_format="{l_bar}{bar}{n:.1e}/{total:.1e} {unit}",
             file=sys.stdout,
         )
@@ -700,9 +700,10 @@ class ParticleTracker:
         # or the number of particles being evolved is zero
         is_finished = False
         while not (is_finished or self.num_particles_tracked == 0):
-            is_finished = self.termination_condition.is_finished
+            is_finished = self.termination_condition.is_finished  # ty:ignore[possibly-missing-attribute]
             progress = min(
-                self.termination_condition.progress, self.termination_condition.total
+                self.termination_condition.progress,
+                self.termination_condition.total,  # ty:ignore[possibly-missing-attribute]
             )
 
             pbar.n = progress
@@ -716,8 +717,8 @@ class ParticleTracker:
                     f"Iter. {self.iteration_number},  "
                     f"Avg. Pos.=({np.nanmean(self.x[:, 0]):.1e},{np.nanmean(self.x[:, 1]):.1e},{np.nanmean(self.x[:, 2]):.1e}) m, "
                     f"Avg. Vel.=({np.nanmean(self.v[:, 0]):.1e},{np.nanmean(self.v[:, 1]):.1e},{np.nanmean(self.v[:, 2]):.1e}) m/s, "
-                    f"dt range = ({np.min(self.dt):.1e},{np.max(self.dt):.1e}) s, "
-                    f"{self.termination_condition.progress_description}"
+                    f"dt range = ({np.min(self.dt):.1e},{np.max(self.dt):.1e}) s, "  # ty:ignore[no-matching-overload]
+                    f"{self.termination_condition.progress_description}"  # ty:ignore[possibly-missing-attribute]
                 )
                 pbar.set_description(desc)
 
@@ -921,7 +922,7 @@ class ParticleTracker:
             dt = dt[self._tracked_particle_mask, np.newaxis]
             self.time[self._tracked_particle_mask] += dt
         else:
-            self.time += dt
+            self.time += dt  # ty:ignore[unsupported-operator]
 
         return dt
 
@@ -962,7 +963,7 @@ class ParticleTracker:
         velocity_unit_vectors = np.multiply(
             1 / current_speeds, self.v[self._tracked_particle_mask]
         )
-        dx = np.multiply(current_speeds, self.dt)
+        dx = np.multiply(current_speeds, self.dt)  # ty:ignore[no-matching-overload]
 
         stopping_power = np.zeros((self.num_particles_tracked, 1))
         relevant_kinetic_energy = (
@@ -1055,7 +1056,7 @@ class ParticleTracker:
         self._update_position()
 
         if not self._integrator.is_relativistic and not self._raised_relativity_warning:
-            beta_max = self.vmax / const.c.si.value
+            beta_max = self.vmax / const.c.si.value  # ty:ignore[unresolved-attribute]
 
             if beta_max >= 0.001:
                 warnings.warn(

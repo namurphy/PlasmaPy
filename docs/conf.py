@@ -27,7 +27,7 @@ import os
 import sys
 from datetime import UTC, datetime, timezone
 
-from sphinx.application import Sphinx
+from sphinx.application import Sphinx  # ty:ignore[unresolved-import]
 
 from plasmapy import __version__ as version
 

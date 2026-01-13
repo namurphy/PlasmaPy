@@ -27,15 +27,15 @@ from plasmapy.utils.exceptions import PhysicsError
 
 __all__ += __lite_funcs__
 
-_c = const.c
-_e = const.e.si
-_eps0 = const.eps0
-_m_e = const.m_e
+_c = const.c  # ty:ignore[unresolved-attribute]
+_e = const.e.si  # ty:ignore[unresolved-attribute]
+_eps0 = const.eps0  # ty:ignore[unresolved-attribute]
+_m_e = const.m_e  # ty:ignore[unresolved-attribute]
 
 
 @validate_quantities(T={"equivalencies": u.temperature_energy()})
 @particle_input
-def _process_inputs(T: u.Quantity[u.K], species: (Particle, Particle), V):
+def _process_inputs(T: u.Quantity[u.K], species: (Particle, Particle), V):  # ty:ignore[invalid-type-form]
     """
     Helper function for processing inputs to functionality contained
     in `plasmapy.formulary.collisions`.
@@ -97,13 +97,13 @@ def _replace_nan_velocity_with_thermal_velocity(
     n_e={"can_be_negative": False},
 )
 def mobility(
-    T: u.Quantity[u.K],
-    n_e: u.Quantity[u.m**-3],
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     species,
     z_mean: float = np.nan,
-    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
+        V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
     method: str = "classical",
-) -> u.Quantity[u.m**2 / (u.V * u.s)]:
+) -> u.Quantity[u.m ** 2 / (u.V * u.s)]:  # ty:ignore[invalid-type-form]
     r"""
     Return the electrical mobility.
 
@@ -284,11 +284,11 @@ def Bethe_stopping_lite(
 @bind_lite_func(Bethe_stopping_lite)
 @validate_quantities()
 def Bethe_stopping(
-    I: u.Quantity[u.J],  # noqa: E741
-    n: u.Quantity[1 / u.m**3],
-    v: u.Quantity[u.m / u.s],
+        I: u.Quantity[u.J],  # noqa: E741  # ty:ignore[invalid-type-form]
+        n: u.Quantity[1 / u.m ** 3],  # ty:ignore[invalid-type-form]
+        v: u.Quantity[u.m / u.s],  # ty:ignore[invalid-type-form]
     z: int,
-) -> u.Quantity[u.J / u.m]:
+) -> u.Quantity[u.J / u.m]:  # ty:ignore[invalid-type-form]
     r"""
     The theoretical electronic stopping power for swift charged particles
     calculated from the Bethe formula.
@@ -330,13 +330,13 @@ def Bethe_stopping(
     n={"can_be_negative": False},
 )
 def Spitzer_resistivity(
-    T: u.Quantity[u.K],
-    n: u.Quantity[u.m**-3],
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     species,
     z_mean: float = np.nan,
-    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
+        V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
     method: str = "classical",
-) -> u.Quantity[u.Ohm * u.m]:
+) -> u.Quantity[u.Ohm * u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Spitzer resistivity of a plasma.
 

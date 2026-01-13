@@ -2,9 +2,9 @@
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 import scipy.integrate as spint
-from astropy.constants import k_B, m_e
+from astropy.constants import k_B, m_e  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.distribution import (
     Maxwellian_1D,

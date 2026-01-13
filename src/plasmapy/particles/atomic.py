@@ -87,7 +87,7 @@ def atomic_number(element: ParticleLike) -> int:
     >>> atomic_number("oganesson")
     118
     """
-    return element.atomic_number
+    return element.atomic_number  # ty:ignore[possibly-missing-attribute]
 
 
 @particle_input
@@ -129,11 +129,11 @@ def mass_number(isotope: ParticleLike) -> int:
     >>> mass_number("alpha")
     4
     """
-    return isotope.mass_number
+    return isotope.mass_number  # ty:ignore[possibly-missing-attribute]
 
 
 @particle_input(exclude={"isotope", "ion"})
-def standard_atomic_weight(element: ParticleLike) -> u.Quantity[u.kg]:
+def standard_atomic_weight(element: ParticleLike) -> u.Quantity[u.kg]:  # ty:ignore[invalid-type-form]
     """Return the standard (conventional) atomic weight of an element
     based on the relative abundances of isotopes in terrestrial
     environments.
@@ -186,7 +186,7 @@ def standard_atomic_weight(element: ParticleLike) -> u.Quantity[u.kg]:
     <Quantity 3.440636e-25 kg>
     """
     # TODO: Put in ReST links into above docstring
-    return element.standard_atomic_weight
+    return element.standard_atomic_weight  # ty:ignore[possibly-missing-attribute]
 
 
 @particle_input(exclude={"neutrino", "antineutrino"})
@@ -195,7 +195,7 @@ def particle_mass(
     *,
     mass_numb: int | None = None,
     Z: float | None = None,
-) -> u.Quantity[u.kg]:
+) -> u.Quantity[u.kg]:  # ty:ignore[invalid-type-form]
     """
     Return the mass of a particle.
 
@@ -240,7 +240,7 @@ def particle_mass(
     The masses of neutrinos are not available because primarily upper
     limits are presently known.
     """
-    return particle.mass
+    return particle.mass  # ty:ignore[possibly-missing-attribute]
 
 
 @particle_input
@@ -287,7 +287,7 @@ def isotopic_abundance(isotope: ParticleLike, mass_numb: int | None = None) -> f
     >>> isotopic_abundance("hydrogen", 1)
     0.999885
     """
-    return isotope.isotopic_abundance
+    return isotope.isotopic_abundance  # ty:ignore[possibly-missing-attribute]
 
 
 @particle_input(any_of={"charged", "uncharged"})
@@ -341,11 +341,11 @@ def charge_number(particle: ParticleLike) -> int:
     >>> charge_number("N-14++")
     2
     """
-    return particle.charge_number
+    return particle.charge_number  # ty:ignore[invalid-return-type, possibly-missing-attribute]
 
 
 @particle_input(any_of={"charged", "uncharged"})
-def electric_charge(particle: ParticleLike) -> u.Quantity[u.C]:
+def electric_charge(particle: ParticleLike) -> u.Quantity[u.C]:  # ty:ignore[invalid-type-form]
     """
     Return the electric charge (in coulombs) of a particle.
 
@@ -395,7 +395,7 @@ def electric_charge(particle: ParticleLike) -> u.Quantity[u.C]:
     >>> electric_charge("H-")
     <Quantity -1.60217662e-19 C>
     """
-    return particle.charge
+    return particle.charge  # ty:ignore[possibly-missing-attribute]
 
 
 @particle_input
@@ -441,15 +441,15 @@ def is_stable(particle: ParticleLike, mass_numb: int | None = None) -> bool:
     >>> is_stable("tau+")
     False
     """
-    if particle.element and not particle.isotope:
+    if particle.element and not particle.isotope:  # ty:ignore[possibly-missing-attribute]
         raise InvalidIsotopeError(
             "The input to is_stable must be either an isotope or a special particle."
         )
-    return particle.is_category("stable")
+    return particle.is_category("stable")  # ty:ignore[possibly-missing-attribute]
 
 
 @particle_input(any_of={"stable", "unstable", "isotope"})
-def half_life(particle: ParticleLike, mass_numb: int | None = None) -> u.Quantity[u.s]:
+def half_life(particle: ParticleLike, mass_numb: int | None = None) -> u.Quantity[u.s]:  # ty:ignore[invalid-type-form]
     """
     Return the half-life in seconds for unstable isotopes and particles,
     and |inf| seconds for stable isotopes and particles.
@@ -496,7 +496,7 @@ def half_life(particle: ParticleLike, mass_numb: int | None = None) -> u.Quantit
     >>> half_life("H-1")
     <Quantity inf s>
     """
-    return particle.half_life
+    return particle.half_life  # ty:ignore[possibly-missing-attribute]
 
 
 def known_isotopes(argument: ParticleLike | None = None) -> ParticleList:
@@ -815,7 +815,7 @@ def stable_isotopes(
 def reduced_mass(
     test_particle: ParticleLike,
     target_particle: ParticleLike,
-) -> u.Quantity[u.kg]:
+) -> u.Quantity[u.kg]:  # ty:ignore[invalid-type-form]
     r"""
     Find the :wikipedia:`reduced mass` between two particles.
 
@@ -872,8 +872,8 @@ def reduced_mass(
     >>> reduced_mass(5.4e-27 * u.kg, 8.6e-27 * u.kg)
     <Quantity 3.31714...e-27 kg>
     """
-    return (test_particle.mass * target_particle.mass) / (
-            test_particle.mass + target_particle.mass
+    return (test_particle.mass * target_particle.mass) / (  # ty:ignore[possibly-missing-attribute]
+            test_particle.mass + target_particle.mass  # ty:ignore[possibly-missing-attribute]
     )
 
 
@@ -917,7 +917,7 @@ def periodic_table_period(argument: ParticleLike) -> int:
             "integer representing its atomic number."
         )
     symbol = atomic_symbol(argument)
-    return _elements.data_about_elements[symbol]["period"]
+    return _elements.data_about_elements[symbol]["period"]  # ty:ignore[invalid-argument-type, not-subscriptable]
 
 
 def periodic_table_group(argument: ParticleLike) -> int:
@@ -965,7 +965,7 @@ def periodic_table_group(argument: ParticleLike) -> int:
             "symbol, or an integer representing its atomic number."
         )
     symbol = atomic_symbol(argument)
-    return _elements.data_about_elements[symbol]["group"]
+    return _elements.data_about_elements[symbol]["group"]  # ty:ignore[invalid-argument-type, not-subscriptable]
 
 
 def periodic_table_block(argument: ParticleLike) -> str:
@@ -1016,7 +1016,7 @@ def periodic_table_block(argument: ParticleLike) -> str:
             "symbol, or an integer representing its atomic number."
         )
     symbol = atomic_symbol(argument)
-    return _elements.data_about_elements[symbol]["block"]
+    return _elements.data_about_elements[symbol]["block"]  # ty:ignore[invalid-argument-type, not-subscriptable]
 
 
 def periodic_table_category(argument: str | int) -> str:
@@ -1062,7 +1062,7 @@ def periodic_table_category(argument: str | int) -> str:
             "symbol, or an integer representing its atomic number."
         )
     symbol = atomic_symbol(argument)
-    return _elements.data_about_elements[symbol]["category"]
+    return _elements.data_about_elements[symbol]["category"]  # ty:ignore[invalid-argument-type, not-subscriptable]
 
 
 @particle_input(any_of={"element", "isotope", "ion"})
@@ -1101,12 +1101,13 @@ def ionic_levels(
     >>> ionic_levels("Fe-56", min_charge=13, max_charge=15)
     ParticleList(['Fe-56 13+', 'Fe-56 14+', 'Fe-56 15+'])
     """
-    base_particle = Particle(particle.isotope or particle.element)
+    base_particle = Particle(
+        particle.isotope or particle.element)  # ty:ignore[invalid-argument-type, possibly-missing-attribute]
 
     if max_charge is None:
-        max_charge = particle.atomic_number
+        max_charge = particle.atomic_number  # ty:ignore[possibly-missing-attribute]
 
-    if not min_charge <= max_charge <= particle.atomic_number:
+    if not min_charge <= max_charge <= particle.atomic_number:  # ty:ignore[possibly-missing-attribute]
         raise ChargeError(
             f"Need min_charge ({min_charge}) "
             f"≤ max_charge ({max_charge}) "
@@ -1137,12 +1138,12 @@ def _is_electron(arg: Any) -> bool:
 def stopping_power(
     incident_particle: ParticleLike,
     material: str,
-    energies: u.Quantity[u.MeV] | None = None,
+        energies: u.Quantity[u.MeV] | None = None,  # ty:ignore[invalid-type-form]
     return_interpolator: bool = False,
     component: Literal["total", "electronic", "nuclear"] = "total",
 ) -> (
     tuple[u.Quantity, u.Quantity]
-    | Callable[[u.Quantity[u.J]], u.Quantity[u.MeV * u.cm**2 / u.g]]
+    | Callable[[u.Quantity[u.J]], u.Quantity[u.MeV * u.cm ** 2 / u.g]]  # ty:ignore[invalid-type-form]
 ):
     """
     Calculate stopping powers for a provided particle in a provided
@@ -1252,4 +1253,5 @@ def stopping_power(
         return (
             energies,
             np.exp(cs(np.log(energies.to("MeV").value))) * u.MeV * u.cm ** 2 / u.g,
-        )
+            # ty:ignore[possibly-missing-attribute]
+        )  # ty:ignore[invalid-return-type]

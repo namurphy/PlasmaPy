@@ -21,7 +21,7 @@ from typing import Any, ClassVar
 
 import astropy.units as u
 import numpy as np
-from astropy.constants import c
+from astropy.constants import c  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.decorators.helpers import preserve_signature
 from plasmapy.utils.exceptions import (
@@ -467,7 +467,7 @@ class CheckUnits(CheckBase):
 
     def __init__(
         self,
-        checks_on_return: u.Unit | list[u.Unit] | dict[str, Any] = None,
+            checks_on_return: u.Unit | list[u.Unit] | dict[str, Any] = None,  # ty:ignore[invalid-parameter-default]
         **checks: u.Unit | list[u.Unit] | dict[str, Any],
     ) -> None:
         super().__init__(checks_on_return=checks_on_return, **checks)
@@ -657,10 +657,12 @@ class CheckUnits(CheckBase):
             # define 'units' for unit checks &
             # define 'none_shall_pass' check
             _units = self._condition_target_units(
-                _units, from_annotations=_units_are_from_anno
+                _units,
+                from_annotations=_units_are_from_anno,  # ty:ignore[invalid-argument-type]
             )
             _units_anno = self._condition_target_units(
-                _units_anno, from_annotations=True
+                _units_anno,
+                from_annotations=True,  # ty:ignore[invalid-argument-type]
             )
             if any(_u not in _units for _u in _units_anno):
                 raise ValueError(
@@ -697,7 +699,7 @@ class CheckUnits(CheckBase):
             #
             # initialize equivalencies
             try:
-                _equivs = param_checks["equivalencies"]
+                _equivs = param_checks["equivalencies"]  # ty:ignore[not-subscriptable]
             except (KeyError, TypeError):
                 _equivs = self.__check_defaults["equivalencies"]
 
@@ -730,7 +732,7 @@ class CheckUnits(CheckBase):
 
             # -- Determine if equivalent units pass --
             try:
-                peu = param_checks.get(
+                peu = param_checks.get(  # ty:ignore[possibly-missing-attribute]
                     "pass_equivalent_units",
                     self.__check_defaults["pass_equivalent_units"],
                 )
@@ -1323,7 +1325,7 @@ def check_relativistic(func=None, betafrac: float = 0.05):
 
 
 def _check_relativistic(
-    V: u.Quantity[u.m / u.s],
+        V: u.Quantity[u.m / u.s],  # ty:ignore[invalid-type-form]
     funcname: str,
     betafrac: float = 0.05,
 ) -> None:

@@ -88,7 +88,7 @@ class Characteristic:
     """
 
     @validate_quantities(bias={"can_be_inf": False}, current={"can_be_inf": False})
-    def __init__(self, bias: u.Quantity[u.V], current: u.Quantity[u.A]) -> None:
+    def __init__(self, bias: u.Quantity[u.V], current: u.Quantity[u.A]) -> None:  # ty:ignore[invalid-type-form]
         _langmuir_futurewarning()
 
         self.bias = bias
@@ -141,7 +141,7 @@ class Characteristic:
             current_unique = np.append(
                 current_unique, np.mean(self.current[self.bias == bias].to(u.A).value)
             )
-        current_unique *= u.A
+        current_unique *= u.A  # ty:ignore[unsupported-operator]
 
         if not inplace:
             return Characteristic(bias_unique, current_unique)
@@ -212,7 +212,7 @@ class Characteristic:
 )
 def swept_probe_analysis(  # noqa: PLR0915
     probe_characteristic,
-    probe_area: u.Quantity[u.m**2],
+        probe_area: u.Quantity[u.m ** 2],  # ty:ignore[invalid-type-form]
     gas_argument,
     bimaxwellian: bool = False,
     visualize: bool = False,
@@ -630,11 +630,11 @@ def get_ion_saturation_current(probe_characteristic):
     validations_on_return={"can_be_negative": False},
 )
 def get_ion_density_LM(
-    ion_saturation_current: u.Quantity[u.A],
-    T_e: u.Quantity[u.eV],
-    probe_area: u.Quantity[u.m**2],
+        ion_saturation_current: u.Quantity[u.A],  # ty:ignore[invalid-type-form]
+        T_e: u.Quantity[u.eV],  # ty:ignore[invalid-type-form]
+        probe_area: u.Quantity[u.m ** 2],  # ty:ignore[invalid-type-form]
     gas,
-) -> u.Quantity[u.m**-3]:
+) -> u.Quantity[u.m ** -3]:  # ty:ignore[invalid-type-form]
     r"""
     Implement the Langmuir-Mottley (LM) method of obtaining the ion
     density.
@@ -677,7 +677,7 @@ def get_ion_density_LM(
     # Calculate the acoustic (Bohm) velocity
     c_s = np.sqrt(T_e / gas)
 
-    return np.abs(ion_saturation_current) / (0.6 * const.e * probe_area * c_s)
+    return np.abs(ion_saturation_current) / (0.6 * const.e * probe_area * c_s)  # ty:ignore[unresolved-attribute]
 
 
 @validate_quantities(
@@ -696,10 +696,10 @@ def get_ion_density_LM(
     validations_on_return={"can_be_negative": False},
 )
 def get_electron_density_LM(
-    electron_saturation_current: u.Quantity[u.A],
-    T_e: u.Quantity[u.eV],
-    probe_area: u.Quantity[u.m**2],
-) -> u.Quantity[u.m**-3]:
+        electron_saturation_current: u.Quantity[u.A],  # ty:ignore[invalid-type-form]
+        T_e: u.Quantity[u.eV],  # ty:ignore[invalid-type-form]
+        probe_area: u.Quantity[u.m ** 2],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.m ** -3]:  # ty:ignore[invalid-type-form]
     r"""Implement the Langmuir-Mottley (LM) method of obtaining the electron
     density.
 
@@ -739,9 +739,9 @@ def get_electron_density_LM(
     _langmuir_futurewarning()
 
     # Calculate the thermal electron velocity
-    v_th = np.sqrt(8 * T_e / (np.pi * const.m_e))
+    v_th = np.sqrt(8 * T_e / (np.pi * const.m_e))  # ty:ignore[unresolved-attribute]
 
-    return 4 * electron_saturation_current / (probe_area * const.e * v_th)
+    return 4 * electron_saturation_current / (probe_area * const.e * v_th)  # ty:ignore[unresolved-attribute]
 
 
 def extract_exponential_section(probe_characteristic, T_e=None, ion_current=None):
@@ -794,8 +794,8 @@ def extract_exponential_section(probe_characteristic, T_e=None, ion_current=None
         if np.array(T_e).size > 1:
             T_e = np.min(T_e)
 
-        _filter = (probe_characteristic.bias > V_F + 1.5 * T_e / const.e) & (
-            probe_characteristic.bias < V_P - 0.2 * T_e / const.e
+        _filter = (probe_characteristic.bias > V_F + 1.5 * T_e / const.e) & (  # ty:ignore[unresolved-attribute]
+                probe_characteristic.bias < V_P - 0.2 * T_e / const.e  # ty:ignore[unresolved-attribute]
         )
     else:
         _filter = (probe_characteristic.bias > V_F) & (probe_characteristic.bias < V_P)
@@ -1107,8 +1107,9 @@ def extrapolate_electron_current(
     validations_on_return={"equivalencies": u.temperature_energy()},
 )
 def reduce_bimaxwellian_temperature(
-    T_e: u.Quantity[u.eV], hot_fraction: float
-) -> u.Quantity[u.eV]:
+        T_e: u.Quantity[u.eV],
+        hot_fraction: float,  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.eV]:  # ty:ignore[invalid-type-form]
     r"""Reduce a bi-Maxwellian (dual) temperature to a single mean temperature
     for a given fraction.
 
@@ -1153,7 +1154,7 @@ def reduce_bimaxwellian_temperature(
 )
 def get_ion_density_OML(
     probe_characteristic: Characteristic,
-    probe_area: u.Quantity[u.m**2],
+        probe_area: u.Quantity[u.m ** 2],  # ty:ignore[invalid-type-form]
     gas,
     visualize: bool = False,
     return_fit: bool = False,
@@ -1225,7 +1226,8 @@ def get_ion_density_OML(
     ion = Particle(argument=gas)
 
     n_i_OML = np.sqrt(
-        -slope * u.mA**2 / u.V * np.pi**2 * ion.mass / (probe_area**2 * const.e**3 * 2)
+        -slope * u.mA ** 2 / u.V * np.pi ** 2 * ion.mass / (probe_area ** 2 * const.e ** 3 * 2)
+        # ty:ignore[unresolved-attribute]
     )
 
     if visualize:
@@ -1371,7 +1373,7 @@ def get_EEDF(probe_characteristic, visualize: bool = False):
 
     # Obtain the correct EEDF energy range from the probe characteristic.
     _filter = (probe_bias > V_F) & (probe_bias < V_P)
-    energy = const.e * (V_P - probe_bias[_filter])
+    energy = const.e * (V_P - probe_bias[_filter])  # ty:ignore[unresolved-attribute]
     energy = energy.to(u.eV)
 
     # Obtain the second derivative of the I-V curve.

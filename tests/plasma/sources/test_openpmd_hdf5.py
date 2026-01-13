@@ -1,5 +1,5 @@
 import astropy.units as u
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 import plasmapy.plasma
 from plasmapy.particles.data.test import data_dir

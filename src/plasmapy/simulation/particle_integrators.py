@@ -15,7 +15,7 @@ from abc import ABC, abstractmethod
 import astropy.constants as const
 import numpy as np
 
-_c = const.c
+_c = const.c  # ty:ignore[unresolved-attribute]
 
 
 class AbstractIntegrator(ABC):

@@ -7,7 +7,7 @@ from contextlib import nullcontext as does_not_raise
 from unittest import mock
 
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.analysis.swept_langmuir.helpers import check_sweep, merge_voltage_clusters
 from plasmapy.utils.exceptions import PlasmaPyWarning

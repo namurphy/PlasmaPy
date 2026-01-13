@@ -5,7 +5,7 @@ from unittest import mock
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.analysis.swept_langmuir.helpers import check_sweep, sort_sweep_arrays
 

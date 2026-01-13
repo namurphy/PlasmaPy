@@ -125,7 +125,7 @@ def bind_lite_func(lite_func, attrs: dict[str, Callable] | None = None):
             # bind
             setattr(wrapper, bound_name, attr)
 
-        wrapper.__bound_lite_func__ = __bound_lite_func__
+        wrapper.__bound_lite_func__ = __bound_lite_func__  # ty:ignore[unresolved-attribute]
 
         return wrapper
 

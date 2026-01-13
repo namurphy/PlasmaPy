@@ -17,7 +17,15 @@ __aliases__ = ["Ef_", "lambdaDB_", "lambdaDB_th_"]
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import c, e, eps0, h, hbar, k_B, m_e
+from astropy.constants.si import (  # ty:ignore[unresolved-import]
+    c,
+    e,
+    eps0,
+    h,
+    hbar,
+    k_B,
+    m_e,
+)
 from lmfit import Parameters, minimize
 
 from plasmapy.formulary import mathematics
@@ -36,9 +44,9 @@ __all__ += __aliases__
 )
 @particle_input
 def deBroglie_wavelength(
-    V: u.Quantity[u.m / u.s],
+        V: u.Quantity[u.m / u.s],  # ty:ignore[invalid-type-form]
     particle: ParticleLike,
-) -> u.Quantity[u.m]:
+) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Return the de Broglie wavelength.
 
@@ -113,13 +121,13 @@ def deBroglie_wavelength(
         lambda_dBr = np.ones(V.shape) * np.inf * u.m
         indices = V.value != 0
         lambda_dBr[indices] = h / (
-            particle.mass * V[indices] * Lorentz_factor(V[indices])
+                particle.mass * V[indices] * Lorentz_factor(V[indices])  # ty:ignore[possibly-missing-attribute]
         )
 
     elif V == 0 * u.m / u.s:
         lambda_dBr = np.inf * u.m
     else:
-        lambda_dBr = h / (Lorentz_factor(V) * particle.mass * V)
+        lambda_dBr = h / (Lorentz_factor(V) * particle.mass * V)  # ty:ignore[possibly-missing-attribute]
 
     return lambda_dBr
 
@@ -132,7 +140,7 @@ lambdaDB_ = deBroglie_wavelength
     T_e={"can_be_negative": False, "equivalencies": u.temperature_energy()},
     validations_on_return={"can_be_negative": False},
 )
-def thermal_deBroglie_wavelength(T_e: u.Quantity[u.K]) -> u.Quantity[u.m]:
+def thermal_deBroglie_wavelength(T_e: u.Quantity[u.K]) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the thermal de Broglie wavelength for electrons.
 
@@ -189,7 +197,7 @@ lambdaDB_th_ = thermal_deBroglie_wavelength
 @validate_quantities(
     n_e={"can_be_negative": False}, validations_on_return={"can_be_negative": False}
 )
-def Fermi_energy(n_e: u.Quantity[u.m**-3]) -> u.Quantity[u.J]:
+def Fermi_energy(n_e: u.Quantity[u.m ** -3]) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the kinetic energy in a degenerate electron gas.
 
@@ -255,7 +263,7 @@ Ef_ = Fermi_energy
 @validate_quantities(
     n_e={"can_be_negative": False}, validations_on_return={"can_be_negative": False}
 )
-def Thomas_Fermi_length(n_e: u.Quantity[u.m**-3]) -> u.Quantity[u.m]:
+def Thomas_Fermi_length(n_e: u.Quantity[u.m ** -3]) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the exponential scale length for charge screening
     for cold and dense plasmas.
@@ -324,7 +332,7 @@ def Thomas_Fermi_length(n_e: u.Quantity[u.m**-3]) -> u.Quantity[u.m]:
 @validate_quantities(
     n={"can_be_negative": False}, validations_on_return={"can_be_negative": False}
 )
-def Wigner_Seitz_radius(n: u.Quantity[u.m**-3]) -> u.Quantity[u.m]:
+def Wigner_Seitz_radius(n: u.Quantity[u.m ** -3]) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the Wigner-Seitz radius, which approximates the inter-particle
     spacing.
@@ -389,8 +397,9 @@ def Wigner_Seitz_radius(n: u.Quantity[u.m**-3]) -> u.Quantity[u.m]:
     T={"can_be_negative": False, "equivalencies": u.temperature_energy()},
 )
 def chemical_potential(
-    n_e: u.Quantity[u.m**-3], T: u.Quantity[u.K]
-) -> u.Quantity[u.dimensionless_unscaled]:
+        n_e: u.Quantity[u.m ** -3],
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the ideal chemical potential.
 
@@ -569,8 +578,9 @@ def _chemical_potential_interp(n_e, T):
     n_e={"can_be_negative": False},
 )
 def quantum_theta(
-    T: u.Quantity[u.K], n_e: u.Quantity[u.m**-3]
-) -> u.Quantity[u.dimensionless_unscaled]:
+        T: u.Quantity[u.K],
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Compare Fermi energy to thermal kinetic energy to check if quantum
     effects are important.

@@ -7,7 +7,7 @@ from pathlib import Path
 import astropy.constants as const
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 from scipy.special import erf
 
 from plasmapy.diagnostics.charged_particle_radiography import (
@@ -21,13 +21,13 @@ rng = np.random.default_rng()
 
 def _test_grid(  # noqa: C901, PLR0912
     name: str,
-    L: u.Quantity[u.m] = 1 * u.mm,
+        L: u.Quantity[u.m] = 1 * u.mm,  # ty:ignore[invalid-type-form]
     num: int = 100,
-    B0: u.Quantity[u.T] = 10 * u.T,
-    E0: u.Quantity[u.V / u.m] = 5e8 * u.V / u.m,
-    phi0: u.Quantity[u.V] = 1.4e5 * u.V,
-    a: u.Quantity[u.m] | None = None,
-    b: u.Quantity[u.m] | None = None,
+        B0: u.Quantity[u.T] = 10 * u.T,  # ty:ignore[invalid-type-form]
+        E0: u.Quantity[u.V / u.m] = 5e8 * u.V / u.m,  # ty:ignore[invalid-type-form]
+        phi0: u.Quantity[u.V] = 1.4e5 * u.V,  # ty:ignore[invalid-type-form]
+        a: u.Quantity[u.m] | None = None,  # ty:ignore[invalid-type-form]
+        b: u.Quantity[u.m] | None = None,  # ty:ignore[invalid-type-form]
 ):
     r"""
     Generates grids representing some common physical scenarios for testing
@@ -88,7 +88,7 @@ def _test_grid(  # noqa: C901, PLR0912
             a = L / 4
         radius = np.linalg.norm(grid.grid[..., 0:2] * grid.unit, axis=3)
         Bz = np.where(radius < a, B0, 0 * u.T)
-        grid.add_quantities(B_z=Bz)
+        grid.add_quantities(B_z=Bz)  # ty:ignore[invalid-argument-type]
 
     elif name == "electrostatic_discontinuity":
         if a is None:
@@ -119,7 +119,7 @@ def _test_grid(  # noqa: C901, PLR0912
         Ey = np.where(radius < b, Ey, 0)
         Ez = np.where(radius < b, Ez, 0)
 
-        grid.add_quantities(E_x=-Ex, E_y=-Ey, E_z=-Ez, phi=potential)
+        grid.add_quantities(E_x=-Ex, E_y=-Ey, E_z=-Ez, phi=potential)  # ty:ignore[invalid-argument-type]
 
     else:
         raise ValueError(
@@ -350,7 +350,7 @@ def test_input_validation() -> None:
             grid,
             source,
             detector,
-            field_weighting="not a valid field weighting",
+            field_weighting="not a valid field weighting",  # ty:ignore[invalid-argument-type]
             verbose=False,
         )
 
@@ -1000,8 +1000,8 @@ PARTICLES_PER_CONFIGURATION = 100
 @pytest.mark.slow
 def test_NIST_particle_stopping(
     material: str,
-    density: u.Quantity[u.kg / u.m**3],
-    energy_projected_range_list: list[tuple[u.Quantity[u.J], u.Quantity[u.m]]],
+        density: u.Quantity[u.kg / u.m ** 3],  # ty:ignore[invalid-type-form]
+        energy_projected_range_list: list[tuple[u.Quantity[u.J], u.Quantity[u.m]]],  # ty:ignore[invalid-type-form]
 ) -> None:
     r"""
     Test to ensure that the simulated stopping range matches the SRIM output
@@ -1014,8 +1014,8 @@ def test_NIST_particle_stopping(
 
     # Calculate the relativistic speed of the particles as a function of their
     # kinetic energy
-    speeds = const.c * np.sqrt(
-        1 - (const.m_p * const.c**2 / (energies + const.m_p * const.c**2)) ** 2
+    speeds = const.c * np.sqrt(  # ty:ignore[unresolved-attribute]
+        1 - (const.m_p * const.c ** 2 / (energies + const.m_p * const.c ** 2)) ** 2  # ty:ignore[unresolved-attribute]
     )
 
     width = np.max(projected_ranges) * 1.1

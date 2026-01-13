@@ -2,7 +2,7 @@
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.dispersion.numerical.hollweg_ import hollweg
 from plasmapy.formulary import speeds

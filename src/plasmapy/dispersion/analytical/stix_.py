@@ -7,7 +7,7 @@ __all__ = ["stix"]
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import c
+from astropy.constants.si import c  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.frequencies import gyrofrequency, plasma_frequency
 from plasmapy.particles import Particle, ParticleList
@@ -22,11 +22,11 @@ c_si_unitless = c.value
     w={"can_be_negative": False, "can_be_zero": False},
 )
 def stix(  # noqa: C901, PLR0912, PLR0915
-    B: u.Quantity[u.T],
-    w: u.Quantity[u.rad / u.s],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
+        w: u.Quantity[u.rad / u.s],  # ty:ignore[invalid-type-form]
     ions: Particle,
-    n_i: u.Quantity[u.m**-3],
-    theta: u.Quantity[u.rad],
+        n_i: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        theta: u.Quantity[u.rad],  # ty:ignore[invalid-type-form]
 ):
     r"""
     Calculate the cold plasma dispersion function presented by
@@ -178,35 +178,35 @@ def stix(  # noqa: C901, PLR0912, PLR0915
 
     # Validate ions argument
     if not isinstance(ions, list | tuple | ParticleList):
-        ions = [ions]
-    ions = ParticleList(ions)
+        ions = [ions]  # ty:ignore[invalid-assignment]
+    ions = ParticleList(ions)  # ty:ignore[invalid-argument-type, invalid-assignment]
 
-    if not all(failed := [ion.is_ion and ion.charge_number > 0 for ion in ions]):
+    if not all(failed := [ion.is_ion and ion.charge_number > 0 for ion in ions]):  # ty:ignore[not-iterable]
         raise ValueError(
             "Particle(s) passed to 'ions' must be a positively charged"
             " ion. The following particle(s) is(are) not allowed "
-            f"{[ion for ion, fail in zip(ions, failed, strict=False) if not fail]}"
+            f"{[ion for ion, fail in zip(ions, failed, strict=False) if not fail]}"  # ty:ignore[invalid-argument-type]
         )
 
     # Validate n_i argument
     if n_i.ndim not in {0, 1}:
         raise ValueError(
             "Argument 'n_i' must be a single valued or a 1D array of "
-            f"size 1 or {len(ions)}, instead got shape of {n_i.shape}"
+            f"size 1 or {len(ions)}, instead got shape of {n_i.shape}"  # ty:ignore[invalid-argument-type]
         )
-    elif n_i.ndim == 1 and n_i.size != len(ions):
+    elif n_i.ndim == 1 and n_i.size != len(ions):  # ty:ignore[invalid-argument-type]
         raise ValueError(
             "Argument 'n_i' and 'ions' need to be the same length, got"
-            f" value of shape {len(ions)} and {len(n_i.shape)}."
+            f" value of shape {len(ions)} and {len(n_i.shape)}."  # ty:ignore[invalid-argument-type]
         )
 
     n_i = n_i.value
     if n_i.ndim == 0:
-        n_i = np.array([n_i] * len(ions))
+        n_i = np.array([n_i] * len(ions))  # ty:ignore[invalid-argument-type]
     elif n_i.size == 1:
-        n_i = np.repeat(n_i, len(ions))
+        n_i = np.repeat(n_i, len(ions))  # ty:ignore[invalid-argument-type]
 
-    species = [*ions, Particle("e-")]
+    species = [*ions, Particle("e-")]  # ty:ignore[not-iterable]
     densities = np.zeros(n_i.size + 1)
     densities[:-1] = n_i
     densities[-1] = np.sum(n_i * ions.charge_number)

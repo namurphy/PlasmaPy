@@ -56,7 +56,7 @@ class HarrisSheet:
         self.P0 = P0
 
     @validate_quantities
-    def magnetic_field(self, y: u.Quantity[u.m]) -> u.Quantity[u.T]:
+    def magnetic_field(self, y: u.Quantity[u.m]) -> u.Quantity[u.T]:  # ty:ignore[invalid-type-form]
         r"""
         Compute the magnetic field.
 
@@ -87,7 +87,7 @@ class HarrisSheet:
         return self.B0 * np.tanh(u.rad * y / self.delta)
 
     @validate_quantities
-    def current_density(self, y: u.Quantity[u.m]) -> u.Quantity[u.A / u.m**2]:
+    def current_density(self, y: u.Quantity[u.m]) -> u.Quantity[u.A / u.m ** 2]:  # ty:ignore[invalid-type-form]
         r"""
         Compute the current density.
 
@@ -112,11 +112,12 @@ class HarrisSheet:
         <Quantity [ -56222.14... , -795774.71...,  -56222.14... ] A / m2>
         """
         return (
-            -self.B0 / (self.delta * const.mu0) * np.cosh(u.rad * y / self.delta) ** -2
+                -self.B0 / (self.delta * const.mu0) * np.cosh(u.rad * y / self.delta) ** -2
+            # ty:ignore[unresolved-attribute]
         )
 
     @validate_quantities
-    def plasma_pressure(self, y: u.Quantity[u.m]) -> u.Quantity[u.Pa]:
+    def plasma_pressure(self, y: u.Quantity[u.m]) -> u.Quantity[u.Pa]:  # ty:ignore[invalid-type-form]
         r"""
         Compute plasma pressure.
 
@@ -141,6 +142,7 @@ class HarrisSheet:
         <Quantity [ 28111.07..., 397887.35...,  28111.07...] Pa>
         """
         return (
-            self.B0**2 / (2 * const.mu0) * (np.cosh(u.rad * y / self.delta) ** -2)
+                self.B0 ** 2 / (2 * const.mu0) * (
+                np.cosh(u.rad * y / self.delta) ** -2)  # ty:ignore[unresolved-attribute]
             + self.P0
         )

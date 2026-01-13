@@ -6,7 +6,7 @@ import warnings
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.particles import CustomParticle
 from plasmapy.plasma.grids import CartesianGrid

@@ -4,7 +4,7 @@ from collections import namedtuple
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.code_repr import (
     _code_repr_of_arg,
@@ -371,7 +371,7 @@ def test__string_together_warnings_for_printing() -> None:
     warnings = [UserWarning, DeprecationWarning]
     warning_messages = ["msg1", "msg2"]
     expected = "UserWarning: msg1\n\nDeprecationWarning: msg2"
-    actual = _string_together_warnings_for_printing(warnings, warning_messages)
+    actual = _string_together_warnings_for_printing(warnings, warning_messages)  # ty:ignore[invalid-argument-type]
     assert actual == expected, (
         f"_string_together_warnings_for_printing is not producing the "
         f"expected result:\n"

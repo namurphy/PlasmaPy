@@ -8,7 +8,7 @@ utils/data/tests/test_downloader.py
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.diagnostics.charged_particle_radiography.detector_stacks import (
     Layer,

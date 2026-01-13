@@ -3,7 +3,7 @@ dielectric.py"""
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.dielectric import (
     RotatingTensorElements,

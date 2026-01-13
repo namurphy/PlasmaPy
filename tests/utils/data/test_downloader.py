@@ -3,7 +3,7 @@ import warnings
 from pathlib import Path
 
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.data.downloader import _API_CONNECTION_ESTABLISHED, Downloader
 

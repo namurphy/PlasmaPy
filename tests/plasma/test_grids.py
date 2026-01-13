@@ -5,7 +5,7 @@ Tests for grids.py
 import astropy.units as u
 import matplotlib.pyplot as plt
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 from astropy.tests.helper import assert_quantity_allclose
 
 from plasmapy.plasma import grids
@@ -406,7 +406,7 @@ def test_AbstractGrid_require_quantities(
             required, replace_with_zeros=replace_with_zeros
         )
 
-        assert all(k in abstract_grid_uniform.quantities for k in required)
+        assert all(k in abstract_grid_uniform.quantities for k in required)  # ty:ignore[not-iterable]
 
 
 def test_AbstractGrid_indexing(abstract_grid_uniform) -> None:
@@ -673,11 +673,11 @@ def nonuniform_cartesian_grid():
     x, y, z = np.meshgrid(ax0, ax1, ax2, indexing="ij")
 
     # Create grid
-    grid = grids.NonUniformCartesianGrid(x, y, z)
+    grid = grids.NonUniformCartesianGrid(x, y, z)  # ty:ignore[invalid-argument-type]
     # Add some data to the grid
-    grid.add_quantities(x=x)
-    grid.add_quantities(y=y)
-    grid.add_quantities(z=z)
+    grid.add_quantities(x=x)  # ty:ignore[invalid-argument-type]
+    grid.add_quantities(y=y)  # ty:ignore[invalid-argument-type]
+    grid.add_quantities(z=z)  # ty:ignore[invalid-argument-type]
 
     radius = np.sqrt(grid.pts0**2 + grid.pts1**2 + grid.pts2**2)
     rho = radius.to(u.mm).value ** 4 * u.kg * u.m**-3
@@ -917,7 +917,7 @@ def test_volume_averaged_interpolator_compare_NN_1D(uniform_cartesian_grid) -> N
     )
     interp_pts = np.moveaxis(interp_pts, 0, -1)
 
-    interp_hax = interp_pts[:, 0].to(u.mm).value
+    interp_hax = interp_pts[:, 0].to(u.mm).value  # ty:ignore[unresolved-attribute]
 
     va_rho = uniform_cartesian_grid.volume_averaged_interpolator(interp_pts, "rho")
     nn_rho = uniform_cartesian_grid.nearest_neighbor_interpolator(interp_pts, "rho")
@@ -948,9 +948,9 @@ def test_volume_averaged_interpolator_compare_NN_3D(uniform_cartesian_grid) -> N
     )
     interp_pts = np.moveaxis(interp_pts, 0, -1)
 
-    xax = interp_pts[:, 0].to(u.mm).value
-    yax = interp_pts[:, 1].to(u.mm).value
-    zax = interp_pts[:, 2].to(u.mm).value
+    xax = interp_pts[:, 0].to(u.mm).value  # ty:ignore[unresolved-attribute]
+    yax = interp_pts[:, 1].to(u.mm).value  # ty:ignore[unresolved-attribute]
+    zax = interp_pts[:, 2].to(u.mm).value  # ty:ignore[unresolved-attribute]
     analytic = np.sqrt(xax**2 + yax**2 + zax**2)
 
     va_rho = uniform_cartesian_grid.volume_averaged_interpolator(interp_pts, "rho")
@@ -1032,7 +1032,7 @@ def debug_volume_avg_interpolator() -> None:
     )
     interp_pts = np.moveaxis(interp_pts, 0, -1)
 
-    interp_hax = interp_pts[:, 0].to(u.mm).value
+    interp_hax = interp_pts[:, 0].to(u.mm).value  # ty:ignore[unresolved-attribute]
 
     va_rho = grid.volume_averaged_interpolator(interp_pts, "rho")
     nn_rho = grid.nearest_neighbor_interpolator(interp_pts, "rho")

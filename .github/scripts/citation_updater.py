@@ -10,7 +10,7 @@ import datetime
 import pathlib
 import re
 
-from ruamel.yaml import YAML
+from ruamel.yaml import YAML  # ty:ignore[unresolved-import]
 
 
 def parse_arguments():

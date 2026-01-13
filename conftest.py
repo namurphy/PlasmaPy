@@ -2,7 +2,7 @@
 
 import os
 
-from hypothesis import Verbosity, settings
+from hypothesis import Verbosity, settings  # ty:ignore[unresolved-import]
 
 settings.register_profile("ci", max_examples=1000)
 settings.register_profile("dev", max_examples=10)

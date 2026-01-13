@@ -12,8 +12,8 @@ thermal speed.
 
 import astropy.units as u
 import numpy as np
-import pytest
-from astropy.constants.si import k_B
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants.si import k_B  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.speeds import (
     kappa_thermal_speed,

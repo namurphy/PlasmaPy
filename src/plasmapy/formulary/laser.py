@@ -27,7 +27,7 @@ __aliases__ = [
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import c, e, eps0, m_e
+from astropy.constants.si import c, e, eps0, m_e  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.decorators import validate_quantities
 
@@ -38,8 +38,8 @@ __all__ += __aliases__
     intensity={"can_be_negative": False},
 )
 def electric_field_amplitude(
-    intensity: u.Quantity[u.watt / u.m**2],
-) -> u.Quantity[u.V / u.m]:
+        intensity: u.Quantity[u.watt / u.m ** 2],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.V / u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the electric field amplitude :math:`E_0` from the intensity :math:`I`
     of a laser.
@@ -88,8 +88,8 @@ E0_ = electric_field_amplitude
     electric_field_amplitude={"can_be_negative": False},
 )
 def intensity(
-    electric_field_amplitude: u.Quantity[u.V / u.m],
-) -> u.Quantity[u.watt / u.m**2]:
+        electric_field_amplitude: u.Quantity[u.V / u.m],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.watt / u.m ** 2]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the intensity :math:`I` of a laser from the
     electric field amplitude :math:`E_0`.
@@ -137,7 +137,7 @@ I_ = intensity
 @validate_quantities(
     angular_frequency={"can_be_negative": False},
 )
-def em_wavelength(angular_frequency: u.Quantity[u.rad / u.s]) -> u.Quantity[u.m]:
+def em_wavelength(angular_frequency: u.Quantity[u.rad / u.s]) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the wavelength of a laser :math:`\lambda` given the
     the angular frequency :math:`\omega`.
@@ -178,7 +178,7 @@ def em_wavelength(angular_frequency: u.Quantity[u.rad / u.s]) -> u.Quantity[u.m]
 @validate_quantities(
     wavelength={"can_be_negative": False},
 )
-def em_angular_frequency(wavelength: u.Quantity[u.m]) -> u.Quantity[u.rad / u.s]:
+def em_angular_frequency(wavelength: u.Quantity[u.m]) -> u.Quantity[u.rad / u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the angular frequency :math:`\omega` of a laser given the
     the wavelength of the beam :math:`\lambda`.
@@ -227,8 +227,8 @@ omega_ = em_angular_frequency
     wavelength={"can_be_negative": False},
 )
 def normalized_vector_potential(
-    intensity: u.Quantity[u.watt / u.m**2],
-    wavelength: u.Quantity[u.m],
+        intensity: u.Quantity[u.watt / u.m ** 2],  # ty:ignore[invalid-type-form]
+        wavelength: u.Quantity[u.m],  # ty:ignore[invalid-type-form]
 ) -> float | np.ndarray:
     r"""
     Calculate the normalized vector potential :math:`a_0` from the intensity :math:`I`
@@ -292,9 +292,9 @@ a0_ = normalized_vector_potential
     beam_waist_radius={"can_be_negative": False},
 )
 def Gaussian_power(
-    intensity: u.Quantity[u.watt / u.m**2],
-    beam_waist_radius: u.Quantity[u.m],
-) -> u.Quantity[u.Watt]:
+        intensity: u.Quantity[u.watt / u.m ** 2],  # ty:ignore[invalid-type-form]
+        beam_waist_radius: u.Quantity[u.m],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.Watt]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the total power of a Gaussian beam :math:`P_0` from the intensity :math:`I`
     and the beam waist radius :math:`w_0`.
@@ -338,7 +338,7 @@ def Gaussian_power(
 @validate_quantities(
     spot_size_FWHM={"can_be_negative": False},
 )
-def Gaussian_beam_waist_radius(spot_size_FWHM: u.Quantity[u.m]) -> u.Quantity[u.m]:
+def Gaussian_beam_waist_radius(spot_size_FWHM: u.Quantity[u.m]) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the beam waist radius :math:`w_0` for the intensity profile
     of a Gaussian beam given the Full Width at Half Maximum spot size :math:`FWHM`.
@@ -390,7 +390,7 @@ w0_ = Gaussian_beam_waist_radius
 @validate_quantities(
     beam_waist_radius={"can_be_negative": False},
 )
-def Gaussian_spot_size_FWHM(beam_waist_radius: u.Quantity[u.m]) -> u.Quantity[u.m]:
+def Gaussian_spot_size_FWHM(beam_waist_radius: u.Quantity[u.m]) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the Full Width at Half Maximum spot size :math:`FWHM` at focus given the
     beam waist radius of a Gaussian beam :math:`w_0`.
@@ -436,9 +436,9 @@ def Gaussian_spot_size_FWHM(beam_waist_radius: u.Quantity[u.m]) -> u.Quantity[u.
     beam_waist_radius={"can_be_negative": False},
 )
 def Gaussian_Rayleigh_length(
-    wavelength: u.Quantity[u.m],
-    beam_waist_radius: u.Quantity[u.m],
-) -> u.Quantity[u.m]:
+        wavelength: u.Quantity[u.m],  # ty:ignore[invalid-type-form]
+        beam_waist_radius: u.Quantity[u.m],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the Rayleigh length :math:`z_R` from the beam waist radius :math:`w_0`
     and the wavelength :math:`\lambda`.

@@ -3,7 +3,7 @@
 # This file contains experimental usage of unicode characters.
 
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.mathematics import Fermi_integral
 
@@ -61,4 +61,4 @@ class Test_Fermi_integral:
         type is passed to `~plasmapy.mathematics.Fermi_integral`.
         """
         with pytest.raises(TypeError):
-            Fermi_integral([1, 2, 3], self.order1)
+            Fermi_integral([1, 2, 3], self.order1)  # ty:ignore[invalid-argument-type]

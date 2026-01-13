@@ -58,10 +58,10 @@ class Layer:
 
     def __init__(
         self,
-        thickness: u.Quantity[u.m],
-        energy_axis: u.Quantity[u.J],
-        stopping_power: u.Quantity[u.J / u.m, u.J * u.m**2 / u.kg],
-        mass_density: u.Quantity[u.kg / u.m**3] | None = None,
+            thickness: u.Quantity[u.m],  # ty:ignore[invalid-type-form]
+            energy_axis: u.Quantity[u.J],  # ty:ignore[invalid-type-form]
+            stopping_power: u.Quantity[u.J / u.m, u.J * u.m ** 2 / u.kg],  # ty:ignore[invalid-type-form]
+            mass_density: u.Quantity[u.kg / u.m ** 3] | None = None,  # ty:ignore[invalid-type-form]
         active: bool = True,
         name: str = "",
     ) -> None:
@@ -139,7 +139,10 @@ class Stack:
         return np.sum(thickness) * u.m
 
     def deposition_curves(
-        self, energies: u.Quantity[u.J], dx=1 * u.um, return_only_active: bool = True
+            self,
+            energies: u.Quantity[u.J],
+            dx=1 * u.um,
+            return_only_active: bool = True,  # ty:ignore[invalid-type-form]
     ):
         """
         Calculate the deposition of an ensemble of particles over a range of
@@ -220,8 +223,8 @@ class Stack:
 
     def energy_bands(
         self,
-        energy_range: u.Quantity[u.J],
-        dE: u.Quantity[u.J],
+            energy_range: u.Quantity[u.J],  # ty:ignore[invalid-type-form]
+            dE: u.Quantity[u.J],  # ty:ignore[invalid-type-form]
         dx=1e-6 * u.m,  # noqa: ARG002
         return_only_active: bool = True,
     ):
@@ -260,7 +263,7 @@ class Stack:
             np.arange(
                 *energy_range.to(u.J).value,
                 dE.to(u.J).value,
-            )
+            )  # ty:ignore[no-matching-overload]
             * u.J
         )
 

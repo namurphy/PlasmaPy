@@ -23,7 +23,7 @@ __aliases__ = ["betaH_", "nD_", "Re_", "Rm_"]
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import mu0
+from astropy.constants.si import mu0  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary import frequencies, lengths, misc, speeds
 from plasmapy.formulary.quantum import quantum_theta
@@ -39,8 +39,9 @@ __all__ += __aliases__
     n_e={"can_be_negative": False},
 )
 def Debye_number(
-    T_e: u.Quantity[u.K], n_e: u.Quantity[u.m**-3]
-) -> u.Quantity[u.dimensionless_unscaled]:
+        T_e: u.Quantity[u.K],
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""Return the number of electrons within a sphere with a radius
     of the Debye length.
 
@@ -114,13 +115,13 @@ nD_ = Debye_number
 )
 @particle_input
 def Hall_parameter(
-    n: u.Quantity[u.m**-3],
-    T: u.Quantity[u.K],
-    B: u.Quantity[u.T],
+        n: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
     ion: ParticleLike,
     particle: ParticleLike,
     coulomb_log: float | None = None,
-    V: u.Quantity[u.m / u.s] | None = None,
+        V: u.Quantity[u.m / u.s] | None = None,  # ty:ignore[invalid-type-form]
     coulomb_log_method: str = "classical",
 ):
     r"""
@@ -238,8 +239,10 @@ betaH_ = Hall_parameter
     n={"can_be_negative": False},
 )
 def beta(
-    T: u.Quantity[u.K], n: u.Quantity[u.m**-3], B: u.Quantity[u.T]
-) -> u.Quantity[u.dimensionless_unscaled]:
+        T: u.Quantity[u.K],
+        n: u.Quantity[u.m ** -3],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Compute the ratio of thermal pressure to magnetic pressure.
 
@@ -288,11 +291,11 @@ def beta(
 
 @validate_quantities(U={"can_be_negative": True})
 def Reynolds_number(
-    rho: u.Quantity[u.kg / u.m**3],
-    U: u.Quantity[u.m / u.s],
-    L: u.Quantity[u.m],
-    mu: u.Quantity[u.kg / (u.m * u.s)],
-) -> u.Quantity[u.dimensionless_unscaled]:
+        rho: u.Quantity[u.kg / u.m ** 3],  # ty:ignore[invalid-type-form]
+        U: u.Quantity[u.m / u.s],  # ty:ignore[invalid-type-form]
+        L: u.Quantity[u.m],  # ty:ignore[invalid-type-form]
+        mu: u.Quantity[u.kg / (u.m * u.s)],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Compute the Reynolds number.
 
@@ -369,8 +372,10 @@ Re_ = Reynolds_number
 
 @validate_quantities(U={"can_be_negative": True})
 def Mag_Reynolds(
-    U: u.Quantity[u.m / u.s], L: u.Quantity[u.m], sigma: u.Quantity[u.S / u.m]
-) -> u.Quantity[u.dimensionless_unscaled]:
+        U: u.Quantity[u.m / u.s],
+        L: u.Quantity[u.m],
+        sigma: u.Quantity[u.S / u.m],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Compute the magnetic Reynolds number.
 
@@ -440,13 +445,13 @@ Rm_ = Mag_Reynolds
 
 
 def Lundquist_number(
-    L: u.Quantity[u.m],
-    B: u.Quantity[u.T],
-    density: u.Quantity[u.m**-3, u.kg / u.m**3],
-    sigma: u.Quantity[u.S / u.m],
+        L: u.Quantity[u.m],  # ty:ignore[invalid-type-form]
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
+        density: u.Quantity[u.m ** -3, u.kg / u.m ** 3],  # ty:ignore[invalid-type-form]
+        sigma: u.Quantity[u.S / u.m],  # ty:ignore[invalid-type-form]
     ion: ParticleLike | None = None,
     z_mean: float | None = None,
-) -> u.Quantity[u.dimensionless_unscaled]:
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Compute the ratio of the Alfén wave crossing timescale to the
     magnetic diffusion timescale.

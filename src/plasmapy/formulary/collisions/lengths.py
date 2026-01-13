@@ -7,7 +7,7 @@ __all__ = ["impact_parameter_perp", "impact_parameter", "mean_free_path"]
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import eps0, hbar
+from astropy.constants.si import eps0, hbar  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.collisions import frequencies, misc
 from plasmapy.formulary.lengths import Debye_length
@@ -22,10 +22,10 @@ from plasmapy.utils.decorators import validate_quantities
 )
 @particle_input
 def impact_parameter_perp(
-    T: u.Quantity[u.K],
-    species: (Particle, Particle),
-    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
-) -> u.Quantity[u.m]:
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        species: (Particle, Particle),  # ty:ignore[invalid-type-form]
+        V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Distance of the closest approach for a 90° Coulomb collision.
 
@@ -109,11 +109,11 @@ def impact_parameter_perp(
     V={"none_shall_pass": True},
 )
 def impact_parameter(  # noqa: C901
-    T: u.Quantity[u.K],
-    n_e: u.Quantity[u.m**-3],
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     species,
     z_mean: float = np.nan,
-    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
+        V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
     method: str = "classical",
 ):
     r"""
@@ -331,13 +331,13 @@ def impact_parameter(  # noqa: C901
     n_e={"can_be_negative": False},
 )
 def mean_free_path(
-    T: u.Quantity[u.K],
-    n_e: u.Quantity[u.m**-3],
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     species,
     z_mean: float = np.nan,
-    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
+        V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
     method: str = "classical",
-) -> u.Quantity[u.m]:
+) -> u.Quantity[u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Collisional mean free path (m).
 

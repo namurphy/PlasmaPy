@@ -6,8 +6,8 @@ import json
 import astropy.constants as const
 import astropy.units as u
 import numpy as np
-import pytest
-from astropy.constants import c, e, m_e, m_n, m_p
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants import c, e, m_e, m_n, m_p  # ty:ignore[unresolved-import]
 
 from plasmapy.particles import json_load_particle, json_loads_particle, molecule
 from plasmapy.particles._isotopes import data_about_isotopes
@@ -590,7 +590,7 @@ equivalent_particles_table: list[list[ParticleLike]] = [
     ["tau", "tau-"],
     [Particle("Fe 5+"), Particle("Fe 4+").ionize()],
     [Particle("He-4 0+"), Particle("alpha").recombine(2)],
-]
+]  # ty:ignore[invalid-assignment]
 
 
 @pytest.mark.parametrize("equivalent_particles", equivalent_particles_table)
@@ -755,7 +755,7 @@ def test_particle_class_mass_nuclide_mass(isotope: str, ion: str) -> None:
             f"of the ion."
         )
 
-        assert Isotope.isotope and not Isotope.ion, inputerrmsg  # noqa: PT018
+        assert Isotope.isotope and not Isotope.ion, inputerrmsg  # noqa: PT018  # ty:ignore[unresolved-attribute]
         assert Isotope.isotope == Ion.isotope, inputerrmsg
         assert Ion.charge_number == Ion.atomic_number, inputerrmsg
 
@@ -950,10 +950,10 @@ customized_particle_tests = [
     (CustomParticle, {"mass": "100.0 g"}, "mass", 100.0 * u.g),
     (CustomParticle, {"charge": -np.inf * u.kC}, "charge", -np.inf * u.C),
     (CustomParticle, {"charge": "5.0 C"}, "charge", 5.0 * u.C),
-    (CustomParticle, {"Z": 1}, "charge", const.e.si),
-    (CustomParticle, {"Z": 1.5}, "charge", 1.5 * const.e.si),
+    (CustomParticle, {"Z": 1}, "charge", const.e.si),  # ty:ignore[unresolved-attribute]
+    (CustomParticle, {"Z": 1.5}, "charge", 1.5 * const.e.si),  # ty:ignore[unresolved-attribute]
     (CustomParticle, {"Z": 1.5}, "charge_number", 1.5),
-    (CustomParticle, {"charge": 1.3 * const.e.si}, "charge_number", 1.3),
+    (CustomParticle, {"charge": 1.3 * const.e.si}, "charge_number", 1.3),  # ty:ignore[unresolved-attribute]
 ]
 
 

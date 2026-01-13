@@ -6,7 +6,7 @@ from numbers import Real
 
 import astropy.units as u
 import numpy as np
-from astropy.constants import c
+from astropy.constants import c  # ty:ignore[unresolved-import]
 from numpy.typing import DTypeLike
 
 from plasmapy.particles.decorators import particle_input
@@ -17,7 +17,7 @@ from plasmapy.utils.exceptions import RelativityError
 
 
 @validate_quantities(V={"can_be_negative": True})
-def Lorentz_factor(V: u.Quantity[u.m / u.s]):
+def Lorentz_factor(V: u.Quantity[u.m / u.s]):  # ty:ignore[invalid-type-form]
     r"""
     Return the Lorentz factor.
 
@@ -93,13 +93,13 @@ def Lorentz_factor(V: u.Quantity[u.m / u.s]):
 @particle_input
 def relativistic_energy(
     particle: ParticleLike,
-    V: u.Quantity[u.m / u.s],
+        V: u.Quantity[u.m / u.s],  # ty:ignore[invalid-type-form]
     *,
     mass_numb: int | None = None,
     Z: int | None = None,
     m=None,
     v=None,
-) -> u.Quantity[u.J]:
+) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
     """
     Calculate the sum of the mass energy and kinetic energy of a
     relativistic body.
@@ -183,7 +183,7 @@ def relativistic_energy(
         )
 
     γ = Lorentz_factor(V)
-    return γ * particle.mass * c**2
+    return γ * particle.mass * c ** 2  # ty:ignore[possibly-missing-attribute]
 
 
 class RelativisticBody:
@@ -315,11 +315,11 @@ class RelativisticBody:
     def __init__(
         self,
         particle: ParticleLike,
-        V: u.Quantity[u.m / u.s] = None,
-        momentum: u.Quantity[u.kg * u.m / u.s] = None,
+            V: u.Quantity[u.m / u.s] = None,  # ty:ignore[invalid-type-form]
+            momentum: u.Quantity[u.kg * u.m / u.s] = None,  # ty:ignore[invalid-type-form]
         *,
-        total_energy: u.Quantity[u.J] = None,
-        kinetic_energy: u.Quantity[u.J] = None,
+            total_energy: u.Quantity[u.J] = None,  # ty:ignore[invalid-type-form]
+            kinetic_energy: u.Quantity[u.J] = None,  # ty:ignore[invalid-type-form]
         v_over_c: float | None = None,
         lorentz_factor: float | None = None,
         Z: int | None = None,
@@ -339,7 +339,7 @@ class RelativisticBody:
             "lorentz_factor": lorentz_factor,
         }
 
-        speed_like_input = self._get_speed_like_input(velocity_like_inputs)
+        speed_like_input = self._get_speed_like_input(velocity_like_inputs)  # ty:ignore[invalid-argument-type]
         self._store_velocity_like_argument(speed_like_input)
 
     def __repr__(self) -> str:
@@ -354,11 +354,11 @@ class RelativisticBody:
         -------
         |Particle|, |CustomParticle|, or |ParticleList|
         """
-        return self._particle
+        return self._particle  # ty:ignore[invalid-return-type]
 
     @property
     @validate_quantities
-    def mass(self) -> u.Quantity[u.kg]:
+    def mass(self) -> u.Quantity[u.kg]:  # ty:ignore[invalid-type-form]
         r"""
         The rest mass of the body, :math:`m_0`\ .
 
@@ -370,7 +370,7 @@ class RelativisticBody:
 
     @property
     @validate_quantities
-    def mass_energy(self) -> u.Quantity[u.J]:
+    def mass_energy(self) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
         r"""
         The rest mass energy of the body, :math:`m_0 c^2`\ .
 
@@ -382,7 +382,7 @@ class RelativisticBody:
 
     @property
     @validate_quantities
-    def total_energy(self) -> u.Quantity[u.J]:
+    def total_energy(self) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
         r"""
         The sum of the rest mass energy and the kinetic energy of the
         body.
@@ -399,7 +399,7 @@ class RelativisticBody:
 
     @property
     @validate_quantities
-    def kinetic_energy(self) -> u.Quantity[u.J]:
+    def kinetic_energy(self) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
         """
         The kinetic energy of the body.
 
@@ -428,7 +428,7 @@ class RelativisticBody:
 
     @property
     @validate_quantities
-    def velocity(self) -> u.Quantity[u.m / u.s]:
+    def velocity(self) -> u.Quantity[u.m / u.s]:  # ty:ignore[invalid-type-form]
         r"""
         The velocity of the body, :math:`V`\ .
 
@@ -457,7 +457,7 @@ class RelativisticBody:
 
     @property
     @validate_quantities
-    def momentum(self) -> u.Quantity[u.kg * u.m / u.s]:
+    def momentum(self) -> u.Quantity[u.kg * u.m / u.s]:  # ty:ignore[invalid-type-form]
         r"""
         The magnitude of the momentum of the body.
 
@@ -473,12 +473,12 @@ class RelativisticBody:
 
     @kinetic_energy.setter
     @validate_quantities(E_K={"can_be_negative": False})
-    def kinetic_energy(self, E_K: u.Quantity[u.J]) -> None:
+    def kinetic_energy(self, E_K: u.Quantity[u.J]) -> None:  # ty:ignore[invalid-type-form]
         self.total_energy = E_K + self.mass_energy
 
     @total_energy.setter
     @validate_quantities(E_tot={"can_be_negative": False})
-    def total_energy(self, E_tot: u.Quantity[u.J]) -> None:
+    def total_energy(self, E_tot: u.Quantity[u.J]) -> None:  # ty:ignore[invalid-type-form]
         self._momentum = np.sqrt(E_tot**2 - self.mass_energy**2) / c
 
     @v_over_c.setter
@@ -487,7 +487,7 @@ class RelativisticBody:
 
     @velocity.setter
     @validate_quantities
-    def velocity(self, V: u.Quantity[u.m / u.s]) -> None:
+    def velocity(self, V: u.Quantity[u.m / u.s]) -> None:  # ty:ignore[invalid-type-form]
         self._momentum = (Lorentz_factor(V) * self.mass * V).to(u.kg * u.m / u.s)
 
     @lorentz_factor.setter
@@ -510,7 +510,7 @@ class RelativisticBody:
 
     @momentum.setter
     @validate_quantities
-    def momentum(self, p: u.Quantity[u.kg * u.m / u.s]) -> None:
+    def momentum(self, p: u.Quantity[u.kg * u.m / u.s]) -> None:  # ty:ignore[invalid-type-form]
         self._momentum = p.to(u.kg * u.m / u.s)
 
     def __eq__(self, other) -> bool:

@@ -2,7 +2,7 @@
 Test module for `plasmapy.utils.decorators.lite_func.bind_lite_func`.
 """
 
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.decorators.lite_func import bind_lite_func
 

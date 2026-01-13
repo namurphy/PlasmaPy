@@ -219,7 +219,7 @@ def create_particles_dict() -> dict[str, dict]:  # noqa: C901, PLR0912
     for particle in particle_zoo.leptons | particle_zoo.antileptons:
         if "nu" not in particle:
             if "e" in particle:
-                particles[particle]["mass"] = const.m_e
+                particles[particle]["mass"] = const.m_e  # ty:ignore[unresolved-attribute]
             elif "mu" in particle:
                 particles[particle]["mass"] = 1.883_531_594e-28 * u.kg
                 particles[particle]["half-life"] = 2.1969811e-6 * u.s
@@ -242,16 +242,16 @@ def create_particles_dict() -> dict[str, dict]:  # noqa: C901, PLR0912
             "element name": "hydrogen",
             "isotope": "H-1",
             "ion": "p+",
-            "mass": const.m_p,
+            "mass": const.m_p,  # ty:ignore[unresolved-attribute]
             "charge number": 1,
             "periodic table": _elements.PeriodicTable(
                 group=1, period=1, block="s", category="nonmetal"
             ),
         },
-        "p-": {"mass": const.m_p, "charge number": -1},
-        "n": {"mass": const.m_n, "half-life": 881.5 * u.s, "charge number": 0},
+        "p-": {"mass": const.m_p, "charge number": -1},  # ty:ignore[unresolved-attribute]
+        "n": {"mass": const.m_n, "half-life": 881.5 * u.s, "charge number": 0},  # ty:ignore[unresolved-attribute]
         "antineutron": {
-            "mass": const.m_n,
+            "mass": const.m_n,  # ty:ignore[unresolved-attribute]
             "half-life": 881.5 * u.s,
             "charge number": 0,
         },
@@ -276,7 +276,7 @@ def create_particles_dict() -> dict[str, dict]:  # noqa: C901, PLR0912
 data_about_special_particles = create_particles_dict()
 
 special_ion_masses = {
-    "p+": const.m_p,
+    "p+": const.m_p,  # ty:ignore[unresolved-attribute]
     "D 1+": 3.343583719e-27 * u.kg,
     "T 1+": 5.007356665e-27 * u.kg,
 }

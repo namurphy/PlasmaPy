@@ -9,7 +9,7 @@ __all__ = [
 __aliases__ = ["DB_", "pmag_", "pth_", "ub_"]
 
 import astropy.units as u
-from astropy.constants.si import e, k_B, mu0
+from astropy.constants.si import e, k_B, mu0  # ty:ignore[unresolved-import]
 
 from plasmapy import particles
 from plasmapy.particles.particle_class import ParticleLike
@@ -45,8 +45,9 @@ def _grab_charge(ion: ParticleLike, z_mean=None):
     B={"can_be_negative": False},
 )
 def Bohm_diffusion(
-    T_e: u.Quantity[u.K], B: u.Quantity[u.T]
-) -> u.Quantity[u.m**2 / u.s]:
+        T_e: u.Quantity[u.K],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.m ** 2 / u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Return the Bohm diffusion coefficient.
 
@@ -114,7 +115,7 @@ DB_ = Bohm_diffusion
 
 
 @validate_quantities
-def magnetic_energy_density(B: u.Quantity[u.T]) -> u.Quantity[u.J / u.m**3]:
+def magnetic_energy_density(B: u.Quantity[u.T]) -> u.Quantity[u.J / u.m ** 3]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the magnetic energy density.
 
@@ -178,7 +179,7 @@ ub_ = magnetic_energy_density
 
 
 @validate_quantities
-def magnetic_pressure(B: u.Quantity[u.T]) -> u.Quantity[u.Pa]:
+def magnetic_pressure(B: u.Quantity[u.T]) -> u.Quantity[u.Pa]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the magnetic pressure.
 
@@ -245,7 +246,7 @@ pmag_ = magnetic_pressure
     T={"can_be_negative": False, "equivalencies": u.temperature_energy()},
     n={"can_be_negative": False},
 )
-def thermal_pressure(T: u.Quantity[u.K], n: u.Quantity[u.m**-3]) -> u.Quantity[u.Pa]:
+def thermal_pressure(T: u.Quantity[u.K], n: u.Quantity[u.m ** -3]) -> u.Quantity[u.Pa]:  # ty:ignore[invalid-type-form]
     r"""
     Return the thermal pressure for a Maxwellian distribution.
 

@@ -242,10 +242,10 @@ class ParticleList(collections.UserList):
         """
         values = [getattr(particle, attr, default) for particle in self.data]
         if unit:
-            values = u.Quantity(values)
+            values = u.Quantity(values)  # ty:ignore[invalid-argument-type]
         return values
 
-    def append(self, particle: ParticleLike) -> None:
+    def append(self, particle: ParticleLike) -> None:  # ty:ignore[invalid-method-override]
         """Append a particle to the end of the |ParticleList|."""
         if isinstance(particle, u.Quantity):
             particle = _turn_quantity_into_custom_particle(particle)
@@ -254,7 +254,7 @@ class ParticleList(collections.UserList):
         self.data.append(particle)
 
     @property
-    def charge(self) -> u.Quantity[u.C]:
+    def charge(self) -> u.Quantity[u.C]:  # ty:ignore[invalid-type-form]
         """
         The electric charges of the particles.
 
@@ -280,7 +280,7 @@ class ParticleList(collections.UserList):
         """
         return self._data
 
-    def extend(self, iterable: Iterable[ParticleLike]) -> None:
+    def extend(self, iterable: Iterable[ParticleLike]) -> None:  # ty:ignore[invalid-method-override]
         """
         Extend the sequence by appending |particle-like| elements from
         ``iterable``.
@@ -296,7 +296,7 @@ class ParticleList(collections.UserList):
                 self.append(obj)
 
     @property
-    def half_life(self) -> u.Quantity[u.s]:
+    def half_life(self) -> u.Quantity[u.s]:  # ty:ignore[invalid-type-form]
         """
         The half-lives of the particles.
 
@@ -306,7 +306,7 @@ class ParticleList(collections.UserList):
         """
         return self._get_particle_attribute("half_life", unit=u.s, default=np.nan * u.s)
 
-    def insert(self, index, particle: ParticleLike) -> None:
+    def insert(self, index, particle: ParticleLike) -> None:  # ty:ignore[invalid-method-override]
         """Insert a particle before an index."""
         if isinstance(particle, u.Quantity):
             particle = _turn_quantity_into_custom_particle(particle)
@@ -398,7 +398,7 @@ class ParticleList(collections.UserList):
         return category_list if particlewise else all(category_list)
 
     @property
-    def charge_number(self) -> np.array:
+    def charge_number(self) -> np.array:  # ty:ignore[invalid-type-form]
         """
         The charges of the particles in units of the elementary
         charge.
@@ -410,7 +410,7 @@ class ParticleList(collections.UserList):
         return np.array(self._get_particle_attribute("charge_number", default=np.nan))
 
     @property
-    def mass(self) -> u.Quantity[u.kg]:
+    def mass(self) -> u.Quantity[u.kg]:  # ty:ignore[invalid-type-form]
         """
         The masses of the particles.
 
@@ -421,7 +421,7 @@ class ParticleList(collections.UserList):
         return self._get_particle_attribute("mass", unit=u.kg, default=np.nan * u.J)
 
     @property
-    def mass_energy(self) -> u.Quantity[u.J]:
+    def mass_energy(self) -> u.Quantity[u.J]:  # ty:ignore[invalid-type-form]
         """
         The mass energies of the particles.
 

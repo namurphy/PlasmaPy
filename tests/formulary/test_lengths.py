@@ -4,8 +4,8 @@ import warnings
 
 import astropy.units as u
 import numpy as np
-import pytest
-from astropy.constants import m_p
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants import m_p  # ty:ignore[unresolved-import]
 from astropy.tests.helper import assert_quantity_allclose
 
 from plasmapy.formulary.lengths import (

@@ -2,7 +2,7 @@
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.densities import critical_density, mass_density
 from plasmapy.formulary.frequencies import plasma_frequency

@@ -3,7 +3,7 @@
 import pickle
 
 import astropy.units as u
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.particles.ionization_state import IonicLevel, IonizationState
 from plasmapy.particles.ionization_state_collection import IonizationStateCollection

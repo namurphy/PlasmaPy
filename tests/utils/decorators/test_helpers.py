@@ -3,7 +3,7 @@
 import inspect
 from unittest import mock
 
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.decorators.helpers import modify_docstring, preserve_signature
 

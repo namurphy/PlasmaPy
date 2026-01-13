@@ -4,9 +4,9 @@
 
 import astropy.units as u
 import numpy as np
-import pytest
-from hypothesis import given
-from hypothesis.strategies import complex_numbers
+import pytest  # ty:ignore[unresolved-import]
+from hypothesis import given  # ty:ignore[unresolved-import]
+from hypothesis.strategies import complex_numbers  # ty:ignore[unresolved-import]
 from numpy import pi as π  # noqa: ICN003
 from scipy.special import gamma as Γ  # noqa: N812
 

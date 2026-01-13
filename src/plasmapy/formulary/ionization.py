@@ -5,7 +5,7 @@ __aliases__ = ["Z_bal_"]
 
 import astropy.units as u
 import numpy as np
-from astropy.constants import a0, k_B
+from astropy.constants import a0, k_B  # ty:ignore[unresolved-import]
 
 from plasmapy.utils.decorators import validate_quantities
 
@@ -14,9 +14,9 @@ from plasmapy.utils.decorators import validate_quantities
     T_e={"can_be_negative": False, "equivalencies": u.temperature_energy()}
 )
 def ionization_balance(
-    n: u.Quantity[u.m**-3],
-    T_e: u.Quantity[u.K],
-) -> u.Quantity[u.dimensionless_unscaled]:
+        n: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        T_e: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Return the average ionization state of ions in a plasma assuming that
     the numbers of ions in each state are equal.
@@ -98,8 +98,12 @@ Z_bal_ = ionization_balance
     T_e={"can_be_negative": False, "equivalencies": u.temperature_energy()}
 )
 def Saha(
-    g_j, g_k, n_e: u.Quantity[u.m**-3], E_jk: u.Quantity[u.J], T_e: u.Quantity[u.K]
-) -> u.Quantity[u.dimensionless_unscaled]:
+        g_j,
+        g_k,
+        n_e: u.Quantity[u.m ** -3],
+        E_jk: u.Quantity[u.J],
+        T_e: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Return the ratio of populations of two ionization states.
 

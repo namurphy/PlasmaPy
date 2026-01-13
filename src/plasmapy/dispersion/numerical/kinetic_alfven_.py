@@ -10,7 +10,7 @@ from numbers import Real
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import c
+from astropy.constants.si import c  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary import frequencies as pfp
 from plasmapy.formulary import speeds as speed
@@ -29,14 +29,14 @@ c_si_unitless = c.value
     T_i={"can_be_negative": False, "equivalencies": u.temperature_energy()},
 )
 def kinetic_alfven(  # noqa: C901, PLR0912
-    B: u.Quantity[u.T],
+        B: u.Quantity[u.T],  # ty:ignore[invalid-type-form]
     ion: ParticleLike,
-    k: u.Quantity[u.rad / u.m],
-    n_i: u.Quantity[u.m**-3],
-    theta: u.Quantity[u.deg],
+        k: u.Quantity[u.rad / u.m],  # ty:ignore[invalid-type-form]
+        n_i: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        theta: u.Quantity[u.deg],  # ty:ignore[invalid-type-form]
     *,
-    T_e: u.Quantity[u.K],
-    T_i: u.Quantity[u.K],
+        T_e: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        T_i: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
     gamma_e: float = 1,
     gamma_i: float = 3,
     mass_numb: int | None = None,
@@ -213,7 +213,7 @@ def kinetic_alfven(  # noqa: C901, PLR0912
     elif np.isscalar(theta):
         theta = np.array([theta])
 
-    Z = ion.charge_number
+    Z = ion.charge_number  # ty:ignore[possibly-missing-attribute]
     n_e = Z * n_i
     v_A = speed.Alfven_speed(B=B, density=n_i, ion=ion)
     omega_ci = pfp.gyrofrequency(B=B, particle=ion, signed=False)

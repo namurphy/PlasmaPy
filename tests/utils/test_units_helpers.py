@@ -5,8 +5,8 @@ from collections.abc import Iterable
 from typing import Any
 
 import astropy.units as u
-import pytest
-from astropy.constants import c, m_e
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants import c, m_e  # ty:ignore[unresolved-import]
 
 from plasmapy.utils._units_helpers import _get_physical_type_dict
 

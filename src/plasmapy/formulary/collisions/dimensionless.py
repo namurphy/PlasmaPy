@@ -11,7 +11,7 @@ from typing import Literal
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import e, eps0, k_B
+from astropy.constants.si import e, eps0, k_B  # ty:ignore[unresolved-import]
 
 from plasmapy import particles
 from plasmapy.formulary.collisions import lengths, misc
@@ -29,13 +29,13 @@ from plasmapy.utils.decorators import validate_quantities
     n_e={"can_be_negative": False},
 )
 def coupling_parameter(
-    T: u.Quantity[u.K],
-    n_e: u.Quantity[u.m**-3],
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     species,
     z_mean: float = np.nan,
-    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
+        V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
     method: Literal["classical", "quantum"] = "classical",
-) -> u.Quantity[u.dimensionless_unscaled]:
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Ratio of the Coulomb energy to the kinetic (usually thermal) energy.
 
@@ -224,13 +224,13 @@ def coupling_parameter(
 )
 def Knudsen_number(
     characteristic_length,
-    T: u.Quantity[u.K],
-    n_e: u.Quantity[u.m**-3],
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     species,
     z_mean: float = np.nan,
-    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
+        V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
     method: str = "classical",
-) -> u.Quantity[u.dimensionless_unscaled]:
+) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
     r"""
     Knudsen number (dimensionless).
 

@@ -4,7 +4,7 @@ import warnings
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.simulation.resolution_constraints import CFL_limit_electromagnetic_yee
 

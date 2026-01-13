@@ -26,7 +26,7 @@ from plasmapy.utils.decorators import validate_quantities
 
 
 def _atomic_number_and_mass_number(p: ParticleLike):
-    return p.atomic_number, p.mass_number if p.isotope else 0
+    return p.atomic_number, p.mass_number if p.isotope else 0  # ty:ignore[possibly-missing-attribute]
 
 
 class IonizationStateCollection:  # noqa: PLW1641
@@ -139,10 +139,10 @@ class IonizationStateCollection:  # noqa: PLW1641
         self,
         inputs: dict[str, np.ndarray] | list | tuple,
         *,
-        T_e: u.Quantity[u.K] = np.nan * u.K,
+            T_e: u.Quantity[u.K] = np.nan * u.K,  # ty:ignore[invalid-type-form]
         abundances: dict[str, float] | None = None,
         log_abundances: dict[str, float] | None = None,
-        n0: u.Quantity[u.m**-3] = np.nan * u.m**-3,
+            n0: u.Quantity[u.m ** -3] = np.nan * u.m ** -3,  # ty:ignore[invalid-type-form]
         tol: float = 1e-15,
         kappa: float = np.inf,
     ) -> None:
@@ -173,7 +173,7 @@ class IonizationStateCollection:  # noqa: PLW1641
             self.tol = tol
             self.ionic_fractions = inputs
             if set_abundances:
-                self.abundances = abundances
+                self.abundances = abundances  # ty:ignore[invalid-assignment]
                 self.log_abundances = log_abundances
             self.kappa = kappa
         except (ValueError, TypeError) as exc:
@@ -275,8 +275,9 @@ class IonizationStateCollection:  # noqa: PLW1641
             # then set the abundance if there is enough (but not too
             # much) information to do so.
 
-            abundance_is_undefined = np.isnan(self.abundances[particle])
-            isnan_of_abundance_values = np.isnan(list(self.abundances.values()))
+            abundance_is_undefined = np.isnan(self.abundances[particle])  # ty:ignore[not-subscriptable]
+            isnan_of_abundance_values = np.isnan(
+                list(self.abundances.values()))  # ty:ignore[possibly-missing-attribute]
             all_abundances_are_nan = np.all(isnan_of_abundance_values)
             n_is_defined = not np.isnan(self.n0)
 
@@ -378,7 +379,7 @@ class IonizationStateCollection:  # noqa: PLW1641
                         np.all(np.isnan(this)) and np.all(np.isnan(that)),
                         u.quantity.allclose(this, that, rtol=min_tol),
                     ]
-                )
+                )  # ty:ignore[no-matching-overload]
 
                 if not this_equals_that:
                     return False
@@ -386,7 +387,7 @@ class IonizationStateCollection:  # noqa: PLW1641
         return True
 
     @property
-    def ionic_fractions(self) -> dict[str, np.array]:
+    def ionic_fractions(self) -> dict[str, np.array]:  # ty:ignore[invalid-type-form]
         """
         A `dict` containing the ionic fractions for each element and
         isotope.
@@ -634,7 +635,7 @@ class IonizationStateCollection:  # noqa: PLW1641
 
     @property
     @validate_quantities
-    def n_e(self) -> u.Quantity[u.m**-3]:
+    def n_e(self) -> u.Quantity[u.m ** -3]:  # ty:ignore[invalid-type-form]
         """The electron number density under the assumption of quasineutrality."""
         number_densities = self.number_densities
         n_e = 0.0 * u.m**-3
@@ -647,13 +648,13 @@ class IonizationStateCollection:  # noqa: PLW1641
 
     @property
     @validate_quantities
-    def n0(self) -> u.Quantity[u.m**-3]:
+    def n0(self) -> u.Quantity[u.m ** -3]:  # ty:ignore[invalid-type-form]
         """The number density scaling factor."""
         return self._pars["n"]
 
     @n0.setter
     @validate_quantities
-    def n0(self, n: u.Quantity[u.m**-3]):
+    def n0(self, n: u.Quantity[u.m ** -3]):  # ty:ignore[invalid-type-form]
         """Set the number density scaling factor."""
         try:
             n = n.to(u.m**-3)
@@ -672,7 +673,7 @@ class IonizationStateCollection:  # noqa: PLW1641
         isotopes composing the collection.
         """
         return {
-            elem: self.n0 * self.abundances[elem] * self.ionic_fractions[elem]
+            elem: self.n0 * self.abundances[elem] * self.ionic_fractions[elem]  # ty:ignore[not-subscriptable]
             for elem in self.base_particles
         }
 
@@ -745,8 +746,9 @@ class IonizationStateCollection:  # noqa: PLW1641
         logarithms of the relative abundances as the corresponding values.
         """
         return {
-            atom: np.log10(abundance) for atom, abundance in self.abundances.items()
-        }
+            atom: np.log10(abundance)
+            for atom, abundance in self.abundances.items()  # ty:ignore[possibly-missing-attribute]
+        }  # ty:ignore[invalid-return-type]
 
     @log_abundances.setter
     def log_abundances(self, value: dict[str, float] | None):
@@ -761,13 +763,13 @@ class IonizationStateCollection:  # noqa: PLW1641
                 raise ParticleError("Invalid log_abundances.") from None
 
     @property
-    def T_e(self) -> u.Quantity[u.K]:
+    def T_e(self) -> u.Quantity[u.K]:  # ty:ignore[invalid-type-form]
         """The electron temperature."""
         return self._pars["T_e"]
 
     @T_e.setter
     @validate_quantities(electron_temperature={"equivalencies": u.temperature_energy()})
-    def T_e(self, electron_temperature: u.Quantity[u.K]):
+    def T_e(self, electron_temperature: u.Quantity[u.K]):  # ty:ignore[invalid-type-form]
         """Set the electron temperature."""
         try:
             temperature = electron_temperature.to(
@@ -782,7 +784,7 @@ class IonizationStateCollection:  # noqa: PLW1641
         self._pars["T_e"] = temperature
 
     @property
-    def kappa(self) -> np.real:
+    def kappa(self) -> np.real:  # ty:ignore[invalid-type-form]
         """
         The κ parameter for a kappa distribution function for electrons.
 
@@ -816,7 +818,7 @@ class IonizationStateCollection:  # noqa: PLW1641
         return self._base_particles
 
     @property
-    def tol(self) -> np.real:
+    def tol(self) -> np.real:  # ty:ignore[invalid-type-form]
         """The absolute tolerance for comparisons."""
         return self._tol
 
@@ -895,10 +897,10 @@ class IonizationStateCollection:  # noqa: PLW1641
 
         for base_particle in self.base_particles:
             ionization_state = self[base_particle]
-            ionic_levels = ionization_state.to_list()[min_charge:]
+            ionic_levels = ionization_state.to_list()[min_charge:]  # ty:ignore[possibly-missing-attribute]
             all_particles.extend(ionic_levels)
 
-            base_particle_abundance = self.abundances[base_particle]
+            base_particle_abundance = self.abundances[base_particle]  # ty:ignore[not-subscriptable]
 
             if np.isnan(base_particle_abundance):
                 if len(self) == 1:
@@ -908,7 +910,7 @@ class IonizationStateCollection:  # noqa: PLW1641
                         "Unable to provide an average particle without abundances."
                     )
 
-            ionic_fractions = ionization_state.ionic_fractions[min_charge:]
+            ionic_fractions = ionization_state.ionic_fractions[min_charge:]  # ty:ignore[possibly-missing-attribute]
             ionic_abundances = base_particle_abundance * ionic_fractions
             all_abundances.extend(ionic_abundances)
 
@@ -916,7 +918,7 @@ class IonizationStateCollection:  # noqa: PLW1641
             use_rms_charge=use_rms_charge,
             use_rms_mass=use_rms_mass,
             abundances=all_abundances,
-        )
+        )  # ty:ignore[invalid-return-type]
 
     def summarize(
         self, minimum_ionic_fraction: float = 0.01

@@ -1,7 +1,7 @@
 import astropy.units as u
 import numpy as np
-import pytest
-from astropy.constants import c
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants import c  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.quantum import (
     Ef_,

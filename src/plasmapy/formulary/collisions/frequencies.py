@@ -13,7 +13,7 @@ from functools import cached_property
 import astropy.units as u
 import numpy as np
 import scipy
-from astropy.constants.si import e, k_B, m_e
+from astropy.constants.si import e, k_B, m_e  # ty:ignore[unresolved-import]
 
 from plasmapy import particles
 from plasmapy.formulary.collisions import coulomb, lengths, misc
@@ -157,9 +157,9 @@ class SingleParticleCollisionFrequencies:
         test_particle: ParticleLike,
         field_particle: ParticleLike,
         *,
-        v_drift: u.Quantity[u.m / u.s],
-        T_b: u.Quantity[u.K],
-        n_b: u.Quantity[u.m**-3],
+            v_drift: u.Quantity[u.m / u.s],  # ty:ignore[invalid-type-form]
+            T_b: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+            n_b: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
         Coulomb_log,
     ) -> None:
         # Note: This class uses CGS units internally to coincide
@@ -186,7 +186,7 @@ class SingleParticleCollisionFrequencies:
 
     @cached_property
     def _mass_ratio(self):
-        return self.test_particle.mass / self.field_particle.mass
+        return self.test_particle.mass / self.field_particle.mass  # ty:ignore[possibly-missing-attribute]
 
     @cached_property
     def momentum_loss(self):
@@ -254,15 +254,15 @@ class SingleParticleCollisionFrequencies:
         return (
             4
             * np.pi
-            * (self.test_particle.charge_number * e.esu) ** 2
-            * (self.field_particle.charge_number * e.esu) ** 2
+            * (self.test_particle.charge_number * e.esu) ** 2  # ty:ignore[possibly-missing-attribute]
+            * (self.field_particle.charge_number * e.esu) ** 2  # ty:ignore[possibly-missing-attribute]
             * self.Coulomb_log
             * self.n_b
-            / (self.test_particle.mass**2 * self.v_drift**3)
+            / (self.test_particle.mass ** 2 * self.v_drift ** 3)  # ty:ignore[possibly-missing-attribute]
         ).to(u.Hz)
 
     @cached_property
-    def x(self) -> u.Quantity[u.dimensionless_unscaled]:
+    def x(self) -> u.Quantity[u.dimensionless_unscaled]:  # ty:ignore[invalid-type-form]
         """
         The ratio of kinetic energy in the test particle to the thermal
         energy of the field particle.
@@ -275,11 +275,12 @@ class SingleParticleCollisionFrequencies:
         |SingleParticleCollisionFrequencies|
         """
 
-        x = self.field_particle.mass * self.v_drift**2 / (2 * k_B.cgs * self.T_b)
+        x = self.field_particle.mass * self.v_drift ** 2 / (
+                2 * k_B.cgs * self.T_b)  # ty:ignore[possibly-missing-attribute]
         return x.to(u.dimensionless_unscaled)
 
     @staticmethod
-    def _phi_integrand(t: u.Quantity[u.dimensionless_unscaled]):  # noqa: ANN205
+    def _phi_integrand(t: u.Quantity[u.dimensionless_unscaled]):  # noqa: ANN205  # ty:ignore[invalid-type-form]
         """
         The phi integrand used in calculating phi.
         """
@@ -390,12 +391,12 @@ class MaxwellianCollisionFrequencies:
         test_particle: ParticleLike,
         field_particle: ParticleLike,
         *,
-        v_drift: u.Quantity[u.m / u.s] = 0 * u.m / u.s,
-        T_a: u.Quantity[u.K],
-        n_a: u.Quantity[u.m**-3],
-        T_b: u.Quantity[u.K],
-        n_b: u.Quantity[u.m**-3],
-        Coulomb_log: u.Quantity[u.dimensionless_unscaled],
+            v_drift: u.Quantity[u.m / u.s] = 0 * u.m / u.s,  # ty:ignore[invalid-type-form]
+            T_a: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+            n_a: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+            T_b: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+            n_b: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+            Coulomb_log: u.Quantity[u.dimensionless_unscaled],  # ty:ignore[invalid-type-form]
     ) -> None:
         if (
             isinstance(v_drift, np.ndarray)
@@ -471,11 +472,11 @@ class MaxwellianCollisionFrequencies:
         return (
             4
             * np.pi
-            * (self.test_particle.charge_number * e.esu) ** 2
-            * (self.field_particle.charge_number * e.esu) ** 2
+            * (self.test_particle.charge_number * e.esu) ** 2  # ty:ignore[possibly-missing-attribute]
+            * (self.field_particle.charge_number * e.esu) ** 2  # ty:ignore[possibly-missing-attribute]
             * self.Coulomb_log
             * self.n_b
-            / (self.test_particle.mass**2 * self._mean_thermal_velocity**3)
+            / (self.test_particle.mass ** 2 * self._mean_thermal_velocity ** 3)  # ty:ignore[possibly-missing-attribute]
         ).to(u.Hz)
 
     @cached_property
@@ -528,7 +529,7 @@ class MaxwellianCollisionFrequencies:
         <Quantity 2.8053078...e+15 Hz>
         """
 
-        if not self.test_particle.is_electron or not self.field_particle.is_ion:
+        if not self.test_particle.is_electron or not self.field_particle.is_ion:  # ty:ignore[possibly-missing-attribute]
             raise ValueError(
                 "Please specify an electron-ion interaction to use the "
                 "Maxwellian_avg_ei_collision_freq attribute."
@@ -592,7 +593,7 @@ class MaxwellianCollisionFrequencies:
         <Quantity 1.1223822...e+08 Hz>
         """
 
-        if not self.test_particle.is_ion or not self.field_particle.is_ion:
+        if not self.test_particle.is_ion or not self.field_particle.is_ion:  # ty:ignore[possibly-missing-attribute]
             raise ValueError(
                 "Please specify an ion-ion interaction to use the "
                 "Maxwellian_avg_ii_collision_freq attribute"
@@ -615,13 +616,13 @@ class MaxwellianCollisionFrequencies:
     n={"can_be_negative": False},
 )
 def collision_frequency(
-    T: u.Quantity[u.K],
-    n: u.Quantity[u.m**-3],
+        T: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     species,
     z_mean: float = np.nan,
-    V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,
+        V: u.Quantity[u.m / u.s] = np.nan * u.m / u.s,  # ty:ignore[invalid-type-form]
     method: str = "classical",
-) -> u.Quantity[u.Hz]:
+) -> u.Quantity[u.Hz]:  # ty:ignore[invalid-type-form]
     r"""
     Collision frequency of particles in a plasma.
 
@@ -805,13 +806,13 @@ def collision_frequency(
     n_e={"can_be_negative": False},
 )
 def fundamental_electron_collision_freq(
-    T_e: u.Quantity[u.K],
-    n_e: u.Quantity[u.m**-3],
+        T_e: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     ion,
     coulomb_log=None,
     V=None,
     coulomb_log_method: str = "classical",
-) -> u.Quantity[u.s**-1]:
+) -> u.Quantity[u.s ** -1]:  # ty:ignore[invalid-type-form]
     r"""
     Average momentum relaxation rate for a slowly flowing Maxwellian
     distribution of electrons.
@@ -965,13 +966,13 @@ def fundamental_electron_collision_freq(
     n_i={"can_be_negative": False},
 )
 def fundamental_ion_collision_freq(
-    T_i: u.Quantity[u.K],
-    n_i: u.Quantity[u.m**-3],
+        T_i: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n_i: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
     ion,
     coulomb_log=None,
     V=None,
     coulomb_log_method: str = "classical",
-) -> u.Quantity[u.s**-1]:
+) -> u.Quantity[u.s ** -1]:  # ty:ignore[invalid-type-form]
     r"""
     Average momentum relaxation rate for a slowly flowing Maxwellian
     distribution of ions.

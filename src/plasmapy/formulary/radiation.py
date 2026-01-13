@@ -27,13 +27,13 @@ from plasmapy.utils.exceptions import PhysicsError
 )
 @particle_input
 def thermal_bremsstrahlung(
-    frequencies: u.Quantity[u.Hz],
-    n_e: u.Quantity[u.m**-3],
-    T_e: u.Quantity[u.K],
-    n_i: u.Quantity[u.m**-3] = None,
+        frequencies: u.Quantity[u.Hz],  # ty:ignore[invalid-type-form]
+        n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+        T_e: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+        n_i: u.Quantity[u.m ** -3] = None,  # ty:ignore[invalid-type-form]
     ion: ParticleLike = "p+",
-    kmax: u.Quantity[u.m] = None,
-) -> u.Quantity[u.kg * u.m**-1 * u.s**-2]:
+        kmax: u.Quantity[u.m] = None,  # ty:ignore[invalid-type-form]
+) -> u.Quantity[u.kg * u.m ** -1 * u.s ** -2]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the bremsstrahlung emission spectrum for a Maxwellian
     plasma in the Rayleigh-Jeans limit :math:`ℏ ω ≪ k_B T_e`.
@@ -114,11 +114,12 @@ def thermal_bremsstrahlung(
     """
 
     if n_i is None:  # default is quasineutrality
-        n_i = n_e / ion.charge_number
+        n_i = n_e / ion.charge_number  # ty:ignore[possibly-missing-attribute]
 
     # Default value of kmax is the electron thermal de Broglie wavelength
     if kmax is None:
-        kmax = (np.sqrt(const.m_e.si * const.k_B.si * T_e) / const.hbar.si).to(1 / u.m)
+        kmax = (np.sqrt(const.m_e.si * const.k_B.si * T_e) / const.hbar.si).to(
+            1 / u.m)  # ty:ignore[unresolved-attribute]
 
     ω = (frequencies * 2 * np.pi * u.rad).to(u.rad / u.s)
     ω_pe = plasma_frequency(n=n_e, particle="e-")
@@ -133,7 +134,7 @@ def thermal_bremsstrahlung(
     # Check that the parameters given fall within the Rayleigh-Jeans limit
     # hω << kT_e
     rj_const = (
-        np.max(ω) * const.hbar.si / (2 * np.pi * u.rad * const.k_B.si * T_e)
+            np.max(ω) * const.hbar.si / (2 * np.pi * u.rad * const.k_B.si * T_e)  # ty:ignore[unresolved-attribute]
     ).to(u.dimensionless_unscaled)
     if rj_const.value > 0.1:
         raise PhysicsError(
@@ -146,16 +147,17 @@ def thermal_bremsstrahlung(
     c1 = (
         (8 / 3)
         * np.sqrt(2 / np.pi)
-        * (const.e.si**2 / (4 * np.pi * const.eps0.si)) ** 3
+        * (const.e.si ** 2 / (4 * np.pi * const.eps0.si)) ** 3  # ty:ignore[unresolved-attribute]
         * 1
-        / (const.m_e.si * const.c.si**2) ** 1.5
+        / (const.m_e.si * const.c.si ** 2) ** 1.5  # ty:ignore[unresolved-attribute]
     )
 
-    Zi = ion.charge_number
-    c2 = np.sqrt(1 - ω_pe**2 / ω**2) * Zi**2 * n_i * n_e / np.sqrt(const.k_B.si * T_e)
+    Zi = ion.charge_number  # ty:ignore[possibly-missing-attribute]
+    c2 = np.sqrt(1 - ω_pe ** 2 / ω ** 2) * Zi ** 2 * n_i * n_e / np.sqrt(
+        const.k_B.si * T_e)  # ty:ignore[unresolved-attribute]
 
     # Dimensionless argument for exponential integral
-    arg = 0.5 * ω**2 * const.m_e.si / (kmax**2 * const.k_B.si * T_e) / u.rad**2
+    arg = 0.5 * ω ** 2 * const.m_e.si / (kmax ** 2 * const.k_B.si * T_e) / u.rad ** 2  # ty:ignore[unresolved-attribute]
     # Remove units, get ndarray of values
     arg = (arg.to(u.dimensionless_unscaled)).value
 

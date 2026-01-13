@@ -1,8 +1,8 @@
 """Test functionality of `plasmapy.formulary.collisions.helio.collisional_analysis`."""
 
 import astropy.units as u
-import pytest
-from astropy.constants.si import c
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants.si import c  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.collisions.helio import temp_ratio
 from plasmapy.particles import Particle

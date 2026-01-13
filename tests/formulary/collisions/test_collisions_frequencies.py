@@ -1,7 +1,7 @@
 import astropy.units as u
 import numpy as np
-import pytest
-from astropy.constants import k_B, m_p
+import pytest  # ty:ignore[unresolved-import]
+from astropy.constants import k_B, m_p  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.collisions.frequencies import (
     MaxwellianCollisionFrequencies,
@@ -45,6 +45,7 @@ class TestSingleParticleCollisionFrequencies:
     for argument_to_convert in arguments_to_convert:
         CGS_unit_conversion_test_constructor_arguments[argument_to_convert] = (
             CGS_unit_conversion_test_constructor_arguments[argument_to_convert].cgs
+            # ty:ignore[possibly-missing-attribute]
         )
 
     MKS_test_case = SingleParticleCollisionFrequencies(
@@ -399,13 +400,14 @@ class TestSingleParticleCollisionFrequencies:
         if interaction_type == "e|e":
             charge_constant = 1
         elif interaction_type == "e|i":
-            charge_constant = value_test_case.field_particle.charge_number ** 2
+            charge_constant = value_test_case.field_particle.charge_number ** 2  # ty:ignore[possibly-missing-attribute]
         elif interaction_type == "i|e":
-            charge_constant = value_test_case.test_particle.charge_number ** 2
+            charge_constant = value_test_case.test_particle.charge_number ** 2  # ty:ignore[possibly-missing-attribute]
         elif interaction_type == "i|i":
             charge_constant = (
-                value_test_case.test_particle.charge_number
-                * value_test_case.field_particle.charge_number
+                                      value_test_case.test_particle.charge_number  # ty:ignore[possibly-missing-attribute]
+                                      * value_test_case.field_particle.charge_number
+                                  # ty:ignore[possibly-missing-attribute]
             ) ** 2
 
         for attribute_name, expected_limit_value in zip(

@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from typing import Any
 
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.utils import roman
 from plasmapy.utils._pytest_helpers.pytest_helpers import run_test

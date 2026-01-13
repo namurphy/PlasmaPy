@@ -2,7 +2,7 @@
 
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.speeds import Alfven_speed, cs_, ion_sound_speed, va_
 from plasmapy.particles.exceptions import InvalidIonError, InvalidParticleError

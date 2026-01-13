@@ -131,7 +131,7 @@ import warnings
 
 import astropy.units as u
 import numpy as np
-from astropy.constants.si import e, k_B, m_e
+from astropy.constants.si import e, k_B, m_e  # ty:ignore[unresolved-import]
 
 from plasmapy import particles
 from plasmapy.formulary.collisions import (
@@ -315,14 +315,14 @@ class ClassicalTransport:
     )
     def __init__(  # noqa: PLR0912, PLR0915
         self,
-        T_e: u.Quantity[u.K],
-        n_e: u.Quantity[u.m**-3],
-        T_i: u.Quantity[u.K],
-        n_i: u.Quantity[u.m**-3],
+            T_e: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+            n_e: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
+            T_i: u.Quantity[u.K],  # ty:ignore[invalid-type-form]
+            n_i: u.Quantity[u.m ** -3],  # ty:ignore[invalid-type-form]
         ion,
-        m_i: u.Quantity[u.kg] = None,
+            m_i: u.Quantity[u.kg] = None,  # ty:ignore[invalid-type-form]
         Z=None,
-        B: u.Quantity[u.T] = 0.0 * u.T,
+            B: u.Quantity[u.T] = 0.0 * u.T,  # ty:ignore[invalid-type-form]
         model: str = "Braginskii",
         field_orientation: str = "parallel",
         coulomb_log_ei=None,
@@ -456,7 +456,7 @@ class ClassicalTransport:
 
     @property
     @validate_quantities
-    def resistivity(self) -> u.Quantity[u.Ohm * u.m]:
+    def resistivity(self) -> u.Quantity[u.Ohm * u.m]:  # ty:ignore[invalid-type-form]
         r"""
         Calculate the resistivity.
 
@@ -524,7 +524,7 @@ class ClassicalTransport:
 
     @property
     @validate_quantities
-    def ion_thermal_conductivity(self) -> u.Quantity[u.W / u.m / u.K]:
+    def ion_thermal_conductivity(self) -> u.Quantity[u.W / u.m / u.K]:  # ty:ignore[invalid-type-form]
         r"""
         Calculate the thermal conductivity for ions.
 
@@ -577,7 +577,7 @@ class ClassicalTransport:
 
     @property
     @validate_quantities
-    def electron_thermal_conductivity(self) -> u.Quantity[u.W / u.m / u.K]:
+    def electron_thermal_conductivity(self) -> u.Quantity[u.W / u.m / u.K]:  # ty:ignore[invalid-type-form]
         r"""
         Calculate the thermal conductivity for electrons.
 
@@ -642,7 +642,7 @@ class ClassicalTransport:
 
     @property
     @validate_quantities
-    def ion_viscosity(self) -> u.Quantity[u.Pa * u.s]:
+    def ion_viscosity(self) -> u.Quantity[u.Pa * u.s]:  # ty:ignore[invalid-type-form]
         r"""
         Calculate the ion viscosity.
 
@@ -689,7 +689,7 @@ class ClassicalTransport:
 
     @property
     @validate_quantities
-    def electron_viscosity(self) -> u.Quantity[u.Pa * u.s]:
+    def electron_viscosity(self) -> u.Quantity[u.Pa * u.s]:  # ty:ignore[invalid-type-form]
         r"""
         Calculate the electron viscosity.
 
@@ -789,13 +789,13 @@ def resistivity(
     ion,
     m_i=None,
     Z=None,
-    B: u.Quantity[u.T] = 0.0 * u.T,
+        B: u.Quantity[u.T] = 0.0 * u.T,  # ty:ignore[invalid-type-form]
     model: str = "Braginskii",
     field_orientation: str = "parallel",
     mu=None,
     theta: float | None = None,
     coulomb_log_method: str = "classical",
-) -> u.Quantity[u.Ohm * u.m]:
+) -> u.Quantity[u.Ohm * u.m]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the resistivity.
 
@@ -857,7 +857,7 @@ def thermoelectric_conductivity(
     ion,
     m_i=None,
     Z=None,
-    B: u.Quantity[u.T] = 0.0 * u.T,
+        B: u.Quantity[u.T] = 0.0 * u.T,  # ty:ignore[invalid-type-form]
     model: str = "Braginskii",
     field_orientation: str = "parallel",
     mu=None,
@@ -899,13 +899,13 @@ def ion_thermal_conductivity(
     ion,
     m_i=None,
     Z=None,
-    B: u.Quantity[u.T] = 0.0 * u.T,
+        B: u.Quantity[u.T] = 0.0 * u.T,  # ty:ignore[invalid-type-form]
     model: str = "Braginskii",
     field_orientation: str = "parallel",
     mu=None,
     theta: float | None = None,
     coulomb_log_method: str = "classical",
-) -> u.Quantity[u.W / u.m / u.K]:
+) -> u.Quantity[u.W / u.m / u.K]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the thermal conductivity for ions.
 
@@ -969,13 +969,13 @@ def electron_thermal_conductivity(
     ion,
     m_i=None,
     Z=None,
-    B: u.Quantity[u.T] = 0.0 * u.T,
+        B: u.Quantity[u.T] = 0.0 * u.T,  # ty:ignore[invalid-type-form]
     model: str = "Braginskii",
     field_orientation: str = "parallel",
     mu=None,
     theta: float | None = None,
     coulomb_log_method: str = "classical",
-) -> u.Quantity[u.W / u.m / u.K]:
+) -> u.Quantity[u.W / u.m / u.K]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the thermal conductivity for electrons.
 
@@ -1051,13 +1051,13 @@ def ion_viscosity(
     ion,
     m_i=None,
     Z=None,
-    B: u.Quantity[u.T] = 0.0 * u.T,
+        B: u.Quantity[u.T] = 0.0 * u.T,  # ty:ignore[invalid-type-form]
     model: str = "Braginskii",
     field_orientation: str = "parallel",
     mu=None,
     theta: float | None = None,
     coulomb_log_method: str = "classical",
-) -> u.Quantity[u.Pa * u.s]:
+) -> u.Quantity[u.Pa * u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the ion viscosity.
 
@@ -1107,13 +1107,13 @@ def electron_viscosity(
     ion,
     m_i=None,
     Z=None,
-    B: u.Quantity[u.T] = 0.0 * u.T,
+        B: u.Quantity[u.T] = 0.0 * u.T,  # ty:ignore[invalid-type-form]
     model: str = "Braginskii",
     field_orientation: str = "parallel",
     mu=None,
     theta: float | None = None,
     coulomb_log_method: str = "classical",
-) -> u.Quantity[u.Pa * u.s]:
+) -> u.Quantity[u.Pa * u.s]:  # ty:ignore[invalid-type-form]
     r"""
     Calculate the electron viscosity.
 
@@ -1179,7 +1179,7 @@ def _nondim_thermal_conductivity(
     elif model == "braginskii":
         kappa_hat = _nondim_tc_i_braginskii(hall, field_orientation)
     elif model == "ji-held":
-        kappa_hat = _nondim_tc_i_ji_held(hall, Z, mu, theta, field_orientation)
+        kappa_hat = _nondim_tc_i_ji_held(hall, Z, mu, theta, field_orientation)  # ty:ignore[invalid-argument-type]
     elif model in {"spitzer-harm", "spitzer"}:
         raise NotImplementedError(
             "Ion thermal conductivity is not implemented in the Spitzer model."
@@ -1218,7 +1218,7 @@ def _nondim_viscosity(
     elif model == "braginskii":
         eta_hat = _nondim_visc_i_braginskii(hall)
     elif model == "ji-held":
-        eta_hat = _nondim_visc_i_ji_held(hall, Z, mu, theta)
+        eta_hat = _nondim_visc_i_ji_held(hall, Z, mu, theta)  # ty:ignore[invalid-argument-type]
     elif model in {"spitzer-harm", "spitzer"}:
         raise NotImplementedError(
             "Ion viscosity is not implemented in the Spitzer model."

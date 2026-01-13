@@ -1,6 +1,6 @@
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.formulary.collisions import coulomb, lengths
 from plasmapy.utils._pytest_helpers import assert_can_handle_nparray

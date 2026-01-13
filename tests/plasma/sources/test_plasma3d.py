@@ -1,6 +1,6 @@
 import astropy.units as u
 import numpy as np
-import pytest
+import pytest  # ty:ignore[unresolved-import]
 
 from plasmapy.plasma.sources import plasma3d
 
