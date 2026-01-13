@@ -599,6 +599,14 @@ def mypy(session: nox.Session) -> None:
     session.run(*MYPY_COMMAND, *session.posargs)
 
 
+@nox.session
+def ty(session: nox.Session) -> None:
+    """Type check with ty."""
+    session.install(".[tests]")
+    session.install("ty")
+    session.run("ty", "check")
+
+
 @nox.session(name="import")
 def try_import(session: nox.Session) -> None:
     """Install PlasmaPy and import it."""
