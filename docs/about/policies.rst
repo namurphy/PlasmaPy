@@ -36,6 +36,14 @@ Dependency groups used for code development activities such as running
 tests and building documentation are excluded from this policy because
 they are not intended for use by end users of PlasmaPy.
 
+.. _deprecation-policy:
+
+Deprecation policy
+==================
+
+to be added...
+
+
 .. _security-policy:
 
 Security policy
